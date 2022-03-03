@@ -10,6 +10,8 @@ import {NgxsModule} from "@ngxs/store";
 import {WalletState} from "./state/wallet/wallet.state";
 import {WEB3_CONFIG, Web3Service} from "./services/web3.service";
 import Web3 from "web3";
+import {MatButtonModule} from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import Web3 from "web3";
     NgxsModule.forRoot([WalletState], {
       developmentMode: !environment.production
     }),
+    MatButtonModule,
   ],
   providers: [
     Web3Service,

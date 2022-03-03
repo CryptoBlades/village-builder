@@ -47,7 +47,9 @@ export class WalletState {
 
   @Action(ClearWalletState)
   clearState({patchState}: StateContext<WalletStateModel>) {
-    patchState(createInitialData());
+    patchState({
+      publicAddress: ''
+    });
   }
 }
 

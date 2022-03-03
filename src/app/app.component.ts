@@ -4,7 +4,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Store} from '@ngxs/store';
 import {from, Observable, take} from "rxjs";
-import {SetMetamaskInstalled, SetWalletAddress} from "./state/wallet/wallet.actions";
+import {SetMetamaskConnected, SetMetamaskInstalled, SetWalletAddress} from "./state/wallet/wallet.actions";
 import {Web3Service} from "./services/web3.service";
 
 @Component({
@@ -32,11 +32,10 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     from(this.detectMetamask()).pipe(take(1)).subscribe();
 
-    this.wallet$.pipe(
-      untilDestroyed(this)
-    ).subscribe((state: WalletStateModel) => {
+    this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.isInstalled = state.isInstalled;
       this.isConnected = state.isConnected;
+      console.log(state);
     });
 
   }
@@ -53,16 +52,10 @@ export class AppComponent implements OnInit {
   async connectMetamask() {
     try {
       const provider = await detectEthereumProvider() as any;
-      if (provider) {
-        const accounts = await provider.request({method: 'eth_requestAccounts'});
-
-        if (typeof window.ethereum !== 'undefined') {
-          this.store.dispatch(new SetWalletAddress(this.web3.utils.toChecksumAddress(accounts[0])));
-          this.wallet$.subscribe(wallet => {
-            console.log(wallet);
-          });
-        }
-      }
+      provider?.request({method: 'eth_requestAccounts'}).then((accounts: any) => {
+        this.store.dispatch(new SetWalletAddress(this.web3.utils.toChecksumAddress(accounts[0])));
+        this.store.dispatch(new SetMetamaskConnected(true));
+      });
     } catch (err) {
       console.error('Connect metamask fail:', err);
     }
