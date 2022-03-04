@@ -14,6 +14,12 @@ yarn-error.log
 # Angular
 .angular/
 
+# Build
+build/
+
+# Web3 local
+.openzeppelin/unknown-1337.json
+
 # IDEs and editors
 .idea/
 .project
