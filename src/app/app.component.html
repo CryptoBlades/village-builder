@@ -1,8 +1,29 @@
 <app-header></app-header>
 <h1 i18n>Hello, {{title}}</h1>
-<div *ngIf="!isConnected; else elseBlock" class="buttons-container">
+<div *ngIf="!isConnected; else connectedBlock" class="buttons-container">
   <button mat-raised-button (click)="connectMetamask()">Connect Wallet</button>
 </div>
-<ng-template #elseBlock>
+<ng-template #connectedBlock>
   You are connected!
+  <div *ngIf="selectedLand; else landNotSelectedBlock">
+    You selected:
+    <div class="p-3">
+      <ng-container>
+        <div>
+          {{ 'Common.ID' }} : {{ selectedLand.id }}
+        </div>
+        <div>
+          {{ 'Common.Tier'}} : {{ selectedLand.tier }}
+        </div>
+        <div>
+          {{ 'Common.ChunkId'}} : {{ selectedLand.chunkID }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <ng-template #landNotSelectedBlock>
+    <div class="lands-display">
+      <app-select-land *ngFor="let land of lands" [land]="land" (selectedLand)="onSelect($event)"></app-select-land>
+    </div>
+  </ng-template>
 </ng-template>

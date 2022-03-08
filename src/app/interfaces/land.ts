@@ -1,8 +1,6 @@
 export interface Land {
+  id: number;
   tier: number,
-  world: number,
   chunkID: number,
-  x: number,
-  y: number,
   resellerAddress: string
 }

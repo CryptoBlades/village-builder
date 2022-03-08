@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Web3Service} from '../web3.service';
-import MockLand from '../../../../../../contracts/build/contracts/CBKLand.json';
+import MockLand from '../../../build/contracts/MockCBKLand.json';
 import {environment} from 'src/environments/environment';
 import {Contract} from 'web3-eth-contract';
 import {Land} from "../interfaces/land";
+import {Web3Service} from "../services/web3.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,18 +18,25 @@ export class LandService {
     this.landContract = new this.web3.eth.Contract(MockLand.abi as any, environment.landContract);
   }
 
-  async getOwned(address: string): Promise<Array<string>> {
-    return await this.landContract.methods.getOwned(address).call();
+  async getOwnedLands(address: string): Promise<Land[]> {
+    const landsIds = await this.landContract.methods.getOwned(address).call();
+    return await Promise.all(landsIds.map(async (landId: number) => {
+      return this.getLandInfo(+landId);
+    }));
   }
 
-  async getLandInfo(id: number): Promise<Land | null> {
+  async getLandInfo(id: number): Promise<Land | undefined>{
     try {
-      const t2 = await this.landContract.methods.get(id).call();
-      console.log(t2);
+      const land = await this.landContract.methods.get(id).call();
 
-      return GetLandMapper(t2);
+      return {
+        id: id,
+        tier: +land[0],
+        chunkID: +land[2],
+        resellerAddress: land[5]
+      } as Land;
     } catch (e) {
-      return null;
+      return;
     }
   }
 }

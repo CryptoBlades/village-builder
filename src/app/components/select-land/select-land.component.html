@@ -1,0 +1,30 @@
+<ng-container [ngSwitch]="land.tier">
+  <div *ngSwitchCase="1">
+    <img src="assets/Land/t1.png" class="land-img-size" alt="">
+  </div>
+  <div *ngSwitchCase="2">
+    <img src="assets/Land/t2.png" class="land-img-size" alt="">
+  </div>
+  <div *ngSwitchCase="3">
+    <img src="assets/Land/t3.png" class="land-img-size" alt="">
+  </div>
+  <div *ngSwitchDefault>
+    <img src="assets/Land/t1.png" class="land-img-size" alt="">
+  </div>
+</ng-container>
+<div class="p-3">
+  <ng-container>
+    <div>
+      {{ 'Common.ID' }} : {{ land.id }}
+    </div>
+    <div>
+      {{ 'Common.Tier'}} : {{ land.tier }}
+    </div>
+    <div>
+      {{ 'Common.ChunkId'}} : {{ land.chunkID }}
+    </div>
+  </ng-container>
+</div>
+<button mat-raised-button class="btn btn-secondary w-100" (click)="onClickSelect()" >
+  {{ 'Common.Select' }}
+</button>

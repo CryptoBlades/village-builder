@@ -11,12 +11,15 @@ import {WalletState} from "./state/wallet/wallet.state";
 import {WEB3_CONFIG, Web3Service} from "./services/web3.service";
 import Web3 from "web3";
 import {MatButtonModule} from '@angular/material/button';
+import { SelectLandComponent } from './components/select-land/select-land.component';
+import {LandState} from "./state/land/land.state";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    SelectLandComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import {MatButtonModule} from '@angular/material/button';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     BrowserAnimationsModule,
-    NgxsModule.forRoot([WalletState], {
+    NgxsModule.forRoot([WalletState, LandState], {
       developmentMode: !environment.production
     }),
     MatButtonModule,
