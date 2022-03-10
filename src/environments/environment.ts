@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   landContract: '0x92a3e4F09b30a9591EbBC3BE61538f9292af9104',
-  landStakingContract: '0x957625CFF38a91a51bC70f322Db07B8Eb0019a9E',
 };
 
 /*
