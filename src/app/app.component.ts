@@ -10,6 +10,7 @@ import {LandService} from "./solidity/land.service";
 import {Land} from "./interfaces/land";
 import {LandState, LandStateModel} from "./state/land/land.state";
 import {SetLandSelected} from "./state/land/land.actions";
+import {CharactersService} from "./solidity/characters.service";
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   isConnected = false;
   currentAccount = '';
   selectedLand?: Land = undefined;
+  characters: number[] = [];
 
   lands: Land[] = [];
 
@@ -36,6 +38,7 @@ export class AppComponent implements OnInit {
     private store: Store,
     private web3: Web3Service,
     private landService: LandService,
+    private charactersService: CharactersService,
   ) {
   }
 
@@ -95,5 +98,10 @@ export class AppComponent implements OnInit {
     } catch (err) {
       console.error('Unstake fail:', err);
     }
+  }
+
+  async onClickFetch() {
+    this.characters = await this.charactersService.getOwnedCharacters();
+    console.log(this.characters);
   }
 }

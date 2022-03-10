@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   landContract: '0x92a3e4F09b30a9591EbBC3BE61538f9292af9104',
+  charactersContract: '0xDB00EaEce427d41180D4EDb2e51b68B1c277D85A',
 };
 
 /*
