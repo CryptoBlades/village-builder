@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   currentAccount = '';
   selectedLand?: Land = undefined;
   characters: number[] = [];
+  characterToStake = '';
 
   lands: Land[] = [];
 
@@ -103,5 +104,10 @@ export class AppComponent implements OnInit {
   async onClickFetch() {
     this.characters = await this.charactersService.getOwnedCharacters();
     console.log(this.characters);
+  }
+
+  async onClickStake() {
+    await this.charactersService.stake(+this.characterToStake);
+    console.log('Staked');
   }
 }

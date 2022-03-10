@@ -11,8 +11,10 @@ import {WalletState} from "./state/wallet/wallet.state";
 import {WEB3_CONFIG, Web3Service} from "./services/web3.service";
 import Web3 from "web3";
 import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
 import { SelectLandComponent } from './components/select-land/select-land.component';
 import {LandState} from "./state/land/land.state";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import {LandState} from "./state/land/land.state";
     NgxsModule.forRoot([WalletState, LandState], {
       developmentMode: !environment.production
     }),
+    FormsModule,
     MatButtonModule,
+    MatInputModule,
   ],
   providers: [
     Web3Service,

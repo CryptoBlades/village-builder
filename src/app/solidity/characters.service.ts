@@ -15,4 +15,15 @@ export class CharactersService extends SolidityService {
     }
     return characters;
   }
+
+  async stake(id: number): Promise<void> {
+    const isApprovedForAll = await this.charactersContract.methods.isApprovedForAll(this.currentAccount, this.characterStakingContract.options.address).call({from: this.currentAccount});
+
+    if (!isApprovedForAll) {
+      await this.charactersContract.methods.approve(this.characterStakingContract.options.address, id).send({from: this.currentAccount});
+    }
+
+    await this.characterStakingContract.methods.stake(id).send({from: this.currentAccount});
+  }
+
 }

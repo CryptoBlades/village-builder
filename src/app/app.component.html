@@ -20,11 +20,18 @@
         </div>
       </ng-container>
     </div>
-    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickUnstake()" >
+    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickUnstake()">
       {{ 'Common.Unstake' }}
     </button>
-    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickFetch()" >
+    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickFetch()">
       {{ 'Common.FetchChars' }}
+    </button>
+    <mat-form-field appearance="fill">
+      <mat-label>Input</mat-label>
+      <input matInput type="number" [(ngModel)]="characterToStake">
+    </mat-form-field>
+    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickStake()">
+      {{ 'Common.StakeChar' }}
     </button>
     <img src="assets/Village/village_background.png" alt="village" class="village-view">
   </div>
