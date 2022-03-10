@@ -1,42 +1,59 @@
 import {Injectable} from '@angular/core';
-import MockLand from '../../../build/contracts/MockCBKLand.json';
-import {environment} from 'src/environments/environment';
-import {Contract} from 'web3-eth-contract';
 import {Land} from "../interfaces/land";
-import {Web3Service} from "../services/web3.service";
+import {UntilDestroy} from "@ngneat/until-destroy";
+import {SolidityService} from "./solidity.service";
 
+@UntilDestroy()
 @Injectable({
   providedIn: 'root'
 })
-export class LandService {
-
-  landContract!: Contract;
-
-  constructor(
-    private web3: Web3Service
-  ) {
-    this.landContract = new this.web3.eth.Contract(MockLand.abi as any, environment.landContract);
-  }
+export class LandService extends SolidityService {
 
   async getOwnedLands(address: string): Promise<Land[]> {
     const landsIds = await this.landContract.methods.getOwned(address).call();
     return await Promise.all(landsIds.map(async (landId: number) => {
+      console.log(landId);
       return this.getLandInfo(+landId);
     }));
   }
 
-  async getLandInfo(id: number): Promise<Land | undefined>{
+  async getLandInfo(id: number): Promise<Land | undefined> {
     try {
       const land = await this.landContract.methods.get(id).call();
-
+      console.log(land);
       return {
         id: id,
         tier: +land[0],
-        chunkID: +land[2],
-        resellerAddress: land[5]
+        chunkID: +land[1],
+        resellerAddress: land[4]
       } as Land;
     } catch (e) {
       return;
     }
   }
+
+  async stakeLand(id: number): Promise<void> {
+    const isApprovedForAll = await this.landContract.methods.isApprovedForAll(this.currentAccount, this.landStakingContract.options.address).call({from: this.currentAccount});
+
+    if (!isApprovedForAll) {
+      await this.landContract.methods.approve(this.landStakingContract.options.address, id).send({from: this.currentAccount});
+    }
+
+    return await this.landStakingContract.methods.stake(id).send({from: this.currentAccount});
+  }
+
+  async unstakeLand(id: number): Promise<void> {
+    return await this.landStakingContract.methods.unstake(id).send({from: this.currentAccount});
+  }
+
+  async hasStakedLand(): Promise<boolean> {
+    const stakedId = +await this.landStakingContract.methods.stakedLands(this.currentAccount).call({from: this.currentAccount});
+    return stakedId !== 0;
+  }
+
+  async getStakedLand(): Promise<Land | undefined> {
+    const stakedId = +await this.landStakingContract.methods.stakedLands(this.currentAccount).call({from: this.currentAccount});
+    return stakedId !== 0 ? await this.getLandInfo(stakedId) : undefined;
+  }
+
 }

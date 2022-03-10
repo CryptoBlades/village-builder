@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
 
   isInstalled = false;
   isConnected = false;
+  currentAccount = '';
   selectedLand?: Land = undefined;
 
   lands: Land[] = [];
@@ -38,16 +39,15 @@ export class AppComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     from(this.detectMetamask()).pipe(take(1)).subscribe();
+    await this.connectMetamask();
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
-      console.log(state);
       this.isInstalled = state.isInstalled;
       this.isConnected = state.isConnected;
-      console.log(state);
+      this.currentAccount = state.publicAddress;
     });
     this.land$.pipe(untilDestroyed(this)).subscribe((state: LandStateModel) => {
-      console.log(state);
       this.selectedLand = state.selectedLand;
     });
   }
@@ -75,11 +75,25 @@ export class AppComponent implements OnInit {
         this.store.dispatch(new SetMetamaskConnected(true));
         this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
           this.lands = await this.landService.getOwnedLands(state.publicAddress)
-          console.log(this.lands);
+          const stakedLand = await this.landService.getStakedLand();
+          if (stakedLand) {
+            this.store.dispatch(new SetLandSelected(stakedLand));
+          }
         });
       });
     } catch (err) {
       console.error('Connect metamask fail:', err);
+    }
+  }
+
+  async onClickUnstake() {
+    if (!this.selectedLand?.id) return;
+    try {
+      await this.landService.unstakeLand(this.selectedLand.id);
+      this.lands = await this.landService.getOwnedLands(this.currentAccount);
+      this.selectedLand = undefined;
+    } catch (err) {
+      console.error('Unstake fail:', err);
     }
   }
 }

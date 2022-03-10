@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Land} from "../../interfaces/land";
+import {LandService} from "../../solidity/land.service";
 
 @Component({
   selector: 'app-select-land',
@@ -9,17 +10,20 @@ import {Land} from "../../interfaces/land";
 export class SelectLandComponent implements OnInit {
   @Input() land!: Land;
 
-  @Output('selectedLand') selectedLand: EventEmitter<any> = new EventEmitter<number>();
+  @Output() selectedLand: EventEmitter<any> = new EventEmitter<number>();
 
 
-  constructor() {
+  constructor(
+    private landService: LandService,
+  ) {
   }
 
   ngOnInit(): void {
   }
 
-  onClickSelect() {
-    this.selectedLand.next(this.land);
+  async onClickSelect() {
+    await this.landService.stakeLand(this.land.id);
+    this.selectedLand.emit(this.land);
   }
 
 }
