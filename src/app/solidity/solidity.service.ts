@@ -8,7 +8,7 @@ import {Web3Service} from "../services/web3.service";
 import CBKLand from "../../../build/contracts/CBKLandInterface.json";
 import Characters from "../../../build/contracts/CharactersInterface.json";
 import {environment} from "../../environments/environment";
-import LandStaking from "../../../build/contracts/LandStaking.json";
+import Village from "../../../build/contracts/Village.json";
 import CharacterStaking from "../../../build/contracts/CharacterStaking.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
@@ -22,7 +22,7 @@ export class SolidityService {
   land$: Observable<LandStateModel> = this.store.select(LandState);
   landContract!: Contract;
   charactersContract!: Contract;
-  landStakingContract!: Contract;
+  villageContract!: Contract;
   characterStakingContract!: Contract;
 
   currentAccount: string = '';
@@ -33,7 +33,7 @@ export class SolidityService {
   ) {
     this.landContract = new this.web3.eth.Contract(CBKLand.abi as any, environment.landContract);
     this.charactersContract = new this.web3.eth.Contract(Characters.abi as any, environment.charactersContract);
-    this.landStakingContract = new this.web3.eth.Contract(LandStaking.abi as any, LandStaking.networks["5777"]!.address);
+    this.villageContract = new this.web3.eth.Contract(Village.abi as any, Village.networks["5777"]!.address);
     this.characterStakingContract = new this.web3.eth.Contract(CharacterStaking.abi as any, CharacterStaking.networks["5777"]!.address);
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.currentAccount = state.publicAddress;

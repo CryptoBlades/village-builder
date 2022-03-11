@@ -33,6 +33,9 @@ export class AppComponent implements OnInit {
   characters: number[] = [];
   characterToStake = '';
 
+  timeLeft = '';
+  checkInterval: any = null;
+
   lands: Land[] = [];
 
   constructor(
@@ -104,10 +107,55 @@ export class AppComponent implements OnInit {
   async onClickFetch() {
     this.characters = await this.charactersService.getOwnedCharacters();
     console.log(this.characters);
+    await this.getTimeLeft();
   }
 
   async onClickStake() {
     await this.charactersService.stake(+this.characterToStake);
     console.log('Staked');
   }
+
+  async getTimeLeft() {
+    const deadlineTimestamp = +await this.charactersService.getStakeCompleteTimestamp();
+    if (!deadlineTimestamp) return;
+    if (this.checkInterval) {
+      clearInterval(this.checkInterval);
+    }
+    this.checkInterval = setInterval(() => {
+      const {total, days, hours, minutes, seconds} = this.getTimeRemaining(deadlineTimestamp.toString());
+      this.timeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
+      if (total <= 1000 && this.checkInterval) {
+        clearInterval(this.checkInterval);
+        this.timeLeft = '';
+      }
+    }, 1000);
+  }
+
+  getTimeRemaining = (end: string) => {
+    const total = new Date(+end * 1000).getTime() - new Date().getTime();
+    let seconds: string | number = Math.floor((total / 1000) % 60);
+    let minutes: string | number = Math.floor((total / 1000 / 60) % 60);
+    let hours: string | number = Math.floor((total / (1000 * 60 * 60)) % 24);
+    let days: string | number = Math.floor((total / (1000 * 60 * 60 * 24)));
+    if (seconds < 10) {
+      seconds = String(seconds).padStart(2, '0');
+    }
+    if (minutes < 10) {
+      minutes = String(minutes).padStart(2, '0');
+    }
+    if (hours < 10) {
+      hours = String(hours).padStart(2, '0');
+    }
+    if (days < 10) {
+      days = String(days).padStart(2, '0');
+    }
+
+    return {
+      total,
+      days,
+      hours,
+      minutes,
+      seconds
+    };
+  };
 }

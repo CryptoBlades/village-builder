@@ -26,4 +26,8 @@ export class CharactersService extends SolidityService {
     await this.characterStakingContract.methods.stake(id).send({from: this.currentAccount});
   }
 
+  async getStakeCompleteTimestamp(): Promise<number> {
+    return +await this.characterStakingContract.methods.getStakeCompleteTimestamp().call({from: this.currentAccount});
+  }
+
 }

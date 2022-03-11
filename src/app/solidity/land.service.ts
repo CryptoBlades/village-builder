@@ -33,26 +33,26 @@ export class LandService extends SolidityService {
   }
 
   async stakeLand(id: number): Promise<void> {
-    const isApprovedForAll = await this.landContract.methods.isApprovedForAll(this.currentAccount, this.landStakingContract.options.address).call({from: this.currentAccount});
+    const isApprovedForAll = await this.landContract.methods.isApprovedForAll(this.currentAccount, this.villageContract.options.address).call({from: this.currentAccount});
 
     if (!isApprovedForAll) {
-      await this.landContract.methods.approve(this.landStakingContract.options.address, id).send({from: this.currentAccount});
+      await this.landContract.methods.approve(this.villageContract.options.address, id).send({from: this.currentAccount});
     }
 
-    return await this.landStakingContract.methods.stake(id).send({from: this.currentAccount});
+    return await this.villageContract.methods.stake(id).send({from: this.currentAccount});
   }
 
   async unstakeLand(id: number): Promise<void> {
-    return await this.landStakingContract.methods.unstake(id).send({from: this.currentAccount});
+    return await this.villageContract.methods.unstake(id).send({from: this.currentAccount});
   }
 
   async hasStakedLand(): Promise<boolean> {
-    const stakedId = +await this.landStakingContract.methods.stakedLands(this.currentAccount).call({from: this.currentAccount});
+    const stakedId = +await this.villageContract.methods.stakedLand(this.currentAccount).call({from: this.currentAccount});
     return stakedId !== 0;
   }
 
   async getStakedLand(): Promise<Land | undefined> {
-    const stakedId = +await this.landStakingContract.methods.stakedLands(this.currentAccount).call({from: this.currentAccount});
+    const stakedId = +await this.villageContract.methods.stakedLand(this.currentAccount).call({from: this.currentAccount});
     return stakedId !== 0 ? await this.getLandInfo(stakedId) : undefined;
   }
 

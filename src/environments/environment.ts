@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  landContract: '0x92a3e4F09b30a9591EbBC3BE61538f9292af9104',
-  charactersContract: '0xDB00EaEce427d41180D4EDb2e51b68B1c277D85A',
+  landContract: '0x4eBE163A7Cd57602e52CfFe34a38268C21897927',
+  charactersContract: '0x0DDEFe3b35E8603a14368Ea48B08eEf81D9744B5',
 };
 
 /*

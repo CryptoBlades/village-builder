@@ -1,5 +1,5 @@
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
-const LandStaking = artifacts.require('LandStaking');
+const Village = artifacts.require('Village');
 module.exports = async function (deployer) {
-  await deployProxy(LandStaking, [], {deployer});
+  await deployProxy(Village, [], {deployer});
 };
