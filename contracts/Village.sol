@@ -54,7 +54,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     return IERC721ReceiverUpgradeable.onERC721Received.selector;
   }
 
-  function stake(uint256 id) public assertOwnsLand(msg.sender, id) {
+  function stake(uint id) public assertOwnsLand(msg.sender, id) {
     require(stakedLand[msg.sender] == 0, 'You already have a land staked');
     stakedLand[msg.sender] = id;
     stakedFrom[msg.sender] = block.timestamp;
@@ -62,7 +62,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     emit Staked(msg.sender, id);
   }
 
-  function unstake(uint256 id) public assertStakesLand(msg.sender, id) {
+  function unstake(uint id) public assertStakesLand(msg.sender, id) {
     stakedLand[msg.sender] = 0;
     stakedFrom[msg.sender] = 0;
     cbkLand.safeTransferFrom(address(this), msg.sender, id);
@@ -70,12 +70,12 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
   }
 
   // TODO: Should be external
-  function upgradeBuilding(uint256 id, Building building) public assertStakesLand(msg.sender, id) {
+  function upgradeBuilding(uint id, Building building) public assertStakesLand(msg.sender, id) {
     buildings[id][building] += 1;
     emit BuildingUpgraded(id, building, buildings[id][building]);
   }
 
-  function getBuildingLevel(uint256 id, uint8 building) public view returns (uint256) {
+  function getBuildingLevel(uint id, uint8 building) public view returns (uint256) {
     return buildings[id][Building(building)];
   }
 

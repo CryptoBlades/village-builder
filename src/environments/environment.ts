@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   landContract: '0x4eBE163A7Cd57602e52CfFe34a38268C21897927',
   charactersContract: '0x0DDEFe3b35E8603a14368Ea48B08eEf81D9744B5',
+  weaponsContract: '0x4f669d30778210D7F336Aa86153C0c8e190aad95',
 };
 
 /*

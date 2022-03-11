@@ -11,6 +11,7 @@ import {Land} from "./interfaces/land";
 import {LandState, LandStateModel} from "./state/land/land.state";
 import {SetLandSelected} from "./state/land/land.actions";
 import {CharactersService} from "./solidity/characters.service";
+import {WeaponsService} from "./solidity/weapons.service";
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,8 @@ export class AppComponent implements OnInit {
   selectedLand?: Land = undefined;
   characters: number[] = [];
   characterToStake = '';
+  weapons: number[] = [];
+  weaponsToStake = '';
 
   timeLeft = '';
   checkInterval: any = null;
@@ -43,6 +46,7 @@ export class AppComponent implements OnInit {
     private web3: Web3Service,
     private landService: LandService,
     private charactersService: CharactersService,
+    private weaponsService: WeaponsService,
   ) {
   }
 
@@ -57,6 +61,7 @@ export class AppComponent implements OnInit {
     this.land$.pipe(untilDestroyed(this)).subscribe((state: LandStateModel) => {
       this.selectedLand = state.selectedLand;
     });
+    await this.getTimeLeft(+await this.weaponsService.getStakeCompleteTimestamp());
   }
 
   onSelect(land: Land) {
@@ -107,7 +112,7 @@ export class AppComponent implements OnInit {
   async onClickFetch() {
     this.characters = await this.charactersService.getOwnedCharacters();
     console.log(this.characters);
-    await this.getTimeLeft();
+    await this.getTimeLeft(+await this.charactersService.getStakeCompleteTimestamp());
   }
 
   async onClickStake() {
@@ -115,8 +120,20 @@ export class AppComponent implements OnInit {
     console.log('Staked');
   }
 
-  async getTimeLeft() {
-    const deadlineTimestamp = +await this.charactersService.getStakeCompleteTimestamp();
+  async onClickFetchWeap() {
+    this.weapons = await this.weaponsService.getOwnedWeapons();
+    console.log(this.weapons);
+    await this.getTimeLeft(+await this.weaponsService.getStakeCompleteTimestamp());
+  }
+
+  async onClickStakeWeap() {
+    const ids = [...this.weaponsToStake].map((value: string | number) => +value);
+    await this.weaponsService.stake(ids);
+    console.log('Staked');
+  }
+
+  getTimeLeft(deadlineTimestamp: number) {
+    console.log('hello');
     if (!deadlineTimestamp) return;
     if (this.checkInterval) {
       clearInterval(this.checkInterval);
@@ -124,6 +141,7 @@ export class AppComponent implements OnInit {
     this.checkInterval = setInterval(() => {
       const {total, days, hours, minutes, seconds} = this.getTimeRemaining(deadlineTimestamp.toString());
       this.timeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
+      console.log(this.timeLeft);
       if (total <= 1000 && this.checkInterval) {
         clearInterval(this.checkInterval);
         this.timeLeft = '';

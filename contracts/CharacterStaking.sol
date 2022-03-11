@@ -17,7 +17,7 @@ contract CharacterStaking is Initializable, AccessControlUpgradeable, IERC721Rec
 
   struct Stake {
     uint256 duration;
-    uint256 barracksRequirement;
+    uint256 requirement;
   }
 
 
@@ -40,9 +40,9 @@ contract CharacterStaking is Initializable, AccessControlUpgradeable, IERC721Rec
 
     village = _village;
 
-    stakes[1] = Stake({duration : 30, barracksRequirement : 1});
-    stakes[2] = Stake({duration : 120, barracksRequirement : 1});
-    stakes[3] = Stake({duration : 300, barracksRequirement : 1});
+    stakes[1] = Stake({duration : 30, requirement : 1});
+    stakes[2] = Stake({duration : 120, requirement : 1});
+    stakes[3] = Stake({duration : 300, requirement : 1});
 
 
     //    tiers[1] = 30;
@@ -132,14 +132,14 @@ contract CharacterStaking is Initializable, AccessControlUpgradeable, IERC721Rec
     uint256 timestamp = block.timestamp;
     if (currentStakeId == 0) {
       require(unlockedTiers[msg.sender] == 0, 'You have already staked');
-      require(barracksLevel >= stakes[1].barracksRequirement, 'You need to upgrade barracks');
+      require(barracksLevel >= stakes[1].requirement, 'You need to upgrade barracks');
       currentStakeStart[msg.sender] = timestamp;
       currentStake[msg.sender] = 1;
     } else {
       uint256 previousStakeTimestamp = currentStakeStart[msg.sender];
       uint256 previousStakeRequirement = stakes[currentStakeId].duration;
       require(timestamp > previousStakeTimestamp + previousStakeRequirement, 'Stake not completed');
-      require(barracksLevel >= stakes[currentStakeId + 1].barracksRequirement, 'You need to upgrade barracks');
+      require(barracksLevel >= stakes[currentStakeId + 1].requirement, 'You need to upgrade barracks');
       emit StakeComplete(msg.sender, currentStake[msg.sender]);
       unlockedTiers[msg.sender] += 1;
       if (stakes[currentStakeId + 1].duration == 0) {
@@ -177,5 +177,9 @@ contract CharacterStaking is Initializable, AccessControlUpgradeable, IERC721Rec
   function getStakeCompleteTimestamp() public view returns (uint256) {
     uint256 currentStakeId = currentStake[msg.sender];
     return currentStakeStart[msg.sender] + stakes[currentStakeId].duration;
+  }
+
+  function getStakedCharactersAmount(address user) public view returns (uint256) {
+    return stakedCharacters[user].length;
   }
 }
