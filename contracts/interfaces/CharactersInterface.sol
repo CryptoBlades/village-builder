@@ -1,4 +1,5 @@
-pragma solidity ^0.8.6;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts-upgradeable/interfaces/IERC721EnumerableUpgradeable.sol";
 

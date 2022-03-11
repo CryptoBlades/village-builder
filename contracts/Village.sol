@@ -1,4 +1,5 @@
-pragma solidity ^0.8.6;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
@@ -22,13 +23,10 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
   event Unstaked(address indexed user, uint256 indexed id);
   event BuildingUpgraded(uint256 indexed id, Building indexed building, uint256 level);
 
-  function initialize() public initializer {
+  function initialize(address cbkLandAddress) public initializer {
     __AccessControl_init_unchained();
     _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     _setupRole(GAME_ADMIN, msg.sender);
-  }
-
-  function assignCBKLandAddress(address cbkLandAddress) external {
     cbkLand = CBKLandInterface(cbkLandAddress);
   }
 
