@@ -1,5 +1,4 @@
 <app-header></app-header>
-<h1 i18n>Hello, {{title}}</h1>
 <div *ngIf="!isConnected; else connectedBlock" class="buttons-container">
   <button mat-raised-button (click)="connectMetamask()">Connect Wallet</button>
 </div>
@@ -28,7 +27,7 @@
     </button>
     <mat-form-field appearance="fill">
       <mat-label>Input</mat-label>
-      <input matInput type="number" [(ngModel)]="characterToStake">
+      <input matInput type="text" [(ngModel)]="charactersToStake">
     </mat-form-field>
     <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickStake()">
       {{ 'Common.StakeChar' }}
@@ -44,7 +43,7 @@
       {{ 'Common.StakeWeap' }}
     </button>
     <span>{{timeLeft}}</span>
-    <img src="assets/Village/village_background.png" alt="village" class="village-view">
+<!--    <img src="assets/Village/village_background.png" alt="village" class="village-view">-->
   </div>
   <ng-template #landNotSelectedBlock>
     <div class="lands-display">

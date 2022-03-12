@@ -44,24 +44,13 @@ contract NftStaking is Initializable, AccessControlUpgradeable, IERC721ReceiverU
     return IERC721ReceiverUpgradeable.onERC721Received.selector;
   }
 
-  modifier assertOwnsNfts(address user, uint[] memory ids) {
-    _assertOwnsNfts(user, ids);
-    _;
-  }
-
-  function _assertOwnsNfts(address user, uint[] memory ids) internal view {
-    for (uint i = 0; i < ids.length; i++) {
-      require(nft.ownerOf(ids[i]) == user, 'Not nft owner');
-    }
-  }
-
   function firstStake() public {
     require(unlockedTiers[tx.origin] == 0, 'You have already staked');
     currentStake[tx.origin] = 1;
     emit FirstStake(tx.origin);
   }
 
-  function stake(uint[] memory ids) virtual public assertOwnsNfts(tx.origin, ids) {
+  function stake(uint[] memory ids) virtual public {
     uint256 currentStakeId = currentStake[tx.origin];
     if (stakes[currentStakeId + 1].amount != 0) {
       require(stakedNfts[tx.origin].length + ids.length == stakes[currentStakeId + 1].amount, 'You need to stake all the required NFTs');

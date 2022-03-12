@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  landContract: '0x4eBE163A7Cd57602e52CfFe34a38268C21897927',
-  charactersContract: '0x0DDEFe3b35E8603a14368Ea48B08eEf81D9744B5',
-  weaponsContract: '0x4f669d30778210D7F336Aa86153C0c8e190aad95',
+  landContract: '0x47a09052DE14bFebA30c721b67fD2d85fA243E6A',
+  charactersContract: '0x089e7fe7b969d0bDcC47568571C560F1C8C5d99b',
+  weaponsContract: '0xC74273bBDD31f1bEC912E5ce63C08FF87Bfb8796',
 };
 
 /*

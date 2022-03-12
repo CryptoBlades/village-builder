@@ -14,10 +14,17 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
 
   mapping(address => uint256) public stakedLand;
   mapping(address => uint256) public stakedFrom;
-  mapping(uint256 => mapping(Building => uint256)) public buildings; // CBKLand to building level
+  mapping(uint256 => mapping(Building => uint256)) public buildings; // land to building to level
+  mapping(Building => uint256) public buildingMaxLevel;
+  mapping(Building => BuildingRequirement) public buildingRequirement;
 
   //  enum Building{NONE, TOWN_HALL, HEADQUARTERS, BARRACKS, STONE_MINE, CLAY_PIT, FOREST_CAMP, CHURCH, STOREHOUSE, SMITHY, RALLY_POINT, FARM, HIDDEN_STASH, WALL, TRADING_POST}
-  enum Building{NONE, TOWN_HALL, HEADQUARTERS, BARRACKS, CLAY_PIT, IRON_MINE,STONE_MINE, STOREHOUSE, SMITHY, FARM, HIDDEN_STASH, WALL, TRADING_POST}
+  enum Building{NONE, TOWN_HALL, HEADQUARTERS, BARRACKS, CLAY_PIT, IRON_MINE, STONE_MINE, STOREHOUSE, SMITHY, FARM, HIDDEN_STASH, WALL, TRADING_POST}
+
+  struct BuildingRequirement {
+    Building building;
+    uint256 level;
+  }
 
   event Staked(address indexed user, uint256 indexed id);
   event Unstaked(address indexed user, uint256 indexed id);
@@ -27,7 +34,27 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     __AccessControl_init_unchained();
     _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     _setupRole(GAME_ADMIN, msg.sender);
+
     cbkLand = CBKLandInterface(cbkLandAddress);
+
+    buildingMaxLevel[Building.TOWN_HALL] = 5;
+    buildingMaxLevel[Building.HEADQUARTERS] = 1;
+    buildingMaxLevel[Building.BARRACKS] = 5;
+    buildingMaxLevel[Building.CLAY_PIT] = 6;
+    buildingMaxLevel[Building.IRON_MINE] = 6;
+    buildingMaxLevel[Building.STONE_MINE] = 6;
+    buildingMaxLevel[Building.STOREHOUSE] = 10;
+    buildingMaxLevel[Building.SMITHY] = 6;
+    buildingMaxLevel[Building.FARM] = 10;
+    buildingMaxLevel[Building.HIDDEN_STASH] = 1;
+    buildingMaxLevel[Building.WALL] = 1;
+    buildingMaxLevel[Building.TRADING_POST] = 1;
+
+    buildingRequirement[Building.HEADQUARTERS] = BuildingRequirement(Building.TOWN_HALL, 3);
+    buildingRequirement[Building.BARRACKS] = BuildingRequirement(Building.TOWN_HALL, 2);
+    buildingRequirement[Building.SMITHY] = BuildingRequirement(Building.BARRACKS, 3);
+    buildingRequirement[Building.WALL] = BuildingRequirement(Building.BARRACKS, 1);
+    buildingRequirement[Building.TRADING_POST] = BuildingRequirement(Building.TOWN_HALL, 5);
   }
 
   modifier assertOwnsLand(address user, uint256 id) {
@@ -68,7 +95,10 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
   }
 
   // TODO: Should be external
-  function upgradeBuilding(uint id, Building building) public assertStakesLand(msg.sender, id) {
+  function upgradeBuilding(uint id, Building building) public assertStakesLand(tx.origin, id) {
+    require(buildings[id][building] < buildingMaxLevel[building], 'Building is already at max level');
+    BuildingRequirement memory requirement = buildingRequirement[building];
+    require(buildings[id][requirement.building] >= requirement.level, 'Required building is not at required level');
     buildings[id][building] += 1;
     emit BuildingUpgraded(id, building, buildings[id][building]);
   }

@@ -22,7 +22,6 @@ import {WeaponsService} from "./solidity/weapons.service";
 @UntilDestroy()
 @Injectable()
 export class AppComponent implements OnInit {
-  title = 'Cryptoblades Kingdoms Village Builder';
 
   wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
   land$: Observable<LandStateModel> = this.store.select(LandState);
@@ -32,7 +31,7 @@ export class AppComponent implements OnInit {
   currentAccount = '';
   selectedLand?: Land = undefined;
   characters: number[] = [];
-  characterToStake = '';
+  charactersToStake = '';
   weapons: number[] = [];
   weaponsToStake = '';
 
@@ -116,7 +115,8 @@ export class AppComponent implements OnInit {
   }
 
   async onClickStake() {
-    await this.charactersService.stake(+this.characterToStake);
+    const ids = [...this.charactersToStake].map((value: string | number) => +value);
+    await this.charactersService.stake(ids);
     console.log('Staked');
   }
 
@@ -133,7 +133,6 @@ export class AppComponent implements OnInit {
   }
 
   getTimeLeft(deadlineTimestamp: number) {
-    console.log('hello');
     if (!deadlineTimestamp) return;
     if (this.checkInterval) {
       clearInterval(this.checkInterval);

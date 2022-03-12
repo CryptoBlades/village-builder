@@ -1,5 +1,6 @@
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const Village = artifacts.require('Village');
 module.exports = async function (deployer) {
-  await deployProxy(Village, ['0x4eBE163A7Cd57602e52CfFe34a38268C21897927'], {deployer});
+  const cbkLandAddress = '0x47a09052DE14bFebA30c721b67fD2d85fA243E6A';
+  await deployProxy(Village, [cbkLandAddress], {deployer});
 };
