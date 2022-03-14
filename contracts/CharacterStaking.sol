@@ -20,4 +20,6 @@ contract CharacterStaking is NftStaking {
     require(barracksLevel >= stakes[currentStake[msg.sender] + 1].requirement, 'You need to upgrade barracks');
     super.stake(ids);
   }
+
+  //TODO: Override unstake, check for stakeComplete event and react accordingly
 }

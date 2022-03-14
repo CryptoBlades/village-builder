@@ -12,6 +12,7 @@ import {LandState, LandStateModel} from "./state/land/land.state";
 import {SetLandSelected} from "./state/land/land.actions";
 import {CharactersService} from "./solidity/characters.service";
 import {WeaponsService} from "./solidity/weapons.service";
+import {Building, KingService} from "./solidity/king.service";
 
 @Component({
   selector: 'app-root',
@@ -34,6 +35,8 @@ export class AppComponent implements OnInit {
   charactersToStake = '';
   weapons: number[] = [];
   weaponsToStake = '';
+  king: number = 0;
+  kingToStake = '';
 
   timeLeft = '';
   checkInterval: any = null;
@@ -46,6 +49,7 @@ export class AppComponent implements OnInit {
     private landService: LandService,
     private charactersService: CharactersService,
     private weaponsService: WeaponsService,
+    private kingService: KingService,
   ) {
   }
 
@@ -129,6 +133,17 @@ export class AppComponent implements OnInit {
   async onClickStakeWeap() {
     const ids = [...this.weaponsToStake].map((value: string | number) => +value);
     await this.weaponsService.stake(ids);
+    console.log('Staked');
+  }
+
+  async onClickFetchKing() {
+    this.king = await this.kingService.getOwnedAmount();
+    console.log(this.king);
+    await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
+  }
+
+  async onClickStakeKing() {
+    await this.kingService.stake(+this.kingToStake, Building.TOWN_HALL);
     console.log('Staked');
   }
 

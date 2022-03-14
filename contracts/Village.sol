@@ -15,6 +15,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
   mapping(address => uint256) public stakedLand;
   mapping(address => uint256) public stakedFrom;
   mapping(uint256 => mapping(Building => uint256)) public buildings; // land to building to level
+  mapping(uint256 => Building) public currentlyUpgrading;
   mapping(Building => uint256) public buildingMaxLevel;
   mapping(Building => BuildingRequirement) public buildingRequirement;
 
@@ -95,12 +96,21 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
   }
 
   // TODO: Should be external
-  function upgradeBuilding(uint id, Building building) public assertStakesLand(tx.origin, id) {
-    require(buildings[id][building] < buildingMaxLevel[building], 'Building is already at max level');
+  function upgradeBuilding(uint id) public assertStakesLand(tx.origin, id) {
+    Building building = currentlyUpgrading[id];
+    if (building != Building.NONE) {
+      require(buildings[id][building] < buildingMaxLevel[building], 'Building is already at max level');
+      BuildingRequirement memory requirement = buildingRequirement[building];
+      require(buildings[id][requirement.building] >= requirement.level, 'Required building is not at required level');
+      buildings[id][building] += 1;
+      emit BuildingUpgraded(id, building, buildings[id][building]);
+    }
+  }
+
+  function setCurrentlyUpgrading(uint id, Building building) public assertStakesLand(tx.origin, id) {
     BuildingRequirement memory requirement = buildingRequirement[building];
     require(buildings[id][requirement.building] >= requirement.level, 'Required building is not at required level');
-    buildings[id][building] += 1;
-    emit BuildingUpgraded(id, building, buildings[id][building]);
+    currentlyUpgrading[id] = building;
   }
 
   function getBuildingLevel(uint id, uint8 building) public view returns (uint256) {

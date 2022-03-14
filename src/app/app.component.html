@@ -42,6 +42,16 @@
     <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickStakeWeap()">
       {{ 'Common.StakeWeap' }}
     </button>
+    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickFetchKing()">
+      {{ 'Common.FetchKing' }}
+    </button>
+    <mat-form-field appearance="fill">
+      <mat-label>Input</mat-label>
+      <input matInput type="text" [(ngModel)]="kingToStake">
+    </mat-form-field>
+    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickStakeKing()">
+      {{ 'Common.StakeKing' }}
+    </button>
     <span>{{timeLeft}}</span>
 <!--    <img src="assets/Village/village_background.png" alt="village" class="village-view">-->
   </div>
