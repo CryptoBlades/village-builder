@@ -25,6 +25,7 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
   mapping(uint256 => Stake) public stakes;
   mapping(address => uint256) public currentStake;
   mapping(address => uint256) public currentStakeStart;
+  mapping(address => bool) public currentStakeRewardClaimed;
   mapping(address => uint256) public unlockedTiers;
 
   event FirstStake(address indexed user);
@@ -42,17 +43,19 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
   }
 
   function stake(uint amount) public returns (bool stakeCompleted) {
+    stakeCompleted = false;
     uint256 currentStakeId = currentStake[tx.origin];
     if (stakes[currentStakeId + 1].amount != 0) {
       require(stakedCurrencies[tx.origin] + amount == stakes[currentStakeId + 1].amount, 'You need to stake required currency amount');
     }
     if (currentStakeId == 0) {
       firstStake();
-      stakeCompleted = false;
     } else {
-      completeStake(currentStakeId);
+      if(!currentStakeRewardClaimed[tx.origin]) {
+        completeStake();
+        stakeCompleted = true;
+      }
       assignNextStake(currentStakeId);
-      stakeCompleted = true;
     }
     currentStakeStart[tx.origin] = block.timestamp;
     currency.transferFrom(tx.origin, address(this), amount);
@@ -66,9 +69,11 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
     emit FirstStake(tx.origin);
   }
   //extract
-  function completeStake(uint currentStakeId) public {
-    require(block.timestamp > currentStakeStart[tx.origin] + stakes[currentStakeId].duration, 'Stake not completed');
+  function completeStake() public {
+    require(block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration, 'Stake not completed');
+    require(!currentStakeRewardClaimed[tx.origin], 'Reward already claimed');
     unlockedTiers[tx.origin] += 1;
+    currentStakeRewardClaimed[tx.origin] = true;
     emit StakeComplete(tx.origin, currentStake[tx.origin]);
   }
   //extract
@@ -78,19 +83,19 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
     } else {
       currentStake[tx.origin] += 1;
     }
+    currentStakeRewardClaimed[tx.origin] = false;
   }
 
   function unstake() virtual public returns (bool stakeCompleted) {
-    uint256 currentStakeId = currentStake[tx.origin];
-    if (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStakeId].duration) {
-      completeStake(currentStakeId);
+    if (!currentStakeRewardClaimed[tx.origin] && (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration)) {
+      completeStake();
       stakeCompleted = true;
     } else {
       stakeCompleted = false;
     }
     currentStake[tx.origin] = 0;
     currentStakeStart[tx.origin] = 0;
-    currency.transferFrom(address(this), tx.origin, stakedCurrencies[tx.origin]);
+    currency.transfer(tx.origin, stakedCurrencies[tx.origin]);
     emit Unstaked(tx.origin, stakedCurrencies[tx.origin]);
     stakedCurrencies[tx.origin] = 0;
   }
@@ -98,4 +103,13 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
   function getStakeCompleteTimestamp() public view returns (uint256) {
     return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }
+
+  function getRequiredStakeAmount() public view returns (uint256) {
+    return stakes[currentStake[tx.origin] + 1].amount - stakedCurrencies[tx.origin];
+  }
+
+  function canCompleteStake() public view returns (bool) {
+    return !currentStakeRewardClaimed[tx.origin] && (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration);
+  }
+
 }

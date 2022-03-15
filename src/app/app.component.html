@@ -45,14 +45,23 @@
     <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickFetchKing()">
       {{ 'Common.FetchKing' }}
     </button>
-    <mat-form-field appearance="fill">
-      <mat-label>Input</mat-label>
-      <input matInput type="text" [(ngModel)]="kingToStake">
-    </mat-form-field>
-    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickStakeKing()">
-      {{ 'Common.StakeKing' }}
-    </button>
-    <span>{{timeLeft}}</span>
+    <div>
+      <h1>{{ 'Common.King' }}</h1>
+      <h2>King needed to upgrade: {{ king }}</h2>
+      <div style="display: flex;">
+        <div *ngFor="let building of buildings" style="border-style: solid;">
+          <h4>{{ building.buildingType }}</h4>
+          <h4>{{ building.level }}</h4>
+          <h4 *ngIf="building.currentlyUpgrading">{{kingTimeLeft}}</h4>
+          <button *ngIf="!kingTimeLeft && building.canUpgrade" mat-raised-button class="btn btn-secondary w-100" (click)="onClickStakeKing(building.buildingType)">
+            {{ 'Common.StakeKing' }}
+          </button>
+          <button *ngIf="building.currentlyUpgrading && canCompleteKingStake" mat-raised-button class="btn btn-secondary w-100" (click)="onClickClaimStakeKing()">
+            {{ 'Common.Claim' }}
+          </button>
+        </div>
+      </div>
+    </div>
 <!--    <img src="assets/Village/village_background.png" alt="village" class="village-view">-->
   </div>
   <ng-template #landNotSelectedBlock>

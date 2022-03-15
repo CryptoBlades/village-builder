@@ -2,12 +2,16 @@ import {Injectable} from '@angular/core';
 import {Land} from "../interfaces/land";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {SolidityService} from "./solidity.service";
+import {Building} from "../app.component";
+import {BuildingType} from "./king.service";
 
 @UntilDestroy()
 @Injectable({
   providedIn: 'root'
 })
 export class LandService extends SolidityService {
+
+  selectedLand?: Land;
 
   async getOwnedLands(address: string): Promise<Land[]> {
     const landsIds = await this.landContract.methods.getOwned(address).call();
@@ -54,6 +58,28 @@ export class LandService extends SolidityService {
   async getStakedLand(): Promise<Land | undefined> {
     const stakedId = +await this.villageContract.methods.stakedLand(this.currentAccount).call({from: this.currentAccount});
     return stakedId !== 0 ? await this.getLandInfo(stakedId) : undefined;
+  }
+
+  async getBuildings(): Promise<Building[]> {
+    const landId = +await this.villageContract.methods.stakedLand(this.currentAccount).call({from: this.currentAccount});
+    const buildings: Building[] = [];
+    console.log(landId);
+    for (let buildingType in BuildingType) {
+      if (isNaN(Number(buildingType))) {
+        return buildings;
+      }
+      console.log(buildingType);
+      const building = await this.villageContract.methods.buildings(landId, buildingType).call({from: this.currentAccount});
+      const currentlyUpgrading = +await this.villageContract.methods.currentlyUpgrading(landId).call({from: this.currentAccount});
+      const canUpgrade = await this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount});
+      buildings.push({
+        buildingType: BuildingType[buildingType as keyof typeof BuildingType],
+        level: +building[0],
+        currentlyUpgrading: currentlyUpgrading == +buildingType,
+        canUpgrade: canUpgrade,
+      });
+    }
+    return buildings;
   }
 
 }

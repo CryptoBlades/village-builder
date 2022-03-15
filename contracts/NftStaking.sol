@@ -106,4 +106,8 @@ contract NftStaking is Initializable, AccessControlUpgradeable, IERC721ReceiverU
   function getStakedNftsAmount(address user) public view returns (uint256) {
     return stakedNfts[user].length;
   }
+
+  function getRequiredStakeAmount() public view returns (uint256) {
+    return stakes[currentStake[tx.origin] + 1].amount - stakedNfts[tx.origin].length;
+  }
 }

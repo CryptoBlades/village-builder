@@ -58,21 +58,21 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     buildingRequirement[Building.TRADING_POST] = BuildingRequirement(Building.TOWN_HALL, 5);
   }
 
-  modifier assertOwnsLand(address user, uint256 id) {
+  modifier assertOwnsLand(address user, uint id) {
     _assertOwnsLand(user, id);
     _;
   }
 
-  function _assertOwnsLand(address user, uint256 id) internal view {
+  function _assertOwnsLand(address user, uint id) internal view {
     require(cbkLand.ownerOf(id) == user, 'Not land owner');
   }
 
-  modifier assertStakesLand(address user, uint256 id) {
+  modifier assertStakesLand(address user, uint id) {
     _assertStakesLand(user, id);
     _;
   }
 
-  function _assertStakesLand(address user, uint256 id) internal view {
+  function _assertStakesLand(address user, uint id) internal view {
     require(stakedLand[user] == id, 'You do not have this land staked');
   }
 
@@ -99,9 +99,6 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
   function upgradeBuilding(uint id) public assertStakesLand(tx.origin, id) {
     Building building = currentlyUpgrading[id];
     if (building != Building.NONE) {
-      require(buildings[id][building] < buildingMaxLevel[building], 'Building is already at max level');
-      BuildingRequirement memory requirement = buildingRequirement[building];
-      require(buildings[id][requirement.building] >= requirement.level, 'Required building is not at required level');
       buildings[id][building] += 1;
       emit BuildingUpgraded(id, building, buildings[id][building]);
     }
@@ -109,6 +106,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
 
   function setCurrentlyUpgrading(uint id, Building building) public assertStakesLand(tx.origin, id) {
     BuildingRequirement memory requirement = buildingRequirement[building];
+    require(buildings[id][building] < buildingMaxLevel[building], 'Building is already at max level');
     require(buildings[id][requirement.building] >= requirement.level, 'Required building is not at required level');
     currentlyUpgrading[id] = building;
   }
@@ -124,6 +122,28 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
 
   function getStakedLand(address user) public view returns (uint256 id) {
     return stakedLand[user];
+  }
+
+  function canUpgradeBuilding(uint id, Building building) public view returns (bool) {
+    BuildingRequirement memory requirement = buildingRequirement[building];
+    return buildings[id][building] < buildingMaxLevel[building] && buildings[id][requirement.building] >= requirement.level;
+  }
+
+  //TODO: Delete later
+  function resetVillage(uint id) public {
+    buildings[id][Building.TOWN_HALL] = 0;
+    buildings[id][Building.HEADQUARTERS] = 0;
+    buildings[id][Building.BARRACKS] = 0;
+    buildings[id][Building.CLAY_PIT] = 0;
+    buildings[id][Building.IRON_MINE] = 0;
+    buildings[id][Building.STONE_MINE] = 0;
+    buildings[id][Building.STOREHOUSE] = 0;
+    buildings[id][Building.SMITHY] = 0;
+    buildings[id][Building.FARM] = 0;
+    buildings[id][Building.HIDDEN_STASH] = 0;
+    buildings[id][Building.WALL] = 0;
+    buildings[id][Building.TRADING_POST] = 0;
+    currentlyUpgrading[id] = Building.NONE;
   }
 
 }

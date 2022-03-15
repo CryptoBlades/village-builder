@@ -12,7 +12,14 @@ import {LandState, LandStateModel} from "./state/land/land.state";
 import {SetLandSelected} from "./state/land/land.actions";
 import {CharactersService} from "./solidity/characters.service";
 import {WeaponsService} from "./solidity/weapons.service";
-import {Building, KingService} from "./solidity/king.service";
+import {BuildingType, KingService} from "./solidity/king.service";
+
+export interface Building {
+  level: number;
+  buildingType: BuildingType;
+  currentlyUpgrading: boolean;
+  canUpgrade: boolean;
+}
 
 @Component({
   selector: 'app-root',
@@ -36,12 +43,15 @@ export class AppComponent implements OnInit {
   weapons: number[] = [];
   weaponsToStake = '';
   king: number = 0;
-  kingToStake = '';
 
   timeLeft = '';
+  kingTimeLeft = '';
   checkInterval: any = null;
+  kingCheckInterval: any = null;
+  canCompleteKingStake = false;
 
   lands: Land[] = [];
+  buildings: Building[] = [];
 
   constructor(
     private store: Store,
@@ -56,15 +66,20 @@ export class AppComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     from(this.detectMetamask()).pipe(take(1)).subscribe();
     await this.connectMetamask();
-    this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
+    this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
       this.isInstalled = state.isInstalled;
       this.isConnected = state.isConnected;
       this.currentAccount = state.publicAddress;
+      this.canCompleteKingStake = await this.kingService.canCompleteStake();
     });
-    this.land$.pipe(untilDestroyed(this)).subscribe((state: LandStateModel) => {
+    this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
       this.selectedLand = state.selectedLand;
+      this.buildings = await this.landService.getBuildings();
+      console.log(this.buildings);
     });
     await this.getTimeLeft(+await this.weaponsService.getStakeCompleteTimestamp());
+    await this.getKingTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
+    this.king = await this.kingService.getRequiredStakeAmount();
   }
 
   onSelect(land: Land) {
@@ -91,6 +106,7 @@ export class AppComponent implements OnInit {
         this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
           this.lands = await this.landService.getOwnedLands(state.publicAddress)
           const stakedLand = await this.landService.getStakedLand();
+          console.log(stakedLand);
           if (stakedLand) {
             this.store.dispatch(new SetLandSelected(stakedLand));
           }
@@ -137,14 +153,49 @@ export class AppComponent implements OnInit {
   }
 
   async onClickFetchKing() {
-    this.king = await this.kingService.getOwnedAmount();
-    console.log(this.king);
+    console.log(await this.kingService.getOwnedAmount());
     await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
   }
 
-  async onClickStakeKing() {
-    await this.kingService.stake(+this.kingToStake, Building.TOWN_HALL);
+  async onClickStakeKing(buildingType: BuildingType) {
+    await this.kingService.stake(buildingType);
     console.log('Staked');
+    await this.getKingTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
+    this.king = await this.kingService.getRequiredStakeAmount();
+    this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
+      this.selectedLand = state.selectedLand;
+      this.buildings = await this.landService.getBuildings();
+      console.log(this.buildings);
+    });
+  }
+
+  async onClickClaimStakeKing() {
+    await this.kingService.claimStakeReward();
+    console.log('Claimed');
+    this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
+      this.selectedLand = state.selectedLand;
+      this.buildings = await this.landService.getBuildings();
+      console.log(this.buildings);
+      this.canCompleteKingStake = await this.kingService.canCompleteStake();
+    });
+  }
+
+  getKingTimeLeft(deadlineTimestamp: number) {
+    if (!deadlineTimestamp) return;
+    if (this.kingCheckInterval) {
+      clearInterval(this.kingCheckInterval);
+    }
+    this.kingCheckInterval = setInterval(async () => {
+      const {total, days, hours, minutes, seconds} = this.getTimeRemaining(deadlineTimestamp.toString());
+      this.kingTimeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
+      console.log(this.kingTimeLeft);
+      if (total <= 1000 && this.kingCheckInterval) {
+        clearInterval(this.kingCheckInterval);
+        this.kingTimeLeft = '';
+        this.canCompleteKingStake = await this.kingService.canCompleteStake();
+        this.buildings = await this.landService.getBuildings();
+      }
+    }, 1000);
   }
 
   getTimeLeft(deadlineTimestamp: number) {
