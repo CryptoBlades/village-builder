@@ -13,11 +13,13 @@ import {SetLandSelected} from "./state/land/land.actions";
 import {CharactersService} from "./solidity/characters.service";
 import {WeaponsService} from "./solidity/weapons.service";
 import {BuildingType, KingService} from "./solidity/king.service";
+import {MatDialog} from "@angular/material/dialog";
+import {BuildingDialogComponent} from "./components/building-dialog/building-dialog.component";
 
 export interface Building {
   level: number;
-  buildingType: BuildingType;
-  currentlyUpgrading: boolean;
+  type: BuildingType;
+  upgrading: boolean;
   canUpgrade: boolean;
 }
 
@@ -55,6 +57,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private store: Store,
+    public dialog: MatDialog,
     private web3: Web3Service,
     private landService: LandService,
     private charactersService: CharactersService,
@@ -212,6 +215,12 @@ export class AppComponent implements OnInit {
         this.timeLeft = '';
       }
     }, 1000);
+  }
+
+  onSomethin(buildingType: BuildingType) {
+    let dialogRef = this.dialog.open(BuildingDialogComponent, {
+      data: { buildingType },
+    });
   }
 
   getTimeRemaining = (end: string) => {

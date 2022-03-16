@@ -12,16 +12,19 @@ import {WEB3_CONFIG, Web3Service} from "./services/web3.service";
 import Web3 from "web3";
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import { SelectLandComponent } from './components/select-land/select-land.component';
+import {SelectLandComponent} from './components/select-land/select-land.component';
 import {LandState} from "./state/land/land.state";
 import {FormsModule} from "@angular/forms";
+import {BuildingDialogComponent} from './components/building-dialog/building-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SelectLandComponent
+    SelectLandComponent,
+    BuildingDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import {FormsModule} from "@angular/forms";
     FormsModule,
     MatButtonModule,
     MatInputModule,
+    MatDialogModule,
   ],
   providers: [
     Web3Service,

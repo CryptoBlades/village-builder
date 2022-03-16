@@ -69,17 +69,24 @@ export class LandService extends SolidityService {
         return buildings;
       }
       console.log(buildingType);
-      const building = await this.villageContract.methods.buildings(landId, buildingType).call({from: this.currentAccount});
-      const currentlyUpgrading = +await this.villageContract.methods.currentlyUpgrading(landId).call({from: this.currentAccount});
-      const canUpgrade = await this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount});
-      buildings.push({
-        buildingType: BuildingType[buildingType as keyof typeof BuildingType],
-        level: +building[0],
-        currentlyUpgrading: currentlyUpgrading == +buildingType,
-        canUpgrade: canUpgrade,
-      });
+      const building = await this.getBuilding(+buildingType);
+      buildings.push(building);
     }
     return buildings;
+  }
+
+  async getBuilding(buildingType: BuildingType): Promise<Building> {
+    const landId = +await this.villageContract.methods.stakedLand(this.currentAccount).call({from: this.currentAccount});
+    const building = await this.villageContract.methods.buildings(landId, buildingType).call({from: this.currentAccount});
+    const currentlyUpgrading = +await this.villageContract.methods.currentlyUpgrading(landId).call({from: this.currentAccount});
+    const canUpgrade = await this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount});
+    console.log(BuildingType[buildingType]);
+    return {
+      type: buildingType,
+      level: +building[0],
+      upgrading: currentlyUpgrading == +buildingType,
+      canUpgrade: canUpgrade,
+    };
   }
 
 }

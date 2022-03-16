@@ -87,7 +87,7 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
   }
 
   function unstake() virtual public returns (bool stakeCompleted) {
-    if (!currentStakeRewardClaimed[tx.origin] && (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration)) {
+    if (canCompleteStake()) {
       completeStake();
       stakeCompleted = true;
     } else {
@@ -109,7 +109,7 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
   }
 
   function canCompleteStake() public view returns (bool) {
-    return !currentStakeRewardClaimed[tx.origin] && (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration);
+    return currentStake[tx.origin] != 0 && !currentStakeRewardClaimed[tx.origin] && (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration);
   }
 
 }

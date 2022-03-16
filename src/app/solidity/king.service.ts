@@ -16,10 +16,10 @@ export class KingService extends SolidityService {
     return +this.web3.utils.fromWei(amount, 'ether');
   }
 
-  async stake(building: BuildingType): Promise<void> {
+  async stake(buildingType: BuildingType): Promise<void> {
     const requiredAmount = await this.kingStakingContract.methods.getRequiredStakeAmount().call({from: this.currentAccount});
     await this.kingContract.methods.approve(this.kingStakingContract.options.address, requiredAmount).send({from: this.currentAccount});
-    await this.kingStakingContract.methods.stake(requiredAmount, BuildingType[building]).send({from: this.currentAccount});
+    await this.kingStakingContract.methods.stake(requiredAmount, buildingType).send({from: this.currentAccount});
   }
 
   async getStakeCompleteTimestamp(): Promise<number> {

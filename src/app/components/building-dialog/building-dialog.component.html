@@ -1,0 +1,11 @@
+<ng-template [ngIf]="building">
+  <p>Name: {{ getBuildingTypeName(building.type) }}</p>
+  <p>Level: {{ building.level }}</p>
+  <p *ngIf="building.upgrading && timeLeft">Time left: {{ timeLeft }}</p>
+  <button *ngIf="canClaim" mat-raised-button class="btn btn-secondary w-100" (click)="onClaim()">
+    {{ 'Common.Claim' }}
+  </button>
+  <button *ngIf="!timeLeft && building.canUpgrade" mat-raised-button class="btn btn-secondary w-100" (click)="onStake()">
+    {{ 'Common.Stake' }}
+  </button>
+</ng-template>
