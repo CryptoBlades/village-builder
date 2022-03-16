@@ -5,6 +5,12 @@ import {SolidityService} from "./solidity.service";
 import {Building} from "../app.component";
 import {BuildingType} from "./king.service";
 
+export interface BuildingRequirements {
+  maxLevel: number;
+  requiredBuilding: BuildingType;
+  requiredBuildingLevel: number;
+}
+
 @UntilDestroy()
 @Injectable({
   providedIn: 'root'
@@ -86,6 +92,16 @@ export class LandService extends SolidityService {
       level: +building[0],
       upgrading: currentlyUpgrading == +buildingType,
       canUpgrade: canUpgrade,
+    };
+  }
+
+  async getBuildingRequirements(buildingType: BuildingType): Promise<BuildingRequirements> {
+    const maxLevel = await this.villageContract.methods.buildingMaxLevel(buildingType).call({from: this.currentAccount});
+    const requirement = await this.villageContract.methods.buildingRequirement(buildingType).call({from: this.currentAccount});
+    return {
+      maxLevel: +maxLevel,
+      requiredBuilding: +requirement.building,
+      requiredBuildingLevel: +requirement.level
     };
   }
 

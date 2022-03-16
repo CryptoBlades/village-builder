@@ -8,4 +8,9 @@
   <button *ngIf="!timeLeft && building.canUpgrade" mat-raised-button class="btn btn-secondary w-100" (click)="onStake()">
     {{ 'Common.Stake' }}
   </button>
+  <div *ngIf="buildingRequirements">
+    <p *ngIf="buildingRequirements.requiredBuilding">Required building: {{getBuildingTypeName(buildingRequirements.requiredBuilding)}}</p>
+    <p *ngIf="buildingRequirements.requiredBuildingLevel">Required level: {{buildingRequirements.requiredBuildingLevel}}</p>
+    <p>Max level: {{buildingRequirements.maxLevel}}</p>
+  </div>
 </ng-template>

@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {Building} from "../../app.component";
 import {BuildingType, KingService} from "../../solidity/king.service";
-import {LandService} from "../../solidity/land.service";
+import {BuildingRequirements, LandService} from "../../solidity/land.service";
 
 @Component({
   selector: 'app-building-dialog',
@@ -15,6 +15,7 @@ export class BuildingDialogComponent implements OnInit {
   timeLeft?: string;
   timeLeftCheckInterval?: any;
   canClaim = false;
+  buildingRequirements?: BuildingRequirements;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -24,6 +25,7 @@ export class BuildingDialogComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.buildingRequirements = await this.landService.getBuildingRequirements(this.data.buildingType);
     await this.loadBuilding();
     await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
   }
