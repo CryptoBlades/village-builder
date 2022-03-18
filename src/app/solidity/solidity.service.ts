@@ -23,13 +23,13 @@ export class SolidityService {
 
   wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
   land$: Observable<LandStateModel> = this.store.select(LandState);
-  landContract!: Contract;
+  landContract!: Promise<Contract>;
   villageContract!: Contract;
-  charactersContract!: Contract;
+  charactersContract!: Promise<Contract>;
   characterStakingContract!: Contract;
-  weaponsContract!: Contract;
+  weaponsContract!: Promise<Contract>;
   weaponStakingContract!: Contract;
-  kingContract!: Contract;
+  kingContract!: Promise<Contract>;
   kingStakingContract!: Contract;
 
   currentAccount: string = '';
@@ -39,25 +39,73 @@ export class SolidityService {
     public web3: Web3Service,
   ) {
     this.villageContract = new this.web3.eth.Contract(Village.abi as any, Village.networks["5777"]!.address);
-    this.villageContract.methods.cbkLand().call().then((address: string) => {
-      this.landContract = new this.web3.eth.Contract(CBKLand.abi as any, address);
+    this.landContract = this.villageContract.methods.cbkLand().call().then((address: string) => {
+      return new this.web3.eth.Contract(CBKLand.abi as any, address);
     });
     console.log('landContract', this.landContract);
     this.characterStakingContract = new this.web3.eth.Contract(CharacterStaking.abi as any, CharacterStaking.networks["5777"]!.address);
-    this.characterStakingContract.methods.nft().call().then((address: string) => {
-      this.charactersContract = new this.web3.eth.Contract(Characters.abi as any, address);
+    this.charactersContract = this.characterStakingContract.methods.nft().call().then((address: string) => {
+      return new this.web3.eth.Contract(Characters.abi as any, address);
     });
     this.weaponStakingContract = new this.web3.eth.Contract(WeaponStaking.abi as any, WeaponStaking.networks["5777"]!.address);
-    this.weaponStakingContract.methods.nft().call().then((address: string) => {
-      this.weaponsContract = new this.web3.eth.Contract(Weapons.abi as any, address);
+    this.weaponsContract = this.weaponStakingContract.methods.nft().call().then((address: string) => {
+      return new this.web3.eth.Contract(Weapons.abi as any, address);
     });
     this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, KingStaking.networks["5777"]!.address);
-    this.kingStakingContract.methods.currency().call().then((address: string) => {
-      this.kingContract = new this.web3.eth.Contract(KingToken.abi as any, address);
+    this.kingContract = this.kingStakingContract.methods.currency().call().then((address: string) => {
+      return new this.web3.eth.Contract(KingToken.abi as any, address);
     });
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.currentAccount = state.publicAddress;
       console.log(state);
     });
   }
+
+  // private async init() {
+  //   this.villageContract = new this.web3.eth.Contract(Village.abi as any, Village.networks["5777"]!.address);
+  //   this.landContract = this.villageContract.methods.cbkLand().call().then((address: string) => {
+  //     return new this.web3.eth.Contract(CBKLand.abi as any, address);
+  //   });
+  //   console.log('landContract', this.landContract);
+  //   this.characterStakingContract = new this.web3.eth.Contract(CharacterStaking.abi as any, CharacterStaking.networks["5777"]!.address);
+  //   this.charactersContract = this.characterStakingContract.methods.nft().call().then((address: string) => {
+  //     return new this.web3.eth.Contract(Characters.abi as any, address);
+  //   });
+  //   this.weaponStakingContract = new this.web3.eth.Contract(WeaponStaking.abi as any, WeaponStaking.networks["5777"]!.address);
+  //   this.weaponsContract = this.weaponStakingContract.methods.nft().call().then((address: string) => {
+  //     return new this.web3.eth.Contract(Weapons.abi as any, address);
+  //   });
+  //   this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, KingStaking.networks["5777"]!.address);
+  //   this.kingContract = this.kingStakingContract.methods.currency().call().then((address: string) => {
+  //     return new this.web3.eth.Contract(KingToken.abi as any, address);
+  //   });
+  //   this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
+  //     this.currentAccount = state.publicAddress;
+  //     console.log(state);
+  //   });
+  // }
+
+  // private async init() {
+  //   this.villageContract = new this.web3.eth.Contract(Village.abi as any, Village.networks["5777"]!.address);
+  //   await this.villageContract.methods.cbkLand().call().then((address: string) => {
+  //     this.landContract = new this.web3.eth.Contract(CBKLand.abi as any, address);
+  //   });
+  //   console.log('landContract', this.landContract);
+  //   this.characterStakingContract = new this.web3.eth.Contract(CharacterStaking.abi as any, CharacterStaking.networks["5777"]!.address);
+  //   await this.characterStakingContract.methods.nft().call().then((address: string) => {
+  //     this.charactersContract = new this.web3.eth.Contract(Characters.abi as any, address);
+  //   });
+  //   this.weaponStakingContract = new this.web3.eth.Contract(WeaponStaking.abi as any, WeaponStaking.networks["5777"]!.address);
+  //   await this.weaponStakingContract.methods.nft().call().then((address: string) => {
+  //     this.weaponsContract = new this.web3.eth.Contract(Weapons.abi as any, address);
+  //   });
+  //   this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, KingStaking.networks["5777"]!.address);
+  //   await this.kingStakingContract.methods.currency().call().then((address: string) => {
+  //     this.kingContract = new this.web3.eth.Contract(KingToken.abi as any, address);
+  //   });
+  //   this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
+  //     this.currentAccount = state.publicAddress;
+  //     console.log(state);
+  //   });
+  // }
 }

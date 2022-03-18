@@ -20,7 +20,7 @@ export class LandService extends SolidityService {
   selectedLand?: Land;
 
   async getOwnedLands(address: string): Promise<Land[]> {
-    const landsIds = await this.landContract.methods.getOwned(address).call();
+    const landsIds = await (await this.landContract).methods.getOwned(address).call();
     return await Promise.all(landsIds.map(async (landId: number) => {
       console.log(landId);
       return this.getLandInfo(+landId);
@@ -29,7 +29,7 @@ export class LandService extends SolidityService {
 
   async getLandInfo(id: number): Promise<Land | undefined> {
     try {
-      const land = await this.landContract.methods.get(id).call();
+      const land = await (await this.landContract).methods.get(id).call();
       console.log(land);
       return {
         id: id,
@@ -43,10 +43,10 @@ export class LandService extends SolidityService {
   }
 
   async stakeLand(id: number): Promise<void> {
-    const isApprovedForAll = await this.landContract.methods.isApprovedForAll(this.currentAccount, this.villageContract.options.address).call({from: this.currentAccount});
+    const isApprovedForAll = await (await this.landContract).methods.isApprovedForAll(this.currentAccount, this.villageContract.options.address).call({from: this.currentAccount});
 
     if (!isApprovedForAll) {
-      await this.landContract.methods.approve(this.villageContract.options.address, id).send({from: this.currentAccount});
+      await (await this.landContract).methods.approve(this.villageContract.options.address, id).send({from: this.currentAccount});
     }
 
     return await this.villageContract.methods.stake(id).send({from: this.currentAccount});

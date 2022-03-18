@@ -250,4 +250,8 @@ export class AppComponent implements OnInit {
       seconds
     };
   };
+
+  getBuildingTypeName(buildingType: BuildingType): string {
+    return BuildingType[buildingType];
+  }
 }
