@@ -16,23 +16,21 @@ contract KingStaking is CurrencyStaking {
 
   function stake(uint amount, Village.Building building) public {
     uint256 stakedLandId = village.stakedLand(msg.sender);
-    if (stake(amount)) {
-      village.upgradeBuilding(stakedLandId);
-    }
-    village.setCurrentlyUpgrading(stakedLandId, building);
+    uint256 finishTimestamp = stake(amount);
+    village.setCurrentlyUpgrading(stakedLandId, building, finishTimestamp);
   }
 
   function unstake() public override returns (bool stakeCompleted) {
     uint256 stakedLandId = village.stakedLand(msg.sender);
     stakeCompleted = super.unstake();
     if (stakeCompleted) {
-      village.upgradeBuilding(stakedLandId);
+      village.finishBuildingUpgrade(stakedLandId);
     }
-    village.setCurrentlyUpgrading(stakedLandId, Village.Building.NONE);
+    village.setCurrentlyUpgrading(stakedLandId, Village.Building.NONE, 0);
   }
 
   function claimStakeReward() public {
     completeStake();
-    village.upgradeBuilding(village.stakedLand(msg.sender));
+    village.finishBuildingUpgrade(village.stakedLand(msg.sender));
   }
 }

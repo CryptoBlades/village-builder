@@ -1,8 +1,10 @@
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const Village = artifacts.require('Village');
+const KingToken = artifacts.require('KingToken');
 const KingStaking = artifacts.require('KingStaking');
 module.exports = async function (deployer) {
   const village = await Village.deployed();
-  const kingAddress = '0x07542fA1E9A8db56fC6685571e1205dAb59eC3Bd';
-  await deployProxy(KingStaking, [village.address, kingAddress], {deployer});
+  const king = await KingToken.deployed();
+  // const kingAddress = '0xfaCc287B1164267A85fC21181B794420cA6FaB7A';
+  await deployProxy(KingStaking, [village.address, king.address], {deployer});
 };

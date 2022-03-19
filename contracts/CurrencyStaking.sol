@@ -42,8 +42,7 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
     currency = IERC20Upgradeable(currencyAddress);
   }
 
-  function stake(uint amount) public returns (bool stakeCompleted) {
-    stakeCompleted = false;
+  function stake(uint amount) public returns (uint finishTimestamp) {
     uint256 currentStakeId = currentStake[tx.origin];
     if (stakes[currentStakeId + 1].amount != 0) {
       require(stakedCurrencies[tx.origin] + amount == stakes[currentStakeId + 1].amount, 'You need to stake required currency amount');
@@ -53,7 +52,6 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
     } else {
       if(!currentStakeRewardClaimed[tx.origin]) {
         completeStake();
-        stakeCompleted = true;
       }
       assignNextStake(currentStakeId);
     }
@@ -61,6 +59,7 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
     currency.transferFrom(tx.origin, address(this), amount);
     stakedCurrencies[tx.origin] = stakedCurrencies[tx.origin].add(amount);
     emit Staked(tx.origin, amount);
+    return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }
   //extract
   function firstStake() public {

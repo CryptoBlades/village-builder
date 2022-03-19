@@ -15,12 +15,17 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
   mapping(address => uint256) public stakedLand;
   mapping(address => uint256) public stakedFrom;
   mapping(uint256 => mapping(Building => uint256)) public buildings; // land to building to level
-  mapping(uint256 => Building) public currentlyUpgrading;
+  mapping(uint256 => BuildingUpgrade) public currentlyUpgrading;
   mapping(Building => uint256) public buildingMaxLevel;
   mapping(Building => BuildingRequirement) public buildingRequirement;
 
   //  enum Building{NONE, TOWN_HALL, HEADQUARTERS, BARRACKS, STONE_MINE, CLAY_PIT, FOREST_CAMP, CHURCH, STOREHOUSE, SMITHY, RALLY_POINT, FARM, HIDDEN_STASH, WALL, TRADING_POST}
   enum Building{NONE, TOWN_HALL, HEADQUARTERS, BARRACKS, CLAY_PIT, IRON_MINE, STONE_MINE, STOREHOUSE, SMITHY, FARM, HIDDEN_STASH, WALL, TRADING_POST}
+
+  struct BuildingUpgrade {
+    Building building;
+    uint256 finishTimestamp;
+  }
 
   struct BuildingRequirement {
     Building building;
@@ -73,7 +78,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
   }
 
   function _assertStakesLand(address user, uint id) internal view {
-    require(stakedLand[user] == id, 'You do not have this land staked');
+    require(stakedLand[user] == id, 'You do not stake this land');
   }
 
   function onERC721Received(address, address, uint256, bytes calldata) pure external override returns (bytes4) {
@@ -95,24 +100,32 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     emit Unstaked(msg.sender, id);
   }
 
-  // TODO: Should be external
-  function upgradeBuilding(uint id) public assertStakesLand(tx.origin, id) {
-    Building building = currentlyUpgrading[id];
-    if (building != Building.NONE) {
-      buildings[id][building] += 1;
-      emit BuildingUpgraded(id, building, buildings[id][building]);
+  function setCurrentlyUpgrading(uint id, Building building, uint finishTimestamp) public assertStakesLand(tx.origin, id) {
+    BuildingUpgrade memory buildingUpgrade = currentlyUpgrading[id];
+    if (buildingUpgrade.building != Building.NONE) {
+      finishBuildingUpgrade(id);
     }
-  }
-
-  function setCurrentlyUpgrading(uint id, Building building) public assertStakesLand(tx.origin, id) {
+    require(getBuildingLevel(id, building) < buildingMaxLevel[building], 'Building is already at max level');
     BuildingRequirement memory requirement = buildingRequirement[building];
-    require(buildings[id][building] < buildingMaxLevel[building], 'Building is already at max level');
-    require(buildings[id][requirement.building] >= requirement.level, 'Required building is not at required level');
-    currentlyUpgrading[id] = building;
+    require(getBuildingLevel(id, requirement.building) >= requirement.level, 'Required building is not at required level');
+    currentlyUpgrading[id] = BuildingUpgrade(building, finishTimestamp);
   }
 
-  function getBuildingLevel(uint id, uint8 building) public view returns (uint256) {
+  function getBuildingLevel(uint id, Building building) public view returns (uint256) {
+    BuildingUpgrade memory buildingUpgrade = currentlyUpgrading[id];
+    if (buildingUpgrade.building == building && buildingUpgrade.finishTimestamp < block.timestamp) {
+      return buildings[id][Building(building)] + 1;
+    }
     return buildings[id][Building(building)];
+  }
+
+  function finishBuildingUpgrade(uint id) public {
+    BuildingUpgrade memory buildingUpgrade = currentlyUpgrading[id];
+    require(buildingUpgrade.building != Building.NONE, 'No upgrade in progress');
+    require(buildingUpgrade.finishTimestamp < block.timestamp, 'Upgrade not yet finished');
+    buildings[id][buildingUpgrade.building] += 1;
+    emit BuildingUpgraded(id, buildingUpgrade.building, buildings[id][buildingUpgrade.building]);
+    currentlyUpgrading[id] = BuildingUpgrade(Building.NONE, 0);
   }
 
   // TODO: Later move the checks to frontend
@@ -126,7 +139,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
 
   function canUpgradeBuilding(uint id, Building building) public view returns (bool) {
     BuildingRequirement memory requirement = buildingRequirement[building];
-    return buildings[id][building] < buildingMaxLevel[building] && buildings[id][requirement.building] >= requirement.level;
+    return getBuildingLevel(id, building) < buildingMaxLevel[building] && getBuildingLevel(id, requirement.building) >= requirement.level;
   }
 
   //TODO: Delete later
@@ -143,7 +156,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     buildings[id][Building.HIDDEN_STASH] = 0;
     buildings[id][Building.WALL] = 0;
     buildings[id][Building.TRADING_POST] = 0;
-    currentlyUpgrading[id] = Building.NONE;
+    currentlyUpgrading[id] = BuildingUpgrade(Building.NONE, 0);
   }
 
 }
