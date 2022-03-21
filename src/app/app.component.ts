@@ -18,9 +18,11 @@ import {BuildingDialogComponent} from "./components/building-dialog/building-dia
 
 export interface Building {
   level: number;
+  maxLevel: number;
   type: BuildingType;
   upgrading: boolean;
   canUpgrade: boolean;
+  image: string;
 }
 
 @Component({
@@ -217,9 +219,10 @@ export class AppComponent implements OnInit {
     }, 1000);
   }
 
-  onSomethin(buildingType: BuildingType) {
+  openBuildingModal(buildingType: BuildingType) {
     let dialogRef = this.dialog.open(BuildingDialogComponent, {
       data: { buildingType },
+      panelClass: 'building-dialog'
     });
   }
 

@@ -1,16 +1,38 @@
 <ng-template [ngIf]="building">
-  <p>Name: {{ getBuildingTypeName(building.type) }}</p>
-  <p>Level: {{ building.level }}</p>
-  <p *ngIf="building.upgrading && timeLeft">Time left: {{ timeLeft }}</p>
-  <button *ngIf="canClaim" mat-raised-button class="btn btn-secondary w-100" (click)="onClaim()">
-    {{ 'Common.Claim' }}
-  </button>
-  <button *ngIf="!timeLeft && building.canUpgrade" mat-raised-button class="btn btn-secondary w-100" (click)="onStake()">
-    {{ 'Common.Stake' }}
-  </button>
-  <div *ngIf="buildingRequirements">
-    <p *ngIf="buildingRequirements.requiredBuilding">Required building: {{getBuildingTypeName(buildingRequirements.requiredBuilding)}}</p>
-    <p *ngIf="buildingRequirements.requiredBuildingLevel">Required level: {{buildingRequirements.requiredBuildingLevel}}</p>
-    <p>Max level: {{buildingRequirements.maxLevel}}</p>
+  <div style="display: flex; max-width: 100%; max-height: 100%;">
+    <div style="flex: 1;">
+      <img style="max-width: 100%; max-height: 100%;" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
+    </div>
+    <div style="flex:1;">
+      <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
+      <p class="building-level">Level: {{ building.level }}</p>
+      <p class="building-level">Max level: {{building.maxLevel}}</p>
+      <div *ngIf="buildingRequirements">
+        <p class="building-requirements">Building requirements: </p>
+        <p class="secondary-text"
+           *ngIf="buildingRequirements.building">{{getBuildingTypeName(buildingRequirements.building)}}
+          ({{buildingRequirements.level}} level)</p>
+      </div>
+      <button [disabled]="isMaxLevel || isUpgradeInProgress" mat-raised-button class="btn button-stake"
+              (click)="onStake()">
+        <ng-container
+          [ngTemplateOutlet]="isMaxLevel ? maxLevel : isUpgradeInProgress ? upgradeInProgress : isBuilt ? upgrade : build"></ng-container>
+        <ng-template #maxLevel>
+          {{ 'Max level reached' }}
+        </ng-template>
+        <ng-template #upgradeInProgress>
+          {{ timeLeft }}
+        </ng-template>
+        <ng-template #upgrade>
+          Upgrade<span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
+        </ng-template>
+        <ng-template #build>
+          Build <span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
+        </ng-template>
+      </button>
+      <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
+        {{ 'Claim' }}
+      </button>
+    </div>
   </div>
 </ng-template>

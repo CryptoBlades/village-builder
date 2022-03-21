@@ -26,6 +26,7 @@ export class KingService extends SolidityService {
     return +await this.kingStakingContract.methods.getStakeCompleteTimestamp().call({from: this.currentAccount});
   }
 
+  // TODO: Suppress call when path ended
   async getRequiredStakeAmount(): Promise<number> {
     const amount = await this.kingStakingContract.methods.getRequiredStakeAmount().call({from: this.currentAccount});
     return +this.web3.utils.fromWei(amount, 'ether');

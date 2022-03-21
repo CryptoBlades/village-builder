@@ -6,9 +6,8 @@ import {Building} from "../app.component";
 import {BuildingType} from "./king.service";
 
 export interface BuildingRequirements {
-  maxLevel: number;
-  requiredBuilding: BuildingType;
-  requiredBuildingLevel: number;
+  building: BuildingType;
+  level: number;
 }
 
 @UntilDestroy()
@@ -74,7 +73,6 @@ export class LandService extends SolidityService {
       if (isNaN(Number(buildingType))) {
         return buildings;
       }
-      console.log(buildingType);
       const building = await this.getBuilding(+buildingType);
       buildings.push(building);
     }
@@ -86,25 +84,23 @@ export class LandService extends SolidityService {
     const buildingLevel = await this.villageContract.methods.getBuildingLevel(landId, buildingType).call({from: this.currentAccount});
     const currentlyUpgrading = await this.villageContract.methods.currentlyUpgrading(landId).call({from: this.currentAccount});
     const canUpgrade = await this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount});
-    console.log(BuildingType[buildingType]);
-    const building = {
+    const maxLevel = await this.villageContract.methods.buildingMaxLevel(buildingType).call({from: this.currentAccount});
+    return {
       type: buildingType,
       level: +buildingLevel,
+      maxLevel: +maxLevel,
       upgrading: currentlyUpgrading.building == +buildingType,
-      canUpgrade: canUpgrade
+      canUpgrade: canUpgrade,
+      image: `assets/Village/Buildings/${BuildingType[buildingType]}.png`,
     };
-    console.log(building);
-    return building;
   }
 
-  async getBuildingRequirements(buildingType: BuildingType): Promise<BuildingRequirements> {
-    const maxLevel = await this.villageContract.methods.buildingMaxLevel(buildingType).call({from: this.currentAccount});
+  async getBuildingRequirements(buildingType: BuildingType): Promise<BuildingRequirements | undefined> {
     const requirement = await this.villageContract.methods.buildingRequirement(buildingType).call({from: this.currentAccount});
-    return {
-      maxLevel: +maxLevel,
-      requiredBuilding: +requirement.building,
-      requiredBuildingLevel: +requirement.level
-    };
+    return +requirement.level !== 0 ? {
+      building: +requirement.building,
+      level: +requirement.level
+    } : undefined;
   }
 
 }

@@ -16,6 +16,7 @@ export class BuildingDialogComponent implements OnInit {
   timeLeftCheckInterval?: any;
   canClaim = false;
   buildingRequirements?: BuildingRequirements;
+  kingRequired?: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -28,11 +29,14 @@ export class BuildingDialogComponent implements OnInit {
     this.buildingRequirements = await this.landService.getBuildingRequirements(this.data.buildingType);
     await this.loadBuilding();
     await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
+    this.kingRequired = await this.kingService.getRequiredStakeAmount();
   }
 
   async loadBuilding(): Promise<void> {
     this.building = await this.landService.getBuilding(this.data.buildingType);
-    this.canClaim = await this.kingService.canCompleteStake();
+    if(this.building.upgrading) {
+      this.canClaim = await this.kingService.canCompleteStake();
+    }
   }
 
   getBuildingTypeName(buildingType: BuildingType): string {
@@ -96,6 +100,18 @@ export class BuildingDialogComponent implements OnInit {
     console.log('Staked');
     await this.loadBuilding();
     await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
+  }
+
+  get isMaxLevel() {
+    return this.building && (this.building.level >= this.building.maxLevel);
+  }
+
+  get isUpgradeInProgress() {
+    return this.building?.upgrading && !!this.timeLeft;
+  }
+
+  get isBuilt() {
+    return this.building && (this.building.level > 0);
   }
 
 }
