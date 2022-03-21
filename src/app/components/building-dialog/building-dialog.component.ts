@@ -17,6 +17,7 @@ export class BuildingDialogComponent implements OnInit {
   canClaim = false;
   buildingRequirements?: BuildingRequirements;
   kingRequired?: number;
+  totalKingStaked?: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -29,7 +30,6 @@ export class BuildingDialogComponent implements OnInit {
     this.buildingRequirements = await this.landService.getBuildingRequirements(this.data.buildingType);
     await this.loadBuilding();
     await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
-    this.kingRequired = await this.kingService.getRequiredStakeAmount();
   }
 
   async loadBuilding(): Promise<void> {
@@ -37,6 +37,8 @@ export class BuildingDialogComponent implements OnInit {
     if(this.building.upgrading) {
       this.canClaim = await this.kingService.canCompleteStake();
     }
+    this.kingRequired = await this.kingService.getRequiredStakeAmount();
+    this.totalKingStaked = await this.kingService.getTotalStaked();
   }
 
   getBuildingTypeName(buildingType: BuildingType): string {

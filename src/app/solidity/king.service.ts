@@ -32,6 +32,11 @@ export class KingService extends SolidityService {
     return +this.web3.utils.fromWei(amount, 'ether');
   }
 
+  async getTotalStaked(): Promise<number> {
+    const amount = await this.kingStakingContract.methods.stakedCurrencies(this.currentAccount).call({from: this.currentAccount});
+    return +this.web3.utils.fromWei(amount, 'ether');
+  }
+
   async canCompleteStake(): Promise<boolean> {
     return this.kingStakingContract.methods.canCompleteStake().call({from: this.currentAccount});
   }

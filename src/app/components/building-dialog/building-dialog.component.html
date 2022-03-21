@@ -1,9 +1,9 @@
 <ng-template [ngIf]="building">
   <div style="display: flex; max-width: 100%; max-height: 100%;">
-    <div style="flex: 1;">
+    <div style="max-width: 60%;">
       <img style="max-width: 100%; max-height: 100%;" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
     </div>
-    <div style="flex:1;">
+    <div>
       <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
       <p class="building-level">Level: {{ building.level }}</p>
       <p class="building-level">Max level: {{building.maxLevel}}</p>
@@ -11,7 +11,11 @@
         <p class="building-requirements">Building requirements: </p>
         <p class="secondary-text"
            *ngIf="buildingRequirements.building">{{getBuildingTypeName(buildingRequirements.building)}}
-          ({{buildingRequirements.level}} level)</p>
+          (Level: {{buildingRequirements.level}})</p>
+      </div>
+      <div *ngIf="totalKingStaked">
+        <p class="building-requirements">Total staked:</p>
+        <p class="secondary-text">{{totalKingStaked}} KING</p>
       </div>
       <button [disabled]="isMaxLevel || isUpgradeInProgress" mat-raised-button class="btn button-stake"
               (click)="onStake()">
