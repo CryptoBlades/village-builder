@@ -15,6 +15,7 @@ import {WeaponsService} from "./solidity/weapons.service";
 import {BuildingType, KingService} from "./solidity/king.service";
 import {MatDialog} from "@angular/material/dialog";
 import {BuildingDialogComponent} from "./components/building-dialog/building-dialog.component";
+import {getBuildingTypeName, getTimeRemaining} from './common/common';
 
 export interface Building {
   level: number;
@@ -34,6 +35,8 @@ export interface Building {
 @UntilDestroy()
 @Injectable()
 export class AppComponent implements OnInit {
+
+  getBuildingTypeName = getBuildingTypeName;
 
   wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
   land$: Observable<LandStateModel> = this.store.select(LandState);
@@ -191,7 +194,7 @@ export class AppComponent implements OnInit {
       clearInterval(this.kingCheckInterval);
     }
     this.kingCheckInterval = setInterval(async () => {
-      const {total, days, hours, minutes, seconds} = this.getTimeRemaining(deadlineTimestamp.toString());
+      const {total, days, hours, minutes, seconds} = getTimeRemaining(deadlineTimestamp.toString());
       this.kingTimeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
       console.log(this.kingTimeLeft);
       if (total <= 1000 && this.kingCheckInterval) {
@@ -209,7 +212,7 @@ export class AppComponent implements OnInit {
       clearInterval(this.checkInterval);
     }
     this.checkInterval = setInterval(() => {
-      const {total, days, hours, minutes, seconds} = this.getTimeRemaining(deadlineTimestamp.toString());
+      const {total, days, hours, minutes, seconds} = getTimeRemaining(deadlineTimestamp.toString());
       this.timeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
       console.log(this.timeLeft);
       if (total <= 1000 && this.checkInterval) {
@@ -222,39 +225,9 @@ export class AppComponent implements OnInit {
   openBuildingModal(buildingType: BuildingType) {
     let dialogRef = this.dialog.open(BuildingDialogComponent, {
       data: { buildingType },
-      panelClass: 'building-dialog'
+      panelClass: 'building-dialog',
+      height: '80vh',
+      width: '80vw',
     });
-  }
-
-  getTimeRemaining = (end: string) => {
-    const total = new Date(+end * 1000).getTime() - new Date().getTime();
-    let seconds: string | number = Math.floor((total / 1000) % 60);
-    let minutes: string | number = Math.floor((total / 1000 / 60) % 60);
-    let hours: string | number = Math.floor((total / (1000 * 60 * 60)) % 24);
-    let days: string | number = Math.floor((total / (1000 * 60 * 60 * 24)));
-    if (seconds < 10) {
-      seconds = String(seconds).padStart(2, '0');
-    }
-    if (minutes < 10) {
-      minutes = String(minutes).padStart(2, '0');
-    }
-    if (hours < 10) {
-      hours = String(hours).padStart(2, '0');
-    }
-    if (days < 10) {
-      days = String(days).padStart(2, '0');
-    }
-
-    return {
-      total,
-      days,
-      hours,
-      minutes,
-      seconds
-    };
-  };
-
-  getBuildingTypeName(buildingType: BuildingType): string {
-    return BuildingType[buildingType];
   }
 }

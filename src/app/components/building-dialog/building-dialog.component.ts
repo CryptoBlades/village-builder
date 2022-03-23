@@ -3,6 +3,8 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {Building} from "../../app.component";
 import {BuildingType, KingService} from "../../solidity/king.service";
 import {BuildingRequirements, LandService} from "../../solidity/land.service";
+import {CharactersService} from "../../solidity/characters.service";
+import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
 
 @Component({
   selector: 'app-building-dialog',
@@ -10,7 +12,7 @@ import {BuildingRequirements, LandService} from "../../solidity/land.service";
   styleUrls: ['./building-dialog.component.scss']
 })
 export class BuildingDialogComponent implements OnInit {
-
+  getBuildingTypeName = getBuildingTypeName;
   building?: Building;
   timeLeft?: string;
   timeLeftCheckInterval?: any;
@@ -22,6 +24,7 @@ export class BuildingDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
     private landService: LandService,
+    private charactersService: CharactersService,
     private kingService: KingService,
   ) {
   }
@@ -41,17 +44,13 @@ export class BuildingDialogComponent implements OnInit {
     this.totalKingStaked = await this.kingService.getTotalStaked();
   }
 
-  getBuildingTypeName(buildingType: BuildingType): string {
-    return BuildingType[buildingType];
-  }
-
   getTimeLeft(deadlineTimestamp: number) {
     if (!deadlineTimestamp) return;
     if (this.timeLeftCheckInterval) {
       clearInterval(this.timeLeftCheckInterval);
     }
     this.timeLeftCheckInterval = setInterval(async () => {
-      const {total, days, hours, minutes, seconds} = this.getTimeRemaining(deadlineTimestamp.toString());
+      const {total, days, hours, minutes, seconds} = getTimeRemaining(deadlineTimestamp.toString());
       this.timeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
       console.log(this.timeLeft);
       if (total <= 1000 && this.timeLeftCheckInterval) {
@@ -62,33 +61,7 @@ export class BuildingDialogComponent implements OnInit {
     }, 1000);
   }
 
-  getTimeRemaining(end: string) {
-    const total = new Date(+end * 1000).getTime() - new Date().getTime();
-    let seconds: string | number = Math.floor((total / 1000) % 60);
-    let minutes: string | number = Math.floor((total / 1000 / 60) % 60);
-    let hours: string | number = Math.floor((total / (1000 * 60 * 60)) % 24);
-    let days: string | number = Math.floor((total / (1000 * 60 * 60 * 24)));
-    if (seconds < 10) {
-      seconds = String(seconds).padStart(2, '0');
-    }
-    if (minutes < 10) {
-      minutes = String(minutes).padStart(2, '0');
-    }
-    if (hours < 10) {
-      hours = String(hours).padStart(2, '0');
-    }
-    if (days < 10) {
-      days = String(days).padStart(2, '0');
-    }
 
-    return {
-      total,
-      days,
-      hours,
-      minutes,
-      seconds
-    };
-  }
 
   async onClaim() {
     await this.kingService.claimStakeReward();
@@ -114,6 +87,10 @@ export class BuildingDialogComponent implements OnInit {
 
   get isBuilt() {
     return this.building && (this.building.level > 0);
+  }
+
+  get isBarracks() {
+    return this.building?.type === BuildingType.BARRACKS;
   }
 
 }

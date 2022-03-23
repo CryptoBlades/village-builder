@@ -1,0 +1,47 @@
+<div *ngIf="building" style="display: flex; max-width: 100%; max-height: 100%;">
+  <div style="max-width: 60%;">
+    <img style="max-width: 100%; max-height: 100%;" [src]="building.image"
+         [alt]="getBuildingTypeName(building.type)">
+  </div>
+  <div>
+    <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
+    <p class="building-level">Level: {{ building.level }}</p>
+    <p class="building-level">Max level: {{building.maxLevel}}</p>
+    <div *ngIf="totalCharactersStaked">
+      <p class="building-requirements">Total staked:</p>
+      <p class="secondary-text">{{totalCharactersStaked}} Characters</p>
+    </div>
+    <div *ngIf="barracksRequired">
+      <p class="building-requirements">Building requirements: </p>
+      <p class="secondary-text">{{getBuildingTypeName(getBarracksType)}}
+        (Level: {{barracksRequired}})</p>
+    </div>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let character of characters" [value]="character">
+        {{character}}
+      </mat-option>
+    </mat-autocomplete>
+    <input type="text"
+           placeholder="Choose character"
+           aria-label="Number"
+           matInput
+           [(ngModel)]="selectedCharacter"
+           [matAutocomplete]="auto"
+           style="background: white;">
+    <button [disabled]="!selectedCharacter || !isBarracksRequirementMet" mat-raised-button
+            class="btn button-stake"
+            (click)="onStake()">
+      <ng-container
+        [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : isBarracksRequirementMet ? stake : upgradeBarracks"></ng-container>
+      <ng-template #stakeInProgress>
+        {{ timeLeft }}
+      </ng-template>
+      <ng-template #stake>
+        Stake <span *ngIf="charactersRequired"> ({{ charactersRequired }} Character)</span>
+      </ng-template>
+      <ng-template #upgradeBarracks>
+        You need to upgrade Barracks first
+      </ng-template>
+    </button>
+  </div>
+</div>

@@ -32,4 +32,17 @@ export class CharactersService extends SolidityService {
     return +await this.characterStakingContract.methods.getStakeCompleteTimestamp().call({from: this.currentAccount});
   }
 
+  async getTotalStaked(): Promise<number> {
+    return +await this.characterStakingContract.methods.getStakedNftsAmount(this.currentAccount).call({from: this.currentAccount});
+  }
+
+  async getRequiredStakeAmount(): Promise<number> {
+    return +await this.characterStakingContract.methods.getRequiredStakeAmount().call({from: this.currentAccount});
+  }
+
+  async getRequiredBarracksLevel(): Promise<number> {
+    console.log(this.currentAccount);
+    return +await this.characterStakingContract.methods.getRequiredBarracksLevel().call({from: this.currentAccount});
+  }
+
 }

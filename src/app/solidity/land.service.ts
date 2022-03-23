@@ -69,12 +69,22 @@ export class LandService extends SolidityService {
     const landId = +await this.villageContract.methods.stakedLand(this.currentAccount).call({from: this.currentAccount});
     const buildings: Building[] = [];
     console.log(landId);
+    const currentlyUpgrading = await this.villageContract.methods.currentlyUpgrading(landId).call({from: this.currentAccount});
     for (let buildingType in BuildingType) {
       if (isNaN(Number(buildingType))) {
         return buildings;
       }
-      const building = await this.getBuilding(+buildingType);
-      buildings.push(building);
+      const buildingLevel = await this.villageContract.methods.getBuildingLevel(landId, buildingType).call({from: this.currentAccount});
+      const canUpgrade = await this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount});
+      const maxLevel = await this.villageContract.methods.buildingMaxLevel(buildingType).call({from: this.currentAccount});
+      buildings.push({
+        type: +buildingType,
+        level: +buildingLevel,
+        maxLevel: +maxLevel,
+        upgrading: currentlyUpgrading.building == +buildingType,
+        canUpgrade: canUpgrade,
+        image: `assets/Village/Buildings/${BuildingType[buildingType]}.png`,
+      });
     }
     return buildings;
   }
@@ -85,14 +95,16 @@ export class LandService extends SolidityService {
     const currentlyUpgrading = await this.villageContract.methods.currentlyUpgrading(landId).call({from: this.currentAccount});
     const canUpgrade = await this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount});
     const maxLevel = await this.villageContract.methods.buildingMaxLevel(buildingType).call({from: this.currentAccount});
-    return {
+    const building = {
       type: buildingType,
       level: +buildingLevel,
       maxLevel: +maxLevel,
       upgrading: currentlyUpgrading.building == +buildingType,
       canUpgrade: canUpgrade,
       image: `assets/Village/Buildings/${BuildingType[buildingType]}.png`,
-    };
+    }
+    console.log(building)
+    return building;
   }
 
   async getBuildingRequirements(buildingType: BuildingType): Promise<BuildingRequirements | undefined> {

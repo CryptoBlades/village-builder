@@ -17,6 +17,9 @@ import {LandState} from "./state/land/land.state";
 import {FormsModule} from "@angular/forms";
 import {BuildingDialogComponent} from './components/building-dialog/building-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { CharacterStakingComponent } from './components/character-staking/character-staking.component';
 
 
 @NgModule({
@@ -24,7 +27,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     AppComponent,
     HeaderComponent,
     SelectLandComponent,
-    BuildingDialogComponent
+    BuildingDialogComponent,
+    CharacterStakingComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +44,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatButtonModule,
     MatInputModule,
     MatDialogModule,
+    MatTabsModule,
+    MatAutocompleteModule,
   ],
   providers: [
     Web3Service,
