@@ -20,7 +20,10 @@ export class CharactersService extends SolidityService {
     const isApprovedForAll = await (await this.charactersContract).methods.isApprovedForAll(this.currentAccount, this.characterStakingContract.options.address).call({from: this.currentAccount});
 
     if (ids.length === 1 && !isApprovedForAll) {
-      await (await this.charactersContract).methods.approve(this.characterStakingContract.options.address, ids[0]).send({from: this.currentAccount});
+      const idOwner = await (await this.charactersContract).methods.ownerOf(ids[0]).call({from: this.currentAccount});
+      if (idOwner === this.currentAccount) {
+        await (await this.charactersContract).methods.approve(this.characterStakingContract.options.address, ids[0]).send({from: this.currentAccount});
+      }
     } else if (!isApprovedForAll) {
       await (await this.charactersContract).methods.setApprovalForAll(this.characterStakingContract.options.address, true).send({from: this.currentAccount});
     }
