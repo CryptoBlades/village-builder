@@ -19,7 +19,8 @@ import {BuildingDialogComponent} from './components/building-dialog/building-dia
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import { CharacterStakingComponent } from './components/character-staking/character-staking.component';
+import {CharacterStakingComponent} from './components/character-staking/character-staking.component';
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { CharacterStakingComponent } from './components/character-staking/charac
     MatDialogModule,
     MatTabsModule,
     MatAutocompleteModule,
+    MatIconModule,
   ],
   providers: [
     Web3Service,

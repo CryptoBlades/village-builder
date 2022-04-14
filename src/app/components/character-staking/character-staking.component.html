@@ -3,7 +3,7 @@
     <img style="max-width: 100%; max-height: 100%;" [src]="building.image"
          [alt]="getBuildingTypeName(building.type)">
   </div>
-  <div>
+  <div style="display: flex; flex-direction: column;">
     <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
     <p class="building-level">Level: {{ building.level }}</p>
     <p class="building-level">Max level: {{building.maxLevel}}</p>
@@ -21,22 +21,23 @@
         {{character}}
       </mat-option>
     </mat-autocomplete>
-    <input type="text"
-           placeholder="Choose character"
-           aria-label="Number"
-           matInput
-           [(ngModel)]="selectedCharacter"
-           [matAutocomplete]="auto"
-           style="background: white;">
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Choose character</mat-label>
+      <input matInput type="text" [(ngModel)]="selectedCharacter" [matAutocomplete]="auto">
+      <button *ngIf="selectedCharacter" matSuffix mat-icon-button aria-label="Clear"
+              (click)="selectedCharacter=undefined">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
     <button [disabled]="!selectedCharacter || !isBarracksRequirementMet" mat-raised-button
             class="btn button-stake"
             (click)="onStake()">
       <ng-container
         [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : isBarracksRequirementMet ? stake : upgradeBarracks"></ng-container>
-      <ng-template #stakeInProgress>
+      <ng-template #stakeInProgress style="color: #43300D">
         {{ timeLeft }}
       </ng-template>
-      <ng-template #stake>
+      <ng-template #stake style="color: #43300D">
         Stake <span *ngIf="charactersRequired"> ({{ charactersRequired }} Character)</span>
       </ng-template>
       <ng-template #upgradeBarracks>
