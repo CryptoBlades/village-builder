@@ -3,6 +3,11 @@ export class SetWalletAddress {
   constructor(public payload: string) {}
 }
 
+export class SetKingBalance {
+  static readonly type = '[Wallet] Set King Balance';
+  constructor(public payload: number) {}
+}
+
 export class SetMetamaskInstalled {
   static readonly type = '[Wallet] Set MetaMask Installed';
   constructor(public payload: boolean) {}

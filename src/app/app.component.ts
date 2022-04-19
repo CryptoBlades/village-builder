@@ -4,7 +4,12 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Store} from '@ngxs/store';
 import {from, Observable, take} from "rxjs";
-import {SetMetamaskConnected, SetMetamaskInstalled, SetWalletAddress} from "./state/wallet/wallet.actions";
+import {
+  SetKingBalance,
+  SetMetamaskConnected,
+  SetMetamaskInstalled,
+  SetWalletAddress
+} from "./state/wallet/wallet.actions";
 import {Web3Service} from "./services/web3.service";
 import {LandService} from "./solidity/land.service";
 import {Land} from "./interfaces/land";
@@ -108,8 +113,9 @@ export class AppComponent implements OnInit {
   async connectMetamask() {
     try {
       const provider = await detectEthereumProvider() as any;
-      provider?.request({method: 'eth_requestAccounts'}).then((accounts: any) => {
+      provider?.request({method: 'eth_requestAccounts'}).then(async (accounts: any) => {
         this.store.dispatch(new SetWalletAddress(this.web3.utils.toChecksumAddress(accounts[0])));
+        this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()))
         this.store.dispatch(new SetMetamaskConnected(true));
         this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
           this.lands = await this.landService.getOwnedLands(state.publicAddress)

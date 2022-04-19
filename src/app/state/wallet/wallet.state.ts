@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Action, Selector, State, StateContext} from '@ngxs/store';
-import {ClearWalletState, SetMetamaskInstalled, SetWalletAddress} from './wallet.actions';
+import {ClearWalletState, SetKingBalance, SetMetamaskInstalled, SetWalletAddress} from './wallet.actions';
 
 
 function createInitialData(): WalletStateModel {
   return {
     publicAddress: '',
+    kingBalance: 0,
     isConnected: false,
     isInstalled: false,
   };
@@ -13,6 +14,7 @@ function createInitialData(): WalletStateModel {
 
 export interface WalletStateModel {
   publicAddress: string;
+  kingBalance: number;
   isConnected: boolean;
   isInstalled: boolean;
 }
@@ -38,6 +40,11 @@ export class WalletState {
   @Action(SetWalletAddress)
   setWalletAddress({patchState}: StateContext<WalletStateModel>, {payload}: SetWalletAddress) {
     patchState({publicAddress: payload, isConnected: true});
+  }
+
+  @Action(SetKingBalance)
+  setKingBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetKingBalance) {
+    patchState({kingBalance: payload});
   }
 
   @Action(SetMetamaskInstalled)

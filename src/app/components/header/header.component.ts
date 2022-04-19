@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
 
   walletAddress: string = '';
+  kingBalance: number = 0;
 
   constructor(
     private store: Store,
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.walletAddress = state.publicAddress;
+      this.kingBalance = state.kingBalance;
     });
   }
 

@@ -1,4 +1,17 @@
 <div class="cbk-header">
-<!--  <img src="./assets/CBK Logo.png" class="cbk-logo" alt="CBK Logo"/>-->
-  <span style="color: white">{{walletAddress}}</span>
+  <div class="cbk-logo-container">
+    <div>
+      <img src="./assets/CBK Logo.png" class="cbk-logo" alt="CBK Logo"/>
+    </div>
+  </div>
+  <div class="balance-welcome-container">
+    <div class="king-container">
+      <img src="./assets/Icon/king.png" class="king-image" alt="King"/>
+      {{kingBalance}}
+      <div>
+        <img src="./assets/Icon/plus.svg" class="king-image" alt="King"/>
+      </div>
+    </div>
+    <span style="color: white">Logged in as: {{walletAddress}}</span>
+  </div>
 </div>

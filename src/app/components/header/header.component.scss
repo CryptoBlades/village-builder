@@ -1,5 +1,56 @@
 .cbk-header {
   height: 5vh;
   background: #000C25;
-  border: 1px solid #424A59;
+  //border-top: 1px solid #424A59;
+  border-bottom: 1px solid #424A59;
+  border-right: 1px solid #424A59;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cbk-logo-container {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  background: #464D53;
+  clip-path: polygon(0 0, 100% 0, 81% 100%, 0% 100%);
+  width: 242px;
+  height: 78px;
+}
+
+.cbk-logo-container div {
+  position: absolute;
+  background: #000C25;
+  width: 240px; /* container height - (border thickness * 2) */
+  height: 76px; /* container height - (border thickness * 2) */
+  clip-path: polygon(0 0, 100% 0, 81% 100%, 0% 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cbk-logo {
+  width: 158px;
+  height: 36px;
+  padding-right: 3rem;
+}
+
+.king-container {
+  width: 135px;
+  height: 32px;
+  background: #000C22 0% 0% no-repeat padding-box;
+  border: 1px solid #2E3541;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.king-image {
+  width: 17px;
+}
+
+.balance-welcome-container {
+  display: flex;
+  align-items: center;
 }

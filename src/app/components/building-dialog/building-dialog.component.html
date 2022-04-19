@@ -5,11 +5,11 @@
         <span class="building-name">KING</span>
       </ng-template>
       <div style="display: flex; max-width: 100%; max-height: 100%; margin-top: 2rem;">
-        <div style="max-width: 60%;">
+        <div style="flex: 1;">
           <img style="max-width: 100%; max-height: 100%;" [src]="building.image"
                [alt]="getBuildingTypeName(building.type)">
         </div>
-        <div>
+        <div style="flex: 2;">
           <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
           <div class="level-container">
             <span class="building-level">Level: {{ building.level }} </span>

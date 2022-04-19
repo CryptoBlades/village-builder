@@ -12,6 +12,7 @@ contract CharacterStaking is NftStaking {
 
   function stake(uint[] memory ids) public override {
     uint256 stakedLandId = village.stakedLand(msg.sender);
+    require(stakedLandId > 0, "You need to stake land");
     uint256 barracksLevel = village.getBuildingLevel(stakedLandId, Village.Building(BARRACKS));
     require(barracksLevel >= stakes[currentStake[msg.sender] + 1].requirement, 'You need to upgrade barracks');
     super.stake(ids);

@@ -1,9 +1,9 @@
 <div *ngIf="building" style="display: flex; max-width: 100%; max-height: 100%;">
-  <div style="max-width: 60%;">
+  <div style="flex: 1;">
     <img style="max-width: 100%; max-height: 100%;" [src]="building.image"
          [alt]="getBuildingTypeName(building.type)">
   </div>
-  <div style="display: flex; flex-direction: column;">
+  <div style="display: flex; flex-direction: column; flex: 2;">
     <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
     <p class="building-level">Level: {{ building.level }}</p>
     <p class="building-level">Max level: {{building.maxLevel}}</p>
