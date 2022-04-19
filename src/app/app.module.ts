@@ -21,6 +21,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {CharacterStakingComponent} from './components/character-staking/character-staking.component';
 import {MatIconModule} from "@angular/material/icon";
+import { KingStakingComponent } from './components/king-staking/king-staking.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MatIconModule} from "@angular/material/icon";
     HeaderComponent,
     SelectLandComponent,
     BuildingDialogComponent,
-    CharacterStakingComponent
+    CharacterStakingComponent,
+    KingStakingComponent
   ],
   imports: [
     BrowserModule,

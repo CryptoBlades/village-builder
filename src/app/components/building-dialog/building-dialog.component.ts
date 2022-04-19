@@ -1,10 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {Building} from "../../app.component";
-import {BuildingType, KingService} from "../../solidity/king.service";
-import {BuildingRequirements, LandService} from "../../solidity/land.service";
-import {CharactersService} from "../../solidity/characters.service";
-import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
+import {BuildingType} from "../../solidity/king.service";
+import {LandService} from "../../solidity/land.service";
 
 @Component({
   selector: 'app-building-dialog',
@@ -12,81 +10,16 @@ import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
   styleUrls: ['./building-dialog.component.scss']
 })
 export class BuildingDialogComponent implements OnInit {
-  getBuildingTypeName = getBuildingTypeName;
   building?: Building;
-  timeLeft?: string;
-  timeLeftCheckInterval?: any;
-  canClaim = false;
-  buildingRequirements?: BuildingRequirements;
-  kingRequired?: number;
-  totalKingStaked?: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
     private landService: LandService,
-    private charactersService: CharactersService,
-    private kingService: KingService,
   ) {
   }
 
   async ngOnInit(): Promise<void> {
-    this.buildingRequirements = await this.landService.getBuildingRequirements(this.data.buildingType);
-    await this.loadBuilding();
-    await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
-  }
-
-  async loadBuilding(): Promise<void> {
     this.building = await this.landService.getBuilding(this.data.buildingType);
-    if(this.building.upgrading) {
-      this.canClaim = await this.kingService.canCompleteStake();
-    }
-    this.kingRequired = await this.kingService.getRequiredStakeAmount();
-    this.totalKingStaked = await this.kingService.getTotalStaked();
-  }
-
-  getTimeLeft(deadlineTimestamp: number) {
-    if (!deadlineTimestamp) return;
-    if (this.timeLeftCheckInterval) {
-      clearInterval(this.timeLeftCheckInterval);
-    }
-    this.timeLeftCheckInterval = setInterval(async () => {
-      const {total, days, hours, minutes, seconds} = getTimeRemaining(deadlineTimestamp.toString());
-      this.timeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
-      console.log(this.timeLeft);
-      if (total <= 1000 && this.timeLeftCheckInterval) {
-        clearInterval(this.timeLeftCheckInterval);
-        this.timeLeft = '';
-        await this.loadBuilding();
-      }
-    }, 1000);
-  }
-
-
-
-  async onClaim() {
-    await this.kingService.claimStakeReward();
-    console.log('Claimed');
-    await this.loadBuilding();
-  }
-
-  async onStake() {
-    if (!this.building) return;
-    await this.kingService.stake(this.building?.type);
-    console.log('Staked');
-    await this.loadBuilding();
-    await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
-  }
-
-  get isMaxLevel() {
-    return this.building && (this.building.level >= this.building.maxLevel);
-  }
-
-  get isUpgradeInProgress() {
-    return this.building?.upgrading && !!this.timeLeft;
-  }
-
-  get isBuilt() {
-    return this.building && (this.building.level > 0);
   }
 
   get isBarracks() {

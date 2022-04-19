@@ -4,52 +4,7 @@
       <ng-template mat-tab-label>
         <span class="building-name">KING</span>
       </ng-template>
-      <div style="display: flex; max-width: 100%; max-height: 100%; margin-top: 2rem;">
-        <div style="flex: 1;">
-          <img style="max-width: 100%; max-height: 100%;" [src]="building.image"
-               [alt]="getBuildingTypeName(building.type)">
-        </div>
-        <div style="flex: 2;">
-          <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
-          <div class="level-container">
-            <span class="building-level">Level: {{ building.level }} </span>
-            <mat-icon class="arrow-icon" *ngIf="!isMaxLevel">keyboard_arrow_right</mat-icon>
-            <span class="building-level" *ngIf="!isMaxLevel"> {{ building.level + 1 }} </span>
-          </div>
-          <p class="building-level">Max level: {{building.maxLevel}}</p>
-          <div *ngIf="buildingRequirements">
-            <p class="building-requirements">Building requirements: </p>
-            <p class="secondary-text"
-               *ngIf="buildingRequirements.building">{{getBuildingTypeName(buildingRequirements.building)}}
-              (Level: {{buildingRequirements.level}})</p>
-          </div>
-          <div *ngIf="totalKingStaked">
-            <p class="building-requirements">Total staked:</p>
-            <p class="secondary-text">{{totalKingStaked}} KING</p>
-          </div>
-          <button [disabled]="isMaxLevel || isUpgradeInProgress || !building.canUpgrade" mat-raised-button
-                  class="btn button-stake"
-                  (click)="onStake()">
-            <ng-container
-              [ngTemplateOutlet]="isMaxLevel ? maxLevel : isUpgradeInProgress ? upgradeInProgress : isBuilt ? upgrade : build"></ng-container>
-            <ng-template #maxLevel>
-              {{ 'Max level reached' }}
-            </ng-template>
-            <ng-template #upgradeInProgress>
-              {{ timeLeft }}
-            </ng-template>
-            <ng-template #upgrade>
-              Upgrade<span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
-            </ng-template>
-            <ng-template #build>
-              Build <span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
-            </ng-template>
-          </button>
-          <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
-            {{ 'Claim' }}
-          </button>
-        </div>
-      </div>
+      <app-king-staking [building]="building"></app-king-staking>
     </mat-tab>
     <mat-tab *ngIf="isBarracks" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
