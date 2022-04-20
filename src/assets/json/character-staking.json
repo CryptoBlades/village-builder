@@ -2,8 +2,9 @@
   {
     "duration": 30,
     "amount": 1,
+    "type": "Characters",
     "requirement": {
-      "type": "Barracks",
+      "type": "Barracks Level",
       "amount": 1
     },
     "rewards": [
@@ -22,8 +23,9 @@
   {
     "duration": 120,
     "amount": 2,
+    "type": "Characters",
     "requirement": {
-      "type": "Barracks",
+      "type": "Barracks Level",
       "amount": 1
     },
     "rewards": [
@@ -42,8 +44,9 @@
   {
     "duration": 300,
     "amount": 3,
+    "type": "Characters",
     "requirement": {
-      "type": "Barracks",
+      "type": "Barracks Level",
       "amount": 1
     },
     "rewards": [
@@ -62,8 +65,9 @@
   {
     "duration": 600,
     "amount": 4,
+    "type": "Characters",
     "requirement": {
-      "type": "Barracks",
+      "type": "Barracks Level",
       "amount": 1
     },
     "rewards": [
@@ -82,8 +86,9 @@
   {
     "duration": 1500,
     "amount": 5,
+    "type": "Characters",
     "requirement": {
-      "type": "Barracks",
+      "type": "Barracks Level",
       "amount": 1
     },
     "rewards": [
@@ -102,8 +107,9 @@
   {
     "duration": 2700,
     "amount": 6,
+    "type": "Characters",
     "requirement": {
-      "type": "Barracks",
+      "type": "Barracks Level",
       "amount": 1
     },
     "rewards": [
@@ -122,8 +128,9 @@
   {
     "duration": 5400,
     "amount": 7,
+    "type": "Characters",
     "requirement": {
-      "type": "Barracks",
+      "type": "Barracks Level",
       "amount": 2
     },
     "rewards": [
@@ -153,8 +160,9 @@
   {
     "duration": 18000,
     "amount": 8,
+    "type": "Characters",
     "requirement": {
-      "type": "Barracks",
+      "type": "Barracks Level",
       "amount": 2
     },
     "rewards": [

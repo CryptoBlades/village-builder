@@ -13,7 +13,7 @@ import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
 })
 export class KingStakingComponent implements OnInit {
   getBuildingTypeName = getBuildingTypeName;
-  @Input() building?: Building;
+  @Input() building!: Building;
   timeLeft?: string;
   timeLeftCheckInterval?: any;
   canClaim = false;

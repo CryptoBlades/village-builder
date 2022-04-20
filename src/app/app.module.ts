@@ -24,6 +24,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {KingStakingComponent} from './components/king-staking/king-staking.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import { StakingTiersStepperComponent } from './components/staking-tiers-stepper/staking-tiers-stepper.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
     SelectLandComponent,
     BuildingDialogComponent,
     CharacterStakingComponent,
-    KingStakingComponent
+    KingStakingComponent,
+    StakingTiersStepperComponent
   ],
   imports: [
     BrowserModule,

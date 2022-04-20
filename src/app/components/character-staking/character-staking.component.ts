@@ -4,35 +4,7 @@ import {Building} from "../../app.component";
 import {CharactersService} from "../../solidity/characters.service";
 import {BuildingType} from "../../solidity/king.service";
 import characterStakingTiers from '../../../assets/json/character-staking.json';
-
-enum RequirementType {
-  BARRACKS = 'Barracks'
-}
-
-enum UnitType {
-  MERCENARY = 'Mercenary',
-  BRUISER = 'Bruiser',
-  MAGE = 'Mage',
-  ARCHER = 'Archer',
-  PALADIN = 'Paladin',
-}
-
-interface CharacterStakingTier {
-  duration: number;
-  amount: number;
-  requirement: {
-    type: RequirementType;
-    amount: number;
-  };
-  rewards: {
-    type: UnitType;
-    amount: number;
-  }[];
-  unlocks: {
-    type: UnitType;
-    amount: number;
-  }[];
-}
+import {StakingTier} from "../../interfaces/staking-tier";
 
 @Component({
   selector: 'app-character-staking',
@@ -41,9 +13,9 @@ interface CharacterStakingTier {
 })
 export class CharacterStakingComponent implements OnInit {
   getBuildingTypeName = getBuildingTypeName;
-  characterStakingTiers: CharacterStakingTier[] = characterStakingTiers as CharacterStakingTier[];
+  characterStakingTiers: StakingTier[] = characterStakingTiers;
 
-  @Input() building?: Building;
+  @Input() building!: Building;
   totalCharactersStaked?: number;
   characters: number[] = [];
   selectedCharacter?: number;
@@ -61,7 +33,6 @@ export class CharacterStakingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.loadCharacters();
     await this.getTimeLeft(+await this.charactersService.getStakeCompleteTimestamp());
-    console.log(characterStakingTiers);
   }
 
   async onStake() {
