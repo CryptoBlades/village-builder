@@ -48,19 +48,19 @@
   <div class="flex-1">
     <mat-stepper orientation="vertical" [selectedIndex]="unlockedTiers!">
       <mat-step *ngFor="let characterStakingTier of characterStakingTiers; index as i"
-                [label]="characterStakingTier.amount + ' Characters'"
+                [label]="characterStakingTier.amount + ' Characters ' + '(' + characterStakingTier.duration / 60 + ' minutes' + ')'"
                 [completed]="unlockedTiers! - 1 >= i">
         <div class="flex flex-col">
           <span>Requires: </span>
           <span>- Level {{characterStakingTier.requirement.amount + ' ' + characterStakingTier.requirement.type}}</span>
-          <span>Rewards: </span>
-          <div class="flex flex-col">
+          <div *ngIf="characterStakingTier.rewards.length" class="flex flex-col">
+            <span>Rewards: </span>
             <span *ngFor="let reward of characterStakingTier.rewards">
               - {{reward.amount}} {{reward.type}}
             </span>
           </div>
-          <span>CBK Unlocks: </span>
-          <div class="flex flex-col">
+          <div *ngIf="characterStakingTier.unlocks.length" class="flex flex-col">
+            <span>CBK Unlocks: </span>
             <span *ngFor="let unlock of characterStakingTier.unlocks">
               - {{unlock.amount}} {{unlock.type}}
             </span>

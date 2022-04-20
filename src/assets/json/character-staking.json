@@ -58,5 +58,127 @@
         "amount": 2
       }
     ]
+  },
+  {
+    "duration": 600,
+    "amount": 4,
+    "requirement": {
+      "type": "Barracks",
+      "amount": 1
+    },
+    "rewards": [
+      {
+        "type": "Mage",
+        "amount": 10
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Mage",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "duration": 1500,
+    "amount": 5,
+    "requirement": {
+      "type": "Barracks",
+      "amount": 1
+    },
+    "rewards": [
+      {
+        "type": "Archer",
+        "amount": 10
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Archer",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "duration": 2700,
+    "amount": 6,
+    "requirement": {
+      "type": "Barracks",
+      "amount": 1
+    },
+    "rewards": [
+      {
+        "type": "Paladin",
+        "amount": 10
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Paladin",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "duration": 5400,
+    "amount": 7,
+    "requirement": {
+      "type": "Barracks",
+      "amount": 2
+    },
+    "rewards": [
+      {
+        "type": "Mercenary",
+        "amount": 5
+      },
+      {
+        "type": "Bruiser",
+        "amount": 5
+      },
+      {
+        "type": "Mage",
+        "amount": 5
+      },
+      {
+        "type": "Archer",
+        "amount": 5
+      },
+      {
+        "type": "Paladin",
+        "amount": 5
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 18000,
+    "amount": 8,
+    "requirement": {
+      "type": "Barracks",
+      "amount": 2
+    },
+    "rewards": [
+      {
+        "type": "Mercenary",
+        "amount": 5
+      },
+      {
+        "type": "Bruiser",
+        "amount": 5
+      },
+      {
+        "type": "Mage",
+        "amount": 5
+      },
+      {
+        "type": "Archer",
+        "amount": 5
+      },
+      {
+        "type": "Paladin",
+        "amount": 5
+      }
+    ],
+    "unlocks": []
   }
 ]
