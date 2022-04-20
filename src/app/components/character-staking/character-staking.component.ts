@@ -51,6 +51,7 @@ export class CharacterStakingComponent implements OnInit {
   checkInterval?: any;
   charactersRequired?: number;
   barracksRequired?: number;
+  unlockedTiers?: number;
 
   constructor(
     private charactersService: CharactersService
@@ -77,7 +78,7 @@ export class CharacterStakingComponent implements OnInit {
     this.totalCharactersStaked = await this.charactersService.getTotalStaked();
     this.charactersRequired = await this.charactersService.getRequiredStakeAmount();
     this.barracksRequired = await this.charactersService.getRequiredBarracksLevel();
-    console.log(this.barracksRequired);
+    this.unlockedTiers = +await this.charactersService.getUnlockedTiers();
   }
 
   getTimeLeft(deadlineTimestamp: number) {

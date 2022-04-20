@@ -46,9 +46,10 @@
     </button>
   </div>
   <div class="flex-1">
-    <mat-stepper orientation="vertical">
-      <mat-step *ngFor="let characterStakingTier of characterStakingTiers"
-                [label]="characterStakingTier.amount + ' Characters'">
+    <mat-stepper orientation="vertical" [selectedIndex]="unlockedTiers!">
+      <mat-step *ngFor="let characterStakingTier of characterStakingTiers; index as i"
+                [label]="characterStakingTier.amount + ' Characters'"
+                [completed]="unlockedTiers! - 1 >= i">
         <div class="flex flex-col">
           <span>Requires: </span>
           <span>- Level {{characterStakingTier.requirement.amount + ' ' + characterStakingTier.requirement.type}}</span>
@@ -66,6 +67,9 @@
           </div>
         </div>
       </mat-step>
+      <ng-template matStepperIcon="edit" let-index="index">
+        {{index + 1}}
+      </ng-template>
     </mat-stepper>
   </div>
 </div>

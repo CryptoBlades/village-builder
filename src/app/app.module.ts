@@ -21,8 +21,9 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {CharacterStakingComponent} from './components/character-staking/character-staking.component';
 import {MatIconModule} from "@angular/material/icon";
-import { KingStakingComponent } from './components/king-staking/king-staking.component';
+import {KingStakingComponent} from './components/king-staking/king-staking.component';
 import {MatStepperModule} from "@angular/material/stepper";
+import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 
 
 @NgModule({
@@ -58,6 +59,10 @@ import {MatStepperModule} from "@angular/material/stepper";
     {
       provide: WEB3_CONFIG,
       useValue: Web3.givenProvider || 'ws://localhost:7545'
+    },
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {displayDefaultIndicatorType: false}
     }
   ],
   bootstrap: [AppComponent]
