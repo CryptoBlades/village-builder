@@ -1,9 +1,9 @@
-<div *ngIf="building" style="display: flex; max-width: 100%; max-height: 100%; margin: 2rem;">
-  <div style="flex: 1;">
+<div *ngIf="building" class="flex m-2" style="max-width: 100%; max-height: 100%;">
+  <div class="flex-1">
     <img style="max-width: 100%; max-height: 100%;" [src]="building.image"
          [alt]="getBuildingTypeName(building.type)">
   </div>
-  <div style="display: flex; flex-direction: column; flex: 2;">
+  <div class="flex flex-col flex-auto">
     <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
     <span class="building-level">Level: {{ building.level }}</span>
     <p class="building-level">Max level: {{building.maxLevel}}</p>
@@ -45,21 +45,21 @@
       </ng-template>
     </button>
   </div>
-  <div style="flex: 1;">
+  <div class="flex-1">
     <mat-stepper orientation="vertical">
       <mat-step *ngFor="let characterStakingTier of characterStakingTiers"
                 [label]="characterStakingTier.amount + ' Characters'">
-        <div style="display: flex; flex-direction: column;">
+        <div class="flex flex-col">
           <span>Requires: </span>
           <span>- Level {{characterStakingTier.requirement.amount + ' ' + characterStakingTier.requirement.type}}</span>
           <span>Rewards: </span>
-          <div style="display: flex; flex-direction: column;">
+          <div class="flex flex-col">
             <span *ngFor="let reward of characterStakingTier.rewards">
               - {{reward.amount}} {{reward.type}}
             </span>
           </div>
           <span>CBK Unlocks: </span>
-          <div style="display: flex; flex-direction: column;">
+          <div class="flex flex-col">
             <span *ngFor="let unlock of characterStakingTier.unlocks">
               - {{unlock.amount}} {{unlock.type}}
             </span>
