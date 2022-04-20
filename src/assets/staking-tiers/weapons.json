@@ -1,0 +1,134 @@
+[
+  {
+    "duration": 30,
+    "amount": 1,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 1
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 120,
+    "amount": 2,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 2
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 300,
+    "amount": 3,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 3
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 600,
+    "amount": 4,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 4
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 1500,
+    "amount": 5,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 5
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 2700,
+    "amount": 6,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 6
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 5400,
+    "amount": 7,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 7
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 7200,
+    "amount": 8,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 8
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 10800,
+    "amount": 9,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 9
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 14400,
+    "amount": 10,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 10
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 18000,
+    "amount": 12,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 11
+    },
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 24000,
+    "amount": 14,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 11
+    },
+    "rewards": [],
+    "unlocks": []
+  }
+]
