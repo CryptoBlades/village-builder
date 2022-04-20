@@ -22,6 +22,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {CharacterStakingComponent} from './components/character-staking/character-staking.component';
 import {MatIconModule} from "@angular/material/icon";
 import { KingStakingComponent } from './components/king-staking/king-staking.component';
+import {MatStepperModule} from "@angular/material/stepper";
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { KingStakingComponent } from './components/king-staking/king-staking.com
     MatTabsModule,
     MatAutocompleteModule,
     MatIconModule,
+    MatStepperModule,
   ],
   providers: [
     Web3Service,

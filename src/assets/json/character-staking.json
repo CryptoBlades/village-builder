@@ -1,0 +1,62 @@
+[
+  {
+    "duration": 30,
+    "amount": 1,
+    "requirement": {
+      "type": "Barracks",
+      "amount": 1
+    },
+    "rewards": [
+      {
+        "type": "Mercenary",
+        "amount": 5
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Mercenary",
+        "amount": 1
+      }
+    ]
+  },
+  {
+    "duration": 120,
+    "amount": 2,
+    "requirement": {
+      "type": "Barracks",
+      "amount": 1
+    },
+    "rewards": [
+      {
+        "type": "Mercenary",
+        "amount": 5
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Mercenary",
+        "amount": 2
+      }
+    ]
+  },
+  {
+    "duration": 300,
+    "amount": 3,
+    "requirement": {
+      "type": "Barracks",
+      "amount": 1
+    },
+    "rewards": [
+      {
+        "type": "Bruiser",
+        "amount": 10
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Bruiser",
+        "amount": 2
+      }
+    ]
+  }
+]

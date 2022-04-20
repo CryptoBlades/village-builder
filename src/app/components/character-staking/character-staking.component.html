@@ -5,16 +5,16 @@
   </div>
   <div style="display: flex; flex-direction: column; flex: 2;">
     <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
-    <p class="building-level">Level: {{ building.level }}</p>
+    <span class="building-level">Level: {{ building.level }}</span>
     <p class="building-level">Max level: {{building.maxLevel}}</p>
-    <div *ngIf="totalCharactersStaked">
-      <p class="building-requirements">Total staked:</p>
-      <p class="secondary-text">{{totalCharactersStaked}} Characters</p>
-    </div>
     <div *ngIf="barracksRequired">
       <p class="building-requirements">Building requirements: </p>
       <p class="secondary-text">{{getBuildingTypeName(getBarracksType)}}
         (Level: {{barracksRequired}})</p>
+    </div>
+    <div *ngIf="totalCharactersStaked">
+      <p class="building-requirements">Total staked:</p>
+      <p class="secondary-text">{{totalCharactersStaked}} Characters</p>
     </div>
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let character of characters" [value]="character">
@@ -44,5 +44,28 @@
         You need to upgrade Barracks first
       </ng-template>
     </button>
+  </div>
+  <div style="flex: 1;">
+    <mat-stepper orientation="vertical">
+      <mat-step *ngFor="let characterStakingTier of characterStakingTiers"
+                [label]="characterStakingTier.amount + ' Characters'">
+        <div style="display: flex; flex-direction: column;">
+          <span>Requires: </span>
+          <span>- Level {{characterStakingTier.requirement.amount + ' ' + characterStakingTier.requirement.type}}</span>
+          <span>Rewards: </span>
+          <div style="display: flex; flex-direction: column;">
+            <span *ngFor="let reward of characterStakingTier.rewards">
+              - {{reward.amount}} {{reward.type}}
+            </span>
+          </div>
+          <span>CBK Unlocks: </span>
+          <div style="display: flex; flex-direction: column;">
+            <span *ngFor="let unlock of characterStakingTier.unlocks">
+              - {{unlock.amount}} {{unlock.type}}
+            </span>
+          </div>
+        </div>
+      </mat-step>
+    </mat-stepper>
   </div>
 </div>
