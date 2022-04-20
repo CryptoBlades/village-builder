@@ -3,7 +3,7 @@ import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
 import {Building} from "../../app.component";
 import {CharactersService} from "../../solidity/characters.service";
 import {BuildingType} from "../../solidity/king.service";
-import characterStakingTiers from '../../../assets/json/character-staking.json';
+import characterStakingTiers from '../../../assets/staking-tiers/characters.json';
 import {StakingTier} from "../../interfaces/staking-tier";
 
 @Component({
@@ -49,7 +49,7 @@ export class CharacterStakingComponent implements OnInit {
     this.totalCharactersStaked = await this.charactersService.getTotalStaked();
     this.charactersRequired = await this.charactersService.getRequiredStakeAmount();
     this.barracksRequired = await this.charactersService.getRequiredBarracksLevel();
-    this.unlockedTiers = +await this.charactersService.getUnlockedTiers();
+    this.unlockedTiers = await this.charactersService.getUnlockedTiers();
   }
 
   getTimeLeft(deadlineTimestamp: number) {

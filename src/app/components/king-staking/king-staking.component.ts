@@ -5,6 +5,8 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {BuildingType, KingService} from "../../solidity/king.service";
 import {CharactersService} from "../../solidity/characters.service";
 import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
+import {StakingTier} from "../../interfaces/staking-tier";
+import kingStakingTiers from '../../../assets/staking-tiers/king.json';
 
 @Component({
   selector: 'app-king-staking',
@@ -13,6 +15,8 @@ import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
 })
 export class KingStakingComponent implements OnInit {
   getBuildingTypeName = getBuildingTypeName;
+  kingStakingTiers: StakingTier[] = kingStakingTiers;
+
   @Input() building!: Building;
   timeLeft?: string;
   timeLeftCheckInterval?: any;
@@ -20,6 +24,7 @@ export class KingStakingComponent implements OnInit {
   buildingRequirements?: BuildingRequirements;
   kingRequired?: number;
   totalKingStaked?: number;
+  unlockedTiers?: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -30,6 +35,7 @@ export class KingStakingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.unlockedTiers = await this.kingService.getUnlockedTiers();
     this.buildingRequirements = await this.landService.getBuildingRequirements(this.data.buildingType);
     await this.loadBuilding();
     await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());

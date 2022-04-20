@@ -2,7 +2,7 @@ export interface StakingTier {
   duration: number;
   amount: number;
   type: string;
-  requirement: {
+  requirement?: {
     type: string;
     amount: number;
   };

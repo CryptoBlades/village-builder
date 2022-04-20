@@ -1,10 +1,12 @@
-<mat-stepper orientation="vertical" [selectedIndex]="unlockedTiers!">
+<mat-stepper orientation="vertical" [selectedIndex]="unlockedTiers!" class="overflow-auto max-h-full">
   <mat-step *ngFor="let stakingTier of stakingTiers; index as i"
-            [label]="stakingTier.amount + ' ' + stakingTier.type + '(' + stakingTier.duration / 60 + ' minutes' + ')'"
+            [label]="stakingTier.amount + ' ' + stakingTier.type + ' (' + stakingTier.duration / 60 + ' minutes' + ')'"
             [completed]="unlockedTiers! - 1 >= i">
     <div class="flex flex-col">
-      <span>Requires: </span>
-      <span>- {{stakingTier.requirement.type + ': ' + stakingTier.requirement.amount}}</span>
+      <div *ngIf="stakingTier.requirement" class="flex flex-col">
+        <span>Requires: </span>
+        <span>- {{stakingTier.requirement.type + ': ' + stakingTier.requirement.amount}}</span>
+      </div>
       <div *ngIf="stakingTier.rewards.length" class="flex flex-col">
         <span>Rewards: </span>
         <span *ngFor="let reward of stakingTier.rewards">
