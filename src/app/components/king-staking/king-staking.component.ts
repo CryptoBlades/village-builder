@@ -35,7 +35,6 @@ export class KingStakingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.unlockedTiers = await this.kingService.getUnlockedTiers();
     this.buildingRequirements = await this.landService.getBuildingRequirements(this.data.buildingType);
     await this.loadBuilding();
     await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
@@ -48,6 +47,7 @@ export class KingStakingComponent implements OnInit {
     }
     this.kingRequired = await this.kingService.getRequiredStakeAmount();
     this.totalKingStaked = await this.kingService.getTotalStaked();
+    this.unlockedTiers = await this.kingService.getUnlockedTiers();
   }
 
   getTimeLeft(deadlineTimestamp: number) {

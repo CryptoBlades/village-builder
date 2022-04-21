@@ -1,0 +1,80 @@
+[
+  {
+    "duration": 30,
+    "amount": 0.01,
+    "type": "SKILL",
+    "requirement": {
+      "type": "KING Staked",
+      "amount": 4
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 50
+      },
+      {
+        "type": "Wood",
+        "amount": 50
+      },
+      {
+        "type": "Stone",
+        "amount": 50
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "duration": 60,
+    "amount": 0.05,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 1
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 120,
+    "amount": 0.1,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 75
+      },
+      {
+        "type": "Wood",
+        "amount": 75
+      },
+      {
+        "type": "Stone",
+        "amount": 75
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Wood",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "duration": 180,
+    "amount": 0.2,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 2
+      }
+    ],
+    "unlocks": []
+  }
+]
