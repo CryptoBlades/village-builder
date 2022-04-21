@@ -55,7 +55,6 @@ export class AppComponent implements OnInit {
   currentAccount = '';
   selectedLand?: Land = undefined;
   characters: number[] = [];
-  charactersToStake = '';
   weapons: number[] = [];
   weaponsToStake = '';
   king: number = 0;
@@ -150,18 +149,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async onClickFetch() {
-    this.characters = await this.charactersService.getOwnedCharacters();
-    console.log(this.characters);
-    await this.getTimeLeft(+await this.charactersService.getStakeCompleteTimestamp());
-  }
-
-  async onClickStake() {
-    const ids = [...this.charactersToStake].map((value: string | number) => +value);
-    await this.charactersService.stake(ids);
-    console.log('Staked');
-  }
-
   async onClickFetchWeap() {
     this.weapons = await this.weaponsService.getOwnedWeapons();
     console.log(this.weapons);
@@ -172,34 +159,6 @@ export class AppComponent implements OnInit {
     const ids = [...this.weaponsToStake].map((value: string | number) => +value);
     await this.weaponsService.stake(ids);
     console.log('Staked');
-  }
-
-  async onClickFetchKing() {
-    console.log(await this.kingService.getOwnedAmount());
-    await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
-  }
-
-  async onClickStakeKing(buildingType: BuildingType) {
-    await this.kingService.stake(buildingType);
-    console.log('Staked');
-    await this.getKingTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
-    this.king = await this.kingService.getRequiredStakeAmount();
-    this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
-      this.selectedLand = state.selectedLand;
-      this.buildings = await this.landService.getBuildings();
-      console.log(this.buildings);
-    });
-  }
-
-  async onClickClaimStakeKing() {
-    await this.kingService.claimStakeReward();
-    console.log('Claimed');
-    this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
-      this.selectedLand = state.selectedLand;
-      this.buildings = await this.landService.getBuildings();
-      console.log(this.buildings);
-      this.canCompleteKingStake = await this.kingService.canCompleteStake();
-    });
   }
 
   getKingTimeLeft(deadlineTimestamp: number) {
