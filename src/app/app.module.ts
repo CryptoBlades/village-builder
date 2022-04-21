@@ -25,6 +25,8 @@ import {KingStakingComponent} from './components/king-staking/king-staking.compo
 import {MatStepperModule} from "@angular/material/stepper";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import { StakingTiersStepperComponent } from './components/staking-tiers-stepper/staking-tiers-stepper.component';
+import { ResourcePillComponent } from './components/resource-pill/resource-pill.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { StakingTiersStepperComponent } from './components/staking-tiers-stepper
     BuildingDialogComponent,
     CharacterStakingComponent,
     KingStakingComponent,
-    StakingTiersStepperComponent
+    StakingTiersStepperComponent,
+    ResourcePillComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ import { StakingTiersStepperComponent } from './components/staking-tiers-stepper
     MatAutocompleteModule,
     MatIconModule,
     MatStepperModule,
+    MatTooltipModule,
   ],
   providers: [
     Web3Service,

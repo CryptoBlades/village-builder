@@ -1,0 +1,6 @@
+.resource-container {
+  background-color: #000C22;
+  border: 1px solid #2E3541;
+  border-radius: 5px;
+  @apply flex items-center text-white justify-between w-24 min-w-max p-0.5;
+}

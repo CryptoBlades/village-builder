@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {WalletState, WalletStateModel} from "../../state/wallet/wallet.state";
 import {Store} from "@ngxs/store";
@@ -11,7 +11,6 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
   wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
 
   walletAddress: string = '';
@@ -19,7 +18,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private store: Store,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {

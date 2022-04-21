@@ -5,13 +5,9 @@
     </div>
   </div>
   <div class="balance-welcome-container">
-    <div class="king-container">
-      <img src="./assets/Icon/king.png" class="king-image" alt="King"/>
-      {{kingBalance}}
-      <div>
-        <img src="./assets/Icon/plus.svg" class="king-image" alt="King"/>
-      </div>
-    </div>
+    <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/king.png" [tooltip]="'King'"></app-resource-pill>
+    <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/weapon.png" [tooltip]="'Weapons'"></app-resource-pill>
+    <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/character.png" [tooltip]="'Characters'"></app-resource-pill>
     <span style="color: white">Logged in as: {{walletAddress}}</span>
   </div>
 </div>
