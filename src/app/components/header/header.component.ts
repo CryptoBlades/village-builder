@@ -3,6 +3,8 @@ import {Observable} from "rxjs";
 import {WalletState, WalletStateModel} from "../../state/wallet/wallet.state";
 import {Store} from "@ngxs/store";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {LandState, LandStateModel} from "../../state/land/land.state";
+import {Land} from "../../interfaces/land";
 
 @UntilDestroy()
 @Component({
@@ -12,12 +14,14 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 })
 export class HeaderComponent implements OnInit {
   wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
+  land$: Observable<LandStateModel> = this.store.select(LandState);
 
   walletAddress: string = '';
   kingBalance: number = 0;
   skillBalance: number = 0;
   weaponsBalance: number = 0;
   charactersBalance: number = 0;
+  land?: Land;
 
   constructor(
     private store: Store,
@@ -31,6 +35,9 @@ export class HeaderComponent implements OnInit {
       this.skillBalance = state.skillBalance;
       this.weaponsBalance = state.weaponsBalance;
       this.charactersBalance = state.charactersBalance;
+    });
+    this.land$.pipe(untilDestroyed(this)).subscribe((state: LandStateModel) => {
+      this.land = state.selectedLand;
     });
   }
 

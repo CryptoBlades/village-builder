@@ -9,6 +9,25 @@
     <app-resource-pill [balance]="skillBalance" image="./assets/Placeholder/skill.png" [tooltip]="'Skill'"></app-resource-pill>
     <app-resource-pill [balance]="weaponsBalance" image="./assets/Placeholder/weapon.png" [tooltip]="'Weapons'"></app-resource-pill>
     <app-resource-pill [balance]="charactersBalance" image="./assets/Placeholder/character.png" [tooltip]="'Characters'"></app-resource-pill>
-    <span style="color: white">Logged in as: {{walletAddress}}</span>
+    <div class="text-white">
+      <span>Logged in as: {{walletAddress}}</span>
+    </div>
+    <div *ngIf="land" class="text-white">
+      <ng-container [ngSwitch]="land.tier">
+        <div *ngSwitchCase="1">
+          <img src="assets/Land/t1.png" class="w-28" alt="">
+        </div>
+        <div *ngSwitchCase="2">
+          <img src="assets/Land/t2.png" class="w-28" alt="">
+        </div>
+        <div *ngSwitchCase="3">
+          <img src="assets/Land/t3.png" class="w-28" alt="">
+        </div>
+        <div *ngSwitchDefault>
+          <img src="assets/Land/t1.png" class="w-28" alt="">
+        </div>
+      </ng-container>
+      <span>ID: {{land.id}}</span>
+    </div>
   </div>
 </div>
