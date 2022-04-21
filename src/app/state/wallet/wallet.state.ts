@@ -1,12 +1,23 @@
 import {Injectable} from '@angular/core';
 import {Action, Selector, State, StateContext} from '@ngxs/store';
-import {ClearWalletState, SetKingBalance, SetMetamaskInstalled, SetWalletAddress} from './wallet.actions';
+import {
+  ClearWalletState,
+  SetCharactersBalance,
+  SetKingBalance,
+  SetMetamaskInstalled,
+  SetSkillBalance,
+  SetWalletAddress,
+  SetWeaponsBalance
+} from './wallet.actions';
 
 
 function createInitialData(): WalletStateModel {
   return {
     publicAddress: '',
     kingBalance: 0,
+    skillBalance: 0,
+    weaponsBalance: 0,
+    charactersBalance: 0,
     isConnected: false,
     isInstalled: false,
   };
@@ -15,6 +26,9 @@ function createInitialData(): WalletStateModel {
 export interface WalletStateModel {
   publicAddress: string;
   kingBalance: number;
+  skillBalance: number;
+  weaponsBalance: number;
+  charactersBalance: number;
   isConnected: boolean;
   isInstalled: boolean;
 }
@@ -47,6 +61,21 @@ export class WalletState {
     patchState({kingBalance: payload});
   }
 
+  @Action(SetSkillBalance)
+  setSkillBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSkillBalance) {
+    patchState({skillBalance: payload});
+  }
+
+  @Action(SetWeaponsBalance)
+  setWeaponsBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsBalance) {
+    patchState({weaponsBalance: payload});
+  }
+
+  @Action(SetCharactersBalance)
+  setCharactersBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetCharactersBalance) {
+    patchState({charactersBalance: payload});
+  }
+
   @Action(SetMetamaskInstalled)
   setMetamaskInstalled({patchState}: StateContext<WalletStateModel>, {payload}: SetMetamaskInstalled) {
     patchState({isInstalled: payload});
@@ -55,7 +84,11 @@ export class WalletState {
   @Action(ClearWalletState)
   clearState({patchState}: StateContext<WalletStateModel>) {
     patchState({
-      publicAddress: ''
+      publicAddress: '',
+      kingBalance: 0,
+      skillBalance: 0,
+      weaponsBalance: 0,
+      charactersBalance: 0
     });
   }
 }

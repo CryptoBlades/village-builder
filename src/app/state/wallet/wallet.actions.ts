@@ -8,6 +8,21 @@ export class SetKingBalance {
   constructor(public payload: number) {}
 }
 
+export class SetSkillBalance {
+  static readonly type = '[Wallet] Set Skill Balance';
+  constructor(public payload: number) {}
+}
+
+export class SetWeaponsBalance {
+  static readonly type = '[Wallet] Set Weapons Balance';
+  constructor(public payload: number) {}
+}
+
+export class SetCharactersBalance {
+  static readonly type = '[Wallet] Set Characters Balance';
+  constructor(public payload: number) {}
+}
+
 export class SetMetamaskInstalled {
   static readonly type = '[Wallet] Set MetaMask Installed';
   constructor(public payload: boolean) {}

@@ -5,10 +5,13 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Store} from '@ngxs/store';
 import {from, Observable, take} from "rxjs";
 import {
+  SetCharactersBalance,
   SetKingBalance,
   SetMetamaskConnected,
   SetMetamaskInstalled,
-  SetWalletAddress
+  SetSkillBalance,
+  SetWalletAddress,
+  SetWeaponsBalance
 } from "./state/wallet/wallet.actions";
 import {Web3Service} from "./services/web3.service";
 import {LandService} from "./solidity/land.service";
@@ -21,6 +24,7 @@ import {BuildingType, KingService} from "./solidity/king.service";
 import {MatDialog} from "@angular/material/dialog";
 import {BuildingDialogComponent} from "./components/building-dialog/building-dialog.component";
 import {getBuildingTypeName, getTimeRemaining} from './common/common';
+import {SkillService} from "./solidity/skill.service";
 
 export interface Building {
   level: number;
@@ -73,6 +77,7 @@ export class AppComponent implements OnInit {
     private charactersService: CharactersService,
     private weaponsService: WeaponsService,
     private kingService: KingService,
+    private skillService: SkillService,
   ) {
   }
 
@@ -116,6 +121,9 @@ export class AppComponent implements OnInit {
       provider?.request({method: 'eth_requestAccounts'}).then(async (accounts: any) => {
         this.store.dispatch(new SetWalletAddress(this.web3.utils.toChecksumAddress(accounts[0])));
         this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()))
+        this.store.dispatch(new SetSkillBalance(await this.skillService.getOwnedAmount()))
+        this.store.dispatch(new SetWeaponsBalance(await this.weaponsService.getOwnedAmount()))
+        this.store.dispatch(new SetCharactersBalance(await this.charactersService.getOwnedAmount()))
         this.store.dispatch(new SetMetamaskConnected(true));
         this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
           this.lands = await this.landService.getOwnedLands(state.publicAddress)
@@ -229,8 +237,8 @@ export class AppComponent implements OnInit {
   }
 
   openBuildingModal(buildingType: BuildingType) {
-    let dialogRef = this.dialog.open(BuildingDialogComponent, {
-      data: { buildingType },
+    this.dialog.open(BuildingDialogComponent, {
+      data: {buildingType},
       panelClass: 'building-dialog',
       height: '80vh',
       width: '80vw',

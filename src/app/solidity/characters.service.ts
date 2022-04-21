@@ -7,13 +7,17 @@ import {SolidityService} from "./solidity.service";
 export class CharactersService extends SolidityService {
 
   async getOwnedCharacters(): Promise<number[]> {
-    const numberOfCharacters = +await (await this.charactersContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});
+    const numberOfCharacters = await this.getOwnedAmount();
     const characters = [];
     for (let i = 0; i < numberOfCharacters; i++) {
       const character = +await (await this.charactersContract).methods.tokenOfOwnerByIndex(this.currentAccount, i).call({from: this.currentAccount});
       characters.push(character);
     }
     return characters;
+  }
+
+  async getOwnedAmount(): Promise<number> {
+    return +await (await this.charactersContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});
   }
 
   async stake(ids: number[]): Promise<void> {

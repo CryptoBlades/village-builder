@@ -7,6 +7,8 @@ import {CharactersService} from "../../solidity/characters.service";
 import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
 import {StakingTier} from "../../interfaces/staking-tier";
 import kingStakingTiers from '../../../assets/staking-tiers/king.json';
+import {Store} from "@ngxs/store";
+import {SetKingBalance} from "../../state/wallet/wallet.actions";
 
 @Component({
   selector: 'app-king-staking',
@@ -31,6 +33,7 @@ export class KingStakingComponent implements OnInit {
     private landService: LandService,
     private charactersService: CharactersService,
     private kingService: KingService,
+    private store: Store,
   ) {
   }
 
@@ -77,6 +80,7 @@ export class KingStakingComponent implements OnInit {
   async onStake() {
     if (!this.building) return;
     await this.kingService.stake(this.building?.type);
+    this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()))
     console.log('Staked');
     await this.loadBuilding();
     await this.getTimeLeft(+await this.kingService.getStakeCompleteTimestamp());

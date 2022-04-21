@@ -12,6 +12,8 @@ import Weapons from "../../../build/contracts/WeaponsInterface.json";
 import WeaponStaking from "../../../build/contracts/WeaponStaking.json";
 import KingToken from "../../../build/contracts/KingToken.json";
 import KingStaking from "../../../build/contracts/KingStaking.json";
+import SkillToken from "../../../build/contracts/SkillInterface.json";
+import SkillStaking from "../../../build/contracts/SkillStaking.json";
 import Village from "../../../build/contracts/Village.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
@@ -31,6 +33,8 @@ export class SolidityService {
   weaponStakingContract!: Contract;
   kingContract!: Promise<Contract>;
   kingStakingContract!: Contract;
+  skillContract!: Promise<Contract>;
+  skillStakingContract!: Contract;
 
   currentAccount: string = '';
 
@@ -54,6 +58,10 @@ export class SolidityService {
     this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, KingStaking.networks["5777"]!.address);
     this.kingContract = this.kingStakingContract.methods.currency().call().then((address: string) => {
       return new this.web3.eth.Contract(KingToken.abi as any, address);
+    });
+    this.skillStakingContract = new this.web3.eth.Contract(SkillStaking.abi as any, SkillStaking.networks["5777"]!.address);
+    this.skillContract = this.skillStakingContract.methods.currency().call().then((address: string) => {
+      return new this.web3.eth.Contract(SkillToken.abi as any, address);
     });
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.currentAccount = state.publicAddress;

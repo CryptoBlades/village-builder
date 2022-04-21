@@ -5,6 +5,8 @@ import {CharactersService} from "../../solidity/characters.service";
 import {BuildingType} from "../../solidity/king.service";
 import characterStakingTiers from '../../../assets/staking-tiers/characters.json';
 import {StakingTier} from "../../interfaces/staking-tier";
+import {Store} from "@ngxs/store";
+import {SetCharactersBalance} from "../../state/wallet/wallet.actions";
 
 @Component({
   selector: 'app-character-staking',
@@ -26,7 +28,8 @@ export class CharacterStakingComponent implements OnInit {
   unlockedTiers?: number;
 
   constructor(
-    private charactersService: CharactersService
+    private charactersService: CharactersService,
+    private store: Store,
   ) {
   }
 
@@ -46,6 +49,7 @@ export class CharacterStakingComponent implements OnInit {
 
   async loadCharacters() {
     this.characters = await this.charactersService.getOwnedCharacters();
+    this.store.dispatch(new SetCharactersBalance(this.characters.length))
     this.totalCharactersStaked = await this.charactersService.getTotalStaked();
     this.charactersRequired = await this.charactersService.getRequiredStakeAmount();
     this.barracksRequired = await this.charactersService.getRequiredBarracksLevel();

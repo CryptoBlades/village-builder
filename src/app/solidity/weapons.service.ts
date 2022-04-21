@@ -7,13 +7,17 @@ import {SolidityService} from "./solidity.service";
 export class WeaponsService extends SolidityService {
 
   async getOwnedWeapons(): Promise<number[]> {
-    const amount = +await (await this.weaponsContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});
+    const amount = await this.getOwnedAmount();
     const weapons = [];
     for (let i = 0; i < amount; i++) {
       const weapon = +await (await this.weaponsContract).methods.tokenOfOwnerByIndex(this.currentAccount, i).call({from: this.currentAccount});
       weapons.push(weapon);
     }
     return weapons;
+  }
+
+  async getOwnedAmount(): Promise<number> {
+    return +await (await this.weaponsContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});
   }
 
   async stake(ids: number[]): Promise<void> {

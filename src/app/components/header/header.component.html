@@ -4,10 +4,11 @@
       <img src="./assets/CBK Logo.png" class="cbk-logo" alt="CBK Logo"/>
     </div>
   </div>
-  <div class="balance-welcome-container">
+  <div class="flex items-center w-full justify-around">
     <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/king.png" [tooltip]="'King'"></app-resource-pill>
-    <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/weapon.png" [tooltip]="'Weapons'"></app-resource-pill>
-    <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/character.png" [tooltip]="'Characters'"></app-resource-pill>
+    <app-resource-pill [balance]="skillBalance" image="./assets/Placeholder/skill.png" [tooltip]="'Skill'"></app-resource-pill>
+    <app-resource-pill [balance]="weaponsBalance" image="./assets/Placeholder/weapon.png" [tooltip]="'Weapons'"></app-resource-pill>
+    <app-resource-pill [balance]="charactersBalance" image="./assets/Placeholder/character.png" [tooltip]="'Characters'"></app-resource-pill>
     <span style="color: white">Logged in as: {{walletAddress}}</span>
   </div>
 </div>

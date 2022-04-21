@@ -15,6 +15,9 @@ export class HeaderComponent implements OnInit {
 
   walletAddress: string = '';
   kingBalance: number = 0;
+  skillBalance: number = 0;
+  weaponsBalance: number = 0;
+  charactersBalance: number = 0;
 
   constructor(
     private store: Store,
@@ -25,6 +28,9 @@ export class HeaderComponent implements OnInit {
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.walletAddress = state.publicAddress;
       this.kingBalance = state.kingBalance;
+      this.skillBalance = state.skillBalance;
+      this.weaponsBalance = state.weaponsBalance;
+      this.charactersBalance = state.charactersBalance;
     });
   }
 
