@@ -3,7 +3,7 @@ import {Land} from "../interfaces/land";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {SolidityService} from "./solidity.service";
 import {Building} from "../app.component";
-import {BuildingType} from "./king.service";
+import {BuildingType} from "../enums/building-type";
 
 export interface BuildingRequirements {
   building: BuildingType;

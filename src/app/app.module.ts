@@ -27,6 +27,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import { StakingTiersStepperComponent } from './components/staking-tiers-stepper/staking-tiers-stepper.component';
 import { ResourcePillComponent } from './components/resource-pill/resource-pill.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { SkillStakingComponent } from './components/skill-staking/skill-staking.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     CharacterStakingComponent,
     KingStakingComponent,
     StakingTiersStepperComponent,
-    ResourcePillComponent
+    ResourcePillComponent,
+    SkillStakingComponent
   ],
   imports: [
     BrowserModule,

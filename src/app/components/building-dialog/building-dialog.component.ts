@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {Building} from "../../app.component";
-import {BuildingType} from "../../solidity/king.service";
 import {LandService} from "../../solidity/land.service";
+import {BuildingType} from "../../enums/building-type";
 
 @Component({
   selector: 'app-building-dialog',

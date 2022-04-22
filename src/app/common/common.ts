@@ -1,4 +1,5 @@
-import {BuildingType} from "../solidity/king.service";
+import {BuildingType} from "../enums/building-type";
+
 
 export const getBuildingTypeName = (buildingType: BuildingType): string => {
   return BuildingType[buildingType];

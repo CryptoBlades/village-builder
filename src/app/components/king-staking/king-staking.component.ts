@@ -2,13 +2,14 @@ import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Building} from "../../app.component";
 import {BuildingRequirements, LandService} from "../../solidity/land.service";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {BuildingType, KingService} from "../../solidity/king.service";
+import {KingService} from "../../solidity/king.service";
 import {CharactersService} from "../../solidity/characters.service";
 import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
 import {StakingTier} from "../../interfaces/staking-tier";
 import kingStakingTiers from '../../../assets/staking-tiers/king.json';
 import {Store} from "@ngxs/store";
 import {SetKingBalance} from "../../state/wallet/wallet.actions";
+import {BuildingType} from "../../enums/building-type";
 
 @Component({
   selector: 'app-king-staking',
@@ -17,7 +18,6 @@ import {SetKingBalance} from "../../state/wallet/wallet.actions";
 })
 export class KingStakingComponent implements OnInit {
   getBuildingTypeName = getBuildingTypeName;
-  kingStakingTiers: StakingTier[] = kingStakingTiers;
 
   @Input() building!: Building;
   timeLeft?: string;
@@ -27,6 +27,7 @@ export class KingStakingComponent implements OnInit {
   kingRequired?: number;
   totalKingStaked?: number;
   unlockedTiers?: number;
+  kingStakingTiers: StakingTier[] = kingStakingTiers;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },

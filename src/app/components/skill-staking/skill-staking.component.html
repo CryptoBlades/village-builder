@@ -1,0 +1,39 @@
+<div class="flex m-2" style="max-width: 100%; max-height: 100%;">
+  <div class="flex-1">
+    <img style="max-width: 100%; max-height: 100%;" [src]="building.image"
+         [alt]="getBuildingTypeName(building.type)">
+  </div>
+  <div class="flex-auto">
+    <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
+    <span class="building-level">Level: {{ building.level }}</span>
+    <p class="building-level">Max level: {{building.maxLevel}}</p>
+    <!--    <div *ngIf="barracksRequired">-->
+    <!--      <p class="building-requirements">Building requirements: </p>-->
+    <!--      <p class="secondary-text">{{getBuildingTypeName(getBarracksType)}}-->
+    <!--        (Level: {{barracksRequired}})</p>-->
+    <!--    </div>-->
+    <div *ngIf="totalSkillStaked">
+      <p class="building-requirements">Total staked:</p>
+      <p class="secondary-text">{{totalSkillStaked}} SKILL</p>
+    </div>
+    <button mat-raised-button
+            class="btn button-stake"
+            (click)="onStake()">
+      <ng-container
+        [ngTemplateOutlet]="stake"></ng-container>
+      <!--      <ng-template #upgradeInProgress>-->
+      <!--        {{ timeLeft }}-->
+      <!--      </ng-template>-->
+      <ng-template #stake>
+        Stake<span *ngIf="skillRequired"> ({{ skillRequired }} SKILL)</span>
+      </ng-template>
+    </button>
+    <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
+      {{ 'Claim' }}
+    </button>
+  </div>
+  <div class="flex-1">
+    <app-staking-tiers-stepper [stakingTiers]="skillStakingTiers"
+                               [unlockedTiers]="unlockedTiers!"></app-staking-tiers-stepper>
+  </div>
+</div>

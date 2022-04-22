@@ -6,6 +6,12 @@
       </ng-template>
       <app-king-staking [building]="building"></app-king-staking>
     </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span class="building-name">SKILL</span>
+      </ng-template>
+      <app-skill-staking [building]="building"></app-skill-staking>
+    </mat-tab>
     <mat-tab *ngIf="isBarracks" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
         <span class="building-name">CHARACTERS</span>

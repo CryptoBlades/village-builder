@@ -3,35 +3,31 @@ pragma solidity ^0.8.10;
 
 import "./Village.sol";
 import "./CurrencyStaking.sol";
+import "./KingStaking.sol";
 
 contract SkillStaking is CurrencyStaking {
 
-  function initialize(Village _village, address currencyAddress) override public initializer {
+  KingStaking public kingStaking;
+
+  function initialize(Village _village, KingStaking _kingStaking, address currencyAddress) public initializer {
     super.initialize(_village, currencyAddress);
+    kingStaking = _kingStaking;
   }
 
-  // TODO: King methods, rework them
+  function stake(uint amount) public override returns (uint finishTimestamp) {
+    require(kingStaking.unlockedTiers(msg.sender) >= 4, "You must unlock at least 4 tiers of king before staking skill");
+    finishTimestamp = super.stake(amount);
+  }
+
   function addStake(uint id, uint duration, uint amount) public {
     stakes[id] = Stake({duration : duration, requirement : 0, amount : amount});
   }
 
-  function stake(uint amount, Village.Building building) public {
-    uint256 stakedLandId = village.stakedLand(msg.sender);
-    uint256 finishTimestamp = stake(amount);
-    village.setCurrentlyUpgrading(stakedLandId, building, finishTimestamp);
-  }
-
   function unstake() public override returns (bool stakeCompleted) {
-    uint256 stakedLandId = village.stakedLand(msg.sender);
     stakeCompleted = super.unstake();
-    if (stakeCompleted) {
-      village.finishBuildingUpgrade(stakedLandId);
-    }
-    village.setCurrentlyUpgrading(stakedLandId, Village.Building.NONE, 0);
   }
 
   function claimStakeReward() public {
     completeStake();
-    village.finishBuildingUpgrade(village.stakedLand(msg.sender));
   }
 }

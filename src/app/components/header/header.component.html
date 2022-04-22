@@ -4,15 +4,16 @@
       <img src="./assets/CBK Logo.png" class="cbk-logo" alt="CBK Logo"/>
     </div>
   </div>
-  <div class="flex items-center w-full justify-around">
-    <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/king.png" [tooltip]="'King'"></app-resource-pill>
-    <app-resource-pill [balance]="skillBalance" image="./assets/Placeholder/skill.png" [tooltip]="'Skill'"></app-resource-pill>
-    <app-resource-pill [balance]="weaponsBalance" image="./assets/Placeholder/weapon.png" [tooltip]="'Weapons'"></app-resource-pill>
-    <app-resource-pill [balance]="charactersBalance" image="./assets/Placeholder/character.png" [tooltip]="'Characters'"></app-resource-pill>
+  <div *ngIf="land" class="flex items-center w-full justify-around">
+    <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/king.png"
+                       [tooltip]="'King'"></app-resource-pill>
+    <app-resource-pill [balance]="skillBalance" image="./assets/Placeholder/skill.png"
+                       [tooltip]="'Skill'"></app-resource-pill>
+    <app-resource-pill [balance]="weaponsBalance" image="./assets/Placeholder/weapon.png"
+                       [tooltip]="'Weapons'"></app-resource-pill>
+    <app-resource-pill [balance]="charactersBalance" image="./assets/Placeholder/character.png"
+                       [tooltip]="'Characters'"></app-resource-pill>
     <div class="text-white">
-      <span>Logged in as: {{walletAddress}}</span>
-    </div>
-    <div *ngIf="land" class="text-white">
       <ng-container [ngSwitch]="land.tier">
         <div *ngSwitchCase="1">
           <img src="assets/Land/t1.png" class="w-28" alt="">
@@ -29,5 +30,8 @@
       </ng-container>
       <span>ID: {{land.id}}</span>
     </div>
+  </div>
+  <div class="text-white">
+    <span>Logged in as: {{walletAddress}}</span>
   </div>
 </div>

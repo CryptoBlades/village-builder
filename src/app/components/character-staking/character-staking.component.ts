@@ -2,11 +2,11 @@ import {Component, Input, OnInit} from '@angular/core';
 import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
 import {Building} from "../../app.component";
 import {CharactersService} from "../../solidity/characters.service";
-import {BuildingType} from "../../solidity/king.service";
 import characterStakingTiers from '../../../assets/staking-tiers/characters.json';
 import {StakingTier} from "../../interfaces/staking-tier";
 import {Store} from "@ngxs/store";
 import {SetCharactersBalance} from "../../state/wallet/wallet.actions";
+import {BuildingType} from "../../enums/building-type";
 
 @Component({
   selector: 'app-character-staking',

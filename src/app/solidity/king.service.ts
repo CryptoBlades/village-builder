@@ -1,10 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SolidityService} from "./solidity.service";
-
-//TODO: Extract to separate class
-export enum BuildingType {
-  TOWN_HALL = 1, HEADQUARTERS, BARRACKS, CLAY_PIT, IRON_MINE, STONE_MINE, STOREHOUSE, SMITHY, FARM, HIDDEN_STASH, WALL, TRADING_POST
-}
+import {BuildingType} from "../enums/building-type";
 
 @Injectable({
   providedIn: 'root'

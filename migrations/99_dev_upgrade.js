@@ -2,12 +2,16 @@ const {upgradeProxy} = require('@openzeppelin/truffle-upgrades');
 const CharacterStaking = artifacts.require('CharacterStaking');
 const WeaponStaking = artifacts.require('WeaponStaking');
 const KingStaking = artifacts.require('KingStaking');
+const SkillStaking = artifacts.require('SkillStaking');
 const Village = artifacts.require('Village');
+
 module.exports = async function (deployer) {
   await upgradeProxy(Village.address, Village, {deployer});
   const characterStaking = await upgradeProxy(CharacterStaking.address, CharacterStaking, {deployer});
   await upgradeProxy(WeaponStaking.address, WeaponStaking, {deployer});
   const kingStaking = await upgradeProxy(KingStaking.address, KingStaking, {deployer});
+
+  const skillStaking = await upgradeProxy(SkillStaking.address, SkillStaking, {deployer});
 
   await characterStaking.addStake(5, 300, 1, 5);
   await characterStaking.addStake(6, 300, 1, 6);
@@ -72,4 +76,12 @@ module.exports = async function (deployer) {
   await kingStaking.addStake(18, 2040, web3.utils.toWei('50', 'ether'));
   await kingStaking.addStake(19, 2400, web3.utils.toWei('55', 'ether'));
   await kingStaking.addStake(20, 3000, web3.utils.toWei('60', 'ether'));
+
+  await skillStaking.addStake(1, 30, web3.utils.toWei('0.01', 'ether'));
+  await skillStaking.addStake(2, 60, web3.utils.toWei('0.05', 'ether'));
+  await skillStaking.addStake(3, 120, web3.utils.toWei('0.1', 'ether'));
+  await skillStaking.addStake(4, 180, web3.utils.toWei('0.2', 'ether'));
+  await skillStaking.addStake(5, 240, web3.utils.toWei('0.3', 'ether'));
+  await skillStaking.addStake(6, 300, web3.utils.toWei('0.4', 'ether'));
+  await skillStaking.addStake(7, 600, web3.utils.toWei('0.5', 'ether'));
 };

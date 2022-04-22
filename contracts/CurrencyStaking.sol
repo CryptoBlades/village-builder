@@ -42,7 +42,7 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
     currency = IERC20Upgradeable(currencyAddress);
   }
 
-  function stake(uint amount) public returns (uint finishTimestamp) {
+  function stake(uint amount) virtual public returns (uint finishTimestamp) {
     uint256 currentStakeId = currentStake[tx.origin];
     if (stakes[currentStakeId + 1].amount != 0) {
       require(stakedCurrencies[tx.origin] + amount == stakes[currentStakeId + 1].amount, 'You need to stake required currency amount');

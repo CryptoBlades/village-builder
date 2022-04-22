@@ -20,11 +20,12 @@ import {LandState, LandStateModel} from "./state/land/land.state";
 import {SetLandSelected} from "./state/land/land.actions";
 import {CharactersService} from "./solidity/characters.service";
 import {WeaponsService} from "./solidity/weapons.service";
-import {BuildingType, KingService} from "./solidity/king.service";
+import {KingService} from "./solidity/king.service";
 import {MatDialog} from "@angular/material/dialog";
 import {BuildingDialogComponent} from "./components/building-dialog/building-dialog.component";
 import {getBuildingTypeName, getTimeRemaining} from './common/common';
 import {SkillService} from "./solidity/skill.service";
+import {BuildingType} from "./enums/building-type";
 
 export interface Building {
   level: number;
