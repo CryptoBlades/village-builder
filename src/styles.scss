@@ -256,24 +256,68 @@ $altTheme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
   }
 }
 
-mat-dialog-container {
-  background-color: #0D142A !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  overflow: hidden !important;
-  border: 1px solid #404857;
+.building-dialog {
+  mat-dialog-container {
+    background-color: #0D142A !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    overflow: hidden !important;
+    border: 1px solid #404857;
+    border-radius: 10px;
+  }
 }
 
 mat-stepper {
   background-color: #0D142A !important;
 }
 
+mat-tab-group {
+  .mat-tab-body-wrapper {
+    height: 100%;
+  }
+}
+
+.staking-container {
+  @apply flex-1 flex flex-col justify-center px-24 gap-2
+}
+
+.building-image-container {
+  @apply flex-1 flex items-center
+}
+
 .button-stake {
-  background: transparent url('assets/Village/Button.png') 0 0 no-repeat padding-box;
-  background-size: 100% 100%;
+  background-image: url('assets/Village/Button.png');
   color: #43300D;
+
+  @apply w-2/4 bg-cover
+}
+
+.stake-tab {
+  @apply flex m-2 h-full
 }
 
 body {
   margin: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #EDCD90 padding-box;
+  border-radius: 10px;
+  border: 7px solid transparent;
+}
+
+::-webkit-scrollbar {
+  width: 21px;
+  height: 21px;
+}
+
+::-webkit-scrollbar-track {
+  background: #968E74;
+  border: 7px solid transparent;
+  border-radius: 12px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
