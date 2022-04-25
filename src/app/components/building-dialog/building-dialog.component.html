@@ -14,7 +14,7 @@
     </mat-tab>
     <mat-tab *ngIf="isBarracks" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
-        <span class="building-name">CHARACTERS</span>
+        <span class="building-name" [matTooltip]="building.level === 0 ? 'You need to build Barracks first' : ''">CHARACTERS</span>
       </ng-template>
       <app-character-staking [building]="building"></app-character-staking>
     </mat-tab>
