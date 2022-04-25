@@ -164,5 +164,178 @@
       }
     ],
     "unlocks": []
+  },
+  {
+    "duration": 36000,
+    "amount": 9,
+    "type": "Characters",
+    "rewards": [
+      {
+        "type": "Mercenary",
+        "amount": 5
+      },
+      {
+        "type": "Bruiser",
+        "amount": 5
+      },
+      {
+        "type": "Mage",
+        "amount": 5
+      },
+      {
+        "type": "Archer",
+        "amount": 5
+      },
+      {
+        "type": "Paladin",
+        "amount": 5
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 72000,
+    "amount": 10,
+    "type": "Characters",
+    "rewards": [
+      {
+        "type": "Mercenary",
+        "amount": 10
+      },
+      {
+        "type": "Bruiser",
+        "amount": 10
+      },
+      {
+        "type": "Mage",
+        "amount": 10
+      },
+      {
+        "type": "Archer",
+        "amount": 10
+      },
+      {
+        "type": "Paladin",
+        "amount": 10
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 90000,
+    "amount": 11,
+    "type": "Characters",
+    "rewards": [
+      {
+        "type": "Bruiser",
+        "amount": 50
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Bruiser",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "duration": 108000,
+    "amount": 12,
+    "type": "Characters",
+    "rewards": [
+      {
+        "type": "Mage",
+        "amount": 50
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Mage",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "duration": 126000,
+    "amount": 13,
+    "type": "Characters",
+    "requirement": {
+      "type": "Barracks Level",
+      "amount": 3
+    },
+    "rewards": [
+      {
+        "type": "Archer",
+        "amount": 50
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Archer",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "duration": 144000,
+    "amount": 14,
+    "type": "Characters",
+    "rewards": [
+      {
+        "type": "Paladin",
+        "amount": 50
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Paladin",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "duration": 162000,
+    "amount": 15,
+    "type": "Characters",
+    "rewards": [
+      {
+        "type": "Mercenary",
+        "amount": 50
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Mercenary",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "duration": 180000,
+    "amount": 16,
+    "type": "Characters",
+    "rewards": [
+      {
+        "type": "Mercenary",
+        "amount": 15
+      },
+      {
+        "type": "Bruiser",
+        "amount": 15
+      },
+      {
+        "type": "Mage",
+        "amount": 15
+      },
+      {
+        "type": "Archer",
+        "amount": 15
+      },
+      {
+        "type": "Paladin",
+        "amount": 15
+      }
+    ],
+    "unlocks": []
   }
 ]

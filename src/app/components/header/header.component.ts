@@ -35,10 +35,17 @@ export class HeaderComponent implements OnInit {
       this.skillBalance = state.skillBalance;
       this.weaponsBalance = state.weaponsBalance;
       this.charactersBalance = state.charactersBalance;
+      console.log(this.walletAddress.replace(/(\+\d{3})\d{7}/,"*******"))
     });
     this.land$.pipe(untilDestroyed(this)).subscribe((state: LandStateModel) => {
       this.land = state.selectedLand;
     });
+  }
+
+  get formattedWalletAddress() {
+    let firstFiveChars = this.walletAddress.slice(0, 5);
+    let lastFourChars = this.walletAddress.slice(this.walletAddress.length - 4);
+    return firstFiveChars + "..." + lastFourChars;
   }
 
 }
