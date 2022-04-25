@@ -24,4 +24,8 @@ contract WeaponStaking is NftStaking {
     require(stakedCharacters >= stakes[currentStake[msg.sender] + 1].requirement, 'You need to stake more characters');
     super.stake(ids);
   }
+
+  function getNextRequirement() public view returns (uint256) {
+    return stakes[currentStake[msg.sender] + 1].requirement;
+  }
 }

@@ -28,6 +28,7 @@ import { StakingTiersStepperComponent } from './components/staking-tiers-stepper
 import { ResourcePillComponent } from './components/resource-pill/resource-pill.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { SkillStakingComponent } from './components/skill-staking/skill-staking.component';
+import { WeaponStakingComponent } from './components/weapon-staking/weapon-staking.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { SkillStakingComponent } from './components/skill-staking/skill-staking.
     KingStakingComponent,
     StakingTiersStepperComponent,
     ResourcePillComponent,
-    SkillStakingComponent
+    SkillStakingComponent,
+    WeaponStakingComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,50 @@
+<div class="stake-tab">
+  <div class="building-image-container">
+    <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
+  </div>
+  <div class="staking-container">
+    <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
+    <span class="building-level">Level: {{ building.level }}</span>
+    <p class="building-level">Max level: {{building.maxLevel}}</p>
+    <div *ngIf="charactersStakedRequired">
+      <p class="building-requirements">Requirements: </p>
+      <p class="secondary-text">Staking tier unlocked: (Characters: {{ charactersStakedRequired}})</p>
+    </div>
+    <div *ngIf="totalWeaponsStaked">
+      <p class="building-requirements">Total staked:</p>
+      <p class="secondary-text">{{totalWeaponsStaked}} Weapons</p>
+    </div>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let weapon of weapons" [value]="weapon">
+        {{weapon}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Choose weapon</mat-label>
+      <input matInput type="text" [(ngModel)]="selectedWeapon" [matAutocomplete]="auto">
+      <button *ngIf="selectedWeapon" matSuffix mat-icon-button aria-label="Clear"
+              (click)="selectedWeapon=undefined">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button [disabled]="!selectedWeapon || !meetsStakeRequirements" mat-raised-button
+            class="btn button-stake"
+            (click)="onStake()">
+      <ng-container
+        [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : stakeMoreCharacters"></ng-container>
+      <ng-template #stakeInProgress style="color: #43300D">
+        {{ timeLeft }}
+      </ng-template>
+      <ng-template #stake style="color: #43300D">
+        Stake <span *ngIf="weaponsRequired"> ({{ weaponsRequired }} Weapon)</span>
+      </ng-template>
+      <ng-template #stakeMoreCharacters>
+        You need to stake more characters
+      </ng-template>
+    </button>
+  </div>
+  <div class="flex-1">
+    <app-staking-tiers-stepper [stakingTiers]="weaponStakingTiers"
+                               [unlockedTiers]="unlockedTiers!"></app-staking-tiers-stepper>
+  </div>
+</div>

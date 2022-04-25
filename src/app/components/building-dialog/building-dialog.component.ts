@@ -32,4 +32,8 @@ export class BuildingDialogComponent implements OnInit {
       this.building?.type === BuildingType.STONE_MINE;
   }
 
+  get isSmithy() {
+    return this.building?.type === BuildingType.SMITHY;
+  }
+
 }
