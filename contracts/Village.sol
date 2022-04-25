@@ -19,8 +19,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
   mapping(Building => uint256) public buildingMaxLevel;
   mapping(Building => BuildingRequirement) public buildingRequirement;
 
-  //  enum Building{NONE, TOWN_HALL, HEADQUARTERS, BARRACKS, STONE_MINE, CLAY_PIT, FOREST_CAMP, CHURCH, STOREHOUSE, SMITHY, RALLY_POINT, FARM, HIDDEN_STASH, WALL, TRADING_POST}
-  enum Building{NONE, TOWN_HALL, HEADQUARTERS, BARRACKS, CLAY_PIT, IRON_MINE, STONE_MINE, STOREHOUSE, SMITHY, FARM, HIDDEN_STASH, WALL, TRADING_POST}
+  enum Building{NONE, TOWN_HALL, HEADQUARTERS, BARRACKS, CLAY_PIT, FOREST_CAMP, STONE_MINE, STOREHOUSE, SMITHY, FARM, HIDDEN_STASH, WALL, MARKET}
 
   struct BuildingUpgrade {
     Building building;
@@ -47,20 +46,20 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     buildingMaxLevel[Building.HEADQUARTERS] = 1;
     buildingMaxLevel[Building.BARRACKS] = 5;
     buildingMaxLevel[Building.CLAY_PIT] = 6;
-    buildingMaxLevel[Building.IRON_MINE] = 6;
+    buildingMaxLevel[Building.FOREST_CAMP] = 6;
     buildingMaxLevel[Building.STONE_MINE] = 6;
     buildingMaxLevel[Building.STOREHOUSE] = 10;
     buildingMaxLevel[Building.SMITHY] = 6;
     buildingMaxLevel[Building.FARM] = 10;
     buildingMaxLevel[Building.HIDDEN_STASH] = 1;
     buildingMaxLevel[Building.WALL] = 1;
-    buildingMaxLevel[Building.TRADING_POST] = 1;
+    buildingMaxLevel[Building.MARKET] = 1;
 
     buildingRequirement[Building.HEADQUARTERS] = BuildingRequirement(Building.TOWN_HALL, 3);
     buildingRequirement[Building.BARRACKS] = BuildingRequirement(Building.TOWN_HALL, 2);
     buildingRequirement[Building.SMITHY] = BuildingRequirement(Building.BARRACKS, 3);
     buildingRequirement[Building.WALL] = BuildingRequirement(Building.BARRACKS, 1);
-    buildingRequirement[Building.TRADING_POST] = BuildingRequirement(Building.TOWN_HALL, 5);
+    buildingRequirement[Building.MARKET] = BuildingRequirement(Building.TOWN_HALL, 5);
   }
 
   modifier assertOwnsLand(address user, uint id) {
@@ -148,14 +147,14 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     buildings[id][Building.HEADQUARTERS] = 0;
     buildings[id][Building.BARRACKS] = 0;
     buildings[id][Building.CLAY_PIT] = 0;
-    buildings[id][Building.IRON_MINE] = 0;
+    buildings[id][Building.FOREST_CAMP] = 0;
     buildings[id][Building.STONE_MINE] = 0;
     buildings[id][Building.STOREHOUSE] = 0;
     buildings[id][Building.SMITHY] = 0;
     buildings[id][Building.FARM] = 0;
     buildings[id][Building.HIDDEN_STASH] = 0;
     buildings[id][Building.WALL] = 0;
-    buildings[id][Building.TRADING_POST] = 0;
+    buildings[id][Building.MARKET] = 0;
     currentlyUpgrading[id] = BuildingUpgrade(Building.NONE, 0);
   }
 
