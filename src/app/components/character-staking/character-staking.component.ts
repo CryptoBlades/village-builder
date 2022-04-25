@@ -52,7 +52,7 @@ export class CharacterStakingComponent implements OnInit {
     this.store.dispatch(new SetCharactersBalance(this.characters.length))
     this.totalCharactersStaked = await this.charactersService.getTotalStaked();
     this.charactersRequired = await this.charactersService.getRequiredStakeAmount();
-    this.barracksRequired = await this.charactersService.getRequiredBarracksLevel();
+    this.barracksRequired = await this.charactersService.getNextRequirement();
     this.unlockedTiers = await this.charactersService.getUnlockedTiers();
   }
 

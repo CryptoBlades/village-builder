@@ -77,11 +77,11 @@ module.exports = async function (deployer) {
   await kingStaking.addStake(19, 2400, web3.utils.toWei('55', 'ether'));
   await kingStaking.addStake(20, 3000, web3.utils.toWei('60', 'ether'));
 
-  await skillStaking.addStake(1, 30, web3.utils.toWei('0.01', 'ether'));
-  await skillStaking.addStake(2, 60, web3.utils.toWei('0.05', 'ether'));
-  await skillStaking.addStake(3, 120, web3.utils.toWei('0.1', 'ether'));
-  await skillStaking.addStake(4, 180, web3.utils.toWei('0.2', 'ether'));
-  await skillStaking.addStake(5, 240, web3.utils.toWei('0.3', 'ether'));
-  await skillStaking.addStake(6, 300, web3.utils.toWei('0.4', 'ether'));
-  await skillStaking.addStake(7, 600, web3.utils.toWei('0.5', 'ether'));
+  await skillStaking.addStake(1, 30, 4, web3.utils.toWei('0.01', 'ether'));
+  await skillStaking.addStake(2, 60, 4, web3.utils.toWei('0.05', 'ether'));
+  await skillStaking.addStake(3, 120, 4, web3.utils.toWei('0.1', 'ether'));
+  await skillStaking.addStake(4, 180, 4, web3.utils.toWei('0.2', 'ether'));
+  await skillStaking.addStake(5, 240, 4, web3.utils.toWei('0.3', 'ether'));
+  await skillStaking.addStake(6, 300, 4, web3.utils.toWei('0.4', 'ether'));
+  await skillStaking.addStake(7, 600, 4, web3.utils.toWei('0.5', 'ether'));
 };

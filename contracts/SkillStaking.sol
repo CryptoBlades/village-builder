@@ -15,12 +15,12 @@ contract SkillStaking is CurrencyStaking {
   }
 
   function stake(uint amount) public override returns (uint finishTimestamp) {
-    require(kingStaking.unlockedTiers(msg.sender) >= 4, "You must unlock at least 4 tiers of king before staking skill");
+    require(kingStaking.unlockedTiers(msg.sender) >= getNextRequirement(), "You must unlock at least 4 tiers of king before staking skill");
     finishTimestamp = super.stake(amount);
   }
 
-  function addStake(uint id, uint duration, uint amount) public {
-    stakes[id] = Stake({duration : duration, requirement : 0, amount : amount});
+  function addStake(uint id, uint duration, uint requirement, uint amount) public {
+    stakes[id] = Stake({duration : duration, requirement : requirement, amount : amount});
   }
 
   function unstake() public override returns (bool stakeCompleted) {
@@ -29,5 +29,9 @@ contract SkillStaking is CurrencyStaking {
 
   function claimStakeReward() public {
     completeStake();
+  }
+
+  function getNextRequirement() public view returns (uint256) {
+    return stakes[currentStake[msg.sender] + 1].requirement;
   }
 }

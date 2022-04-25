@@ -42,4 +42,9 @@ export class SkillService extends SolidityService {
     const amount = await this.skillStakingContract.methods.getRequiredStakeAmount().call({from: this.currentAccount});
     return +this.web3.utils.fromWei(amount, 'ether');
   }
+
+  async getNextRequirement(): Promise<number> {
+    return +await this.skillStakingContract.methods.getNextRequirement().call({from: this.currentAccount});
+  }
+
 }

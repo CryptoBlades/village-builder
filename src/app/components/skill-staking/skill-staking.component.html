@@ -1,7 +1,6 @@
 <div class="stake-tab">
   <div class="building-image-container">
-    <img style="max-width: 100%; max-height: 100%;" [src]="building.image"
-         [alt]="getBuildingTypeName(building.type)">
+    <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
   </div>
   <div class="staking-container">
     <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
@@ -9,7 +8,7 @@
     <p class="building-level">Max level: {{building.maxLevel}}</p>
     <div>
       <p class="building-requirements">Requirements: </p>
-      <p class="secondary-text">Total staked: (KING: 4)</p>
+      <p class="secondary-text">Staking tier unlocked: (KING: {{ kingStakingTierRequired}})</p>
     </div>
     <div *ngIf="totalSkillStaked">
       <p class="building-requirements">Total staked:</p>
@@ -17,14 +16,18 @@
     </div>
     <button mat-raised-button
             class="btn button-stake"
+            [disabled]="isStakeInProgress || !meetsStakeRequirements"
             (click)="onStake()">
-      <ng-container
-        [ngTemplateOutlet]="stake"></ng-container>
-      <!--      <ng-template #upgradeInProgress>-->
-      <!--        {{ timeLeft }}-->
-      <!--      </ng-template>-->
+      <ng-container class="w-full"
+        [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : required"></ng-container>
+      <ng-template #stakeInProgress>
+        {{ timeLeft }}
+      </ng-template>
       <ng-template #stake>
         Stake<span *ngIf="skillRequired"> ({{ skillRequired }} SKILL)</span>
+      </ng-template>
+      <ng-template #required>
+        You need to unlock at least {{ kingStakingTierRequired}} KING staking tiers
       </ng-template>
     </button>
     <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">

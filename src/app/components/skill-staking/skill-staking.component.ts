@@ -10,6 +10,7 @@ import {CharactersService} from "../../solidity/characters.service";
 import {Store} from "@ngxs/store";
 import {SkillService} from "../../solidity/skill.service";
 import {SetSkillBalance} from "../../state/wallet/wallet.actions";
+import {KingService} from "../../solidity/king.service";
 
 @Component({
   selector: 'app-skill-staking',
@@ -25,6 +26,8 @@ export class SkillStakingComponent implements OnInit {
   totalSkillStaked?: number;
   skillRequired?: number;
   unlockedTiers?: number;
+  kingStakingTierRequired?: number;
+  kingUnlockedTiers?: number;
   canClaim = false;
   skillStakingTiers: StakingTier[] = skillStakingTiers;
 
@@ -33,6 +36,7 @@ export class SkillStakingComponent implements OnInit {
     private landService: LandService,
     private charactersService: CharactersService,
     private skillService: SkillService,
+    private kingService: KingService,
     private store: Store,
   ) {
   }
@@ -48,6 +52,8 @@ export class SkillStakingComponent implements OnInit {
     this.unlockedTiers = await this.skillService.getUnlockedTiers();
     this.canClaim = await this.skillService.canCompleteStake();
     this.skillRequired = await this.skillService.getRequiredStakeAmount();
+    this.kingStakingTierRequired = await this.skillService.getNextRequirement();
+    this.kingUnlockedTiers = await this.kingService.getUnlockedTiers();
   }
 
   getTimeLeft(deadlineTimestamp: number) {
@@ -79,6 +85,14 @@ export class SkillStakingComponent implements OnInit {
     await this.skillService.claimStakeReward();
     console.log('Claimed');
     await this.loadBuilding();
+  }
+
+  get isStakeInProgress() {
+    return !!this.timeLeft;
+  }
+
+  get meetsStakeRequirements() {
+    return this.kingStakingTierRequired! <= this.kingUnlockedTiers!;
   }
 
 }

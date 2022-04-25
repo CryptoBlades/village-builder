@@ -47,8 +47,8 @@ export class CharactersService extends SolidityService {
     return +await this.characterStakingContract.methods.getRequiredStakeAmount().call({from: this.currentAccount});
   }
 
-  async getRequiredBarracksLevel(): Promise<number> {
-    return +await this.characterStakingContract.methods.getRequiredBarracksLevel().call({from: this.currentAccount});
+  async getNextRequirement(): Promise<number> {
+    return +await this.characterStakingContract.methods.getNextRequirement().call({from: this.currentAccount});
   }
 
   async getUnlockedTiers(): Promise<number> {

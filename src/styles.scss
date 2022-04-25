@@ -288,8 +288,8 @@ mat-tab-group {
 .button-stake {
   background-image: url('assets/Village/Button.png');
   color: #43300D;
-
-  @apply w-2/4 bg-cover
+  width: fit-content;
+  @apply bg-cover
 }
 
 .stake-tab {
