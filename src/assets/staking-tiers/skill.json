@@ -76,5 +76,215 @@
       }
     ],
     "unlocks": []
+  },
+  {
+    "duration": 240,
+    "amount": 0.3,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 100
+      },
+      {
+        "type": "Wood",
+        "amount": 100
+      },
+      {
+        "type": "Stone",
+        "amount": 100
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Stone",
+        "amount": 5
+      }
+    ]
+  },
+  {
+    "duration": 300,
+    "amount": 0.4,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 600,
+    "amount": 0.5,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 150
+      },
+      {
+        "type": "Wood",
+        "amount": 150
+      },
+      {
+        "type": "Stone",
+        "amount": 150
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Stone",
+        "amount": 10
+      }
+    ]
+  },
+  {
+    "duration": 720,
+    "amount": 1,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 4
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 900,
+    "amount": 1.25,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 200
+      },
+      {
+        "type": "Wood",
+        "amount": 200
+      },
+      {
+        "type": "Stone",
+        "amount": 200
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Wood",
+        "amount": 10
+      }
+    ]
+  },
+  {
+    "duration": 1200,
+    "amount": 1.5,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 5
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 1500,
+    "amount": 1.75,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 250
+      },
+      {
+        "type": "Wood",
+        "amount": 250
+      },
+      {
+        "type": "Stone",
+        "amount": 250
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Stone",
+        "amount": 10
+      }
+    ]
+  },
+  {
+    "duration": 1800,
+    "amount": 2,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 6
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 2700,
+    "amount": 2.25,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 300
+      },
+      {
+        "type": "Wood",
+        "amount": 300
+      },
+      {
+        "type": "Stone",
+        "amount": 300
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 25
+      }
+    ]
+  },
+  {
+    "duration": 3600,
+    "amount": 2.5,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 7
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 4200,
+    "amount": 2.75,
+    "type": "SKILL",
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 500
+      },
+      {
+        "type": "Wood",
+        "amount": 500
+      },
+      {
+        "type": "Stone",
+        "amount": 500
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Wood",
+        "amount": 25
+      }
+    ]
   }
 ]

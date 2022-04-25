@@ -26,4 +26,10 @@ export class BuildingDialogComponent implements OnInit {
     return this.building?.type === BuildingType.BARRACKS;
   }
 
+  get isResourcesGenerator() {
+    return this.building?.type === BuildingType.CLAY_PIT ||
+      this.building?.type === BuildingType.FOREST_CAMP ||
+      this.building?.type === BuildingType.STONE_MINE;
+  }
+
 }

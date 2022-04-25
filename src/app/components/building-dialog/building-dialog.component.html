@@ -7,7 +7,7 @@
       </ng-template>
       <app-king-staking [building]="building"></app-king-staking>
     </mat-tab>
-    <mat-tab>
+    <mat-tab *ngIf="isResourcesGenerator">
       <ng-template mat-tab-label>
         <img src="./assets/Placeholder/skill.png" class="px-1 w-8" alt="King"/>
         <span class="building-name">SKILL</span>
