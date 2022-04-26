@@ -15,19 +15,19 @@
       <p class="secondary-text">{{totalCharactersStaked}} Characters</p>
     </div>
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let character of characters" [value]="character">
+      <mat-option *ngFor="let character of filteredOptions | async" [value]="character">
         {{character}}
       </mat-option>
     </mat-autocomplete>
     <mat-form-field class="example-form-field" appearance="fill">
       <mat-label>Choose character</mat-label>
-      <input matInput type="text" [(ngModel)]="selectedCharacter" [matAutocomplete]="auto">
-      <button *ngIf="selectedCharacter" matSuffix mat-icon-button aria-label="Clear"
-              (click)="selectedCharacter=undefined">
+      <input matInput type="text" [formControl]="selectedCharacter" [matAutocomplete]="auto">
+      <button *ngIf="selectedCharacter.value" matSuffix mat-icon-button aria-label="Clear"
+              (click)="selectedCharacter.setValue(undefined)">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-    <button [disabled]="!selectedCharacter || !isBarracksRequirementMet" mat-raised-button
+    <button [disabled]="!selectedCharacter.value || !isBarracksRequirementMet" mat-raised-button
             class="btn button-stake"
             (click)="onStake()">
       <ng-container

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
+import {_filter, getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
 import {Building} from "../../app.component";
 import {CharactersService} from "../../solidity/characters.service";
 import characterStakingTiers from '../../../assets/staking-tiers/characters.json';
@@ -7,6 +7,8 @@ import {StakingTier} from "../../interfaces/staking-tier";
 import {Store} from "@ngxs/store";
 import {SetCharactersBalance} from "../../state/wallet/wallet.actions";
 import {BuildingType} from "../../enums/building-type";
+import {map, Observable, startWith} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-character-staking',
@@ -20,12 +22,13 @@ export class CharacterStakingComponent implements OnInit {
   @Input() building!: Building;
   totalCharactersStaked?: number;
   characters: number[] = [];
-  selectedCharacter?: number;
+  selectedCharacter = new FormControl();
   timeLeft?: string;
   checkInterval?: any;
   charactersRequired?: number;
   barracksRequired?: number;
   unlockedTiers?: number;
+  filteredOptions?: Observable<string[]>;
 
   constructor(
     private charactersService: CharactersService,
@@ -36,15 +39,19 @@ export class CharacterStakingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.loadCharacters();
     await this.getTimeLeft(+await this.charactersService.getStakeCompleteTimestamp());
+    this.filteredOptions = this.selectedCharacter.valueChanges.pipe(
+      startWith(''),
+      map(value => _filter(value, this.characters)),
+    );
   }
 
   async onStake() {
-    if (!this.selectedCharacter) return;
-    await this.charactersService.stake([this.selectedCharacter]);
+    if (!this.selectedCharacter.value) return;
+    await this.charactersService.stake([this.selectedCharacter.value]);
     console.log('Staked');
     await this.loadCharacters();
     await this.getTimeLeft(+await this.charactersService.getStakeCompleteTimestamp());
-    this.selectedCharacter = undefined;
+    this.selectedCharacter.setValue(undefined);
   }
 
   async loadCharacters() {

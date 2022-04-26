@@ -1,13 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {StakingTier} from "../../interfaces/staking-tier";
 import {Building} from "../../app.component";
-import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
+import {_filter, getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
 import weaponStakingTiers from '../../../assets/staking-tiers/weapons.json';
 import {CharactersService} from "../../solidity/characters.service";
 import {Store} from "@ngxs/store";
 import {WeaponsService} from "../../solidity/weapons.service";
 import {SetWeaponsBalance} from "../../state/wallet/wallet.actions";
 import {BuildingType} from "../../enums/building-type";
+import {map, Observable, startWith} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-weapon-staking',
@@ -22,13 +24,14 @@ export class WeaponStakingComponent implements OnInit {
   @Input() building!: Building;
   totalWeaponsStaked?: number;
   weapons: number[] = [];
-  selectedWeapon?: number;
+  selectedWeapon = new FormControl();
   timeLeft?: string;
   checkInterval?: any;
   weaponsRequired?: number;
   charactersStakedRequired?: number;
   unlockedTiers?: number;
   charactersUnlockedTiers?: number;
+  filteredOptions?: Observable<string[]>;
 
   constructor(
     private weaponsService: WeaponsService,
@@ -40,15 +43,19 @@ export class WeaponStakingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.loadWeapons();
     await this.getTimeLeft(+await this.weaponsService.getStakeCompleteTimestamp());
+    this.filteredOptions = this.selectedWeapon.valueChanges.pipe(
+      startWith(''),
+      map(value => _filter(value, this.weapons)),
+    );
   }
 
   async onStake() {
-    if (!this.selectedWeapon) return;
-    await this.weaponsService.stake([this.selectedWeapon]);
+    if (!this.selectedWeapon.value) return;
+    await this.weaponsService.stake([this.selectedWeapon.value]);
     console.log('Staked');
-    await this.loadWeapons();
+    this.selectedWeapon.setValue(undefined);
     await this.getTimeLeft(+await this.weaponsService.getStakeCompleteTimestamp());
-    this.selectedWeapon = undefined;
+    await this.loadWeapons();
   }
 
   async loadWeapons() {

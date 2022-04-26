@@ -14,7 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {SelectLandComponent} from './components/select-land/select-land.component';
 import {LandState} from "./state/land/land.state";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BuildingDialogComponent} from './components/building-dialog/building-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatTabsModule} from "@angular/material/tabs";
@@ -24,11 +24,11 @@ import {MatIconModule} from "@angular/material/icon";
 import {KingStakingComponent} from './components/king-staking/king-staking.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
-import { StakingTiersStepperComponent } from './components/staking-tiers-stepper/staking-tiers-stepper.component';
-import { ResourcePillComponent } from './components/resource-pill/resource-pill.component';
+import {StakingTiersStepperComponent} from './components/staking-tiers-stepper/staking-tiers-stepper.component';
+import {ResourcePillComponent} from './components/resource-pill/resource-pill.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
-import { SkillStakingComponent } from './components/skill-staking/skill-staking.component';
-import { WeaponStakingComponent } from './components/weapon-staking/weapon-staking.component';
+import {SkillStakingComponent} from './components/skill-staking/skill-staking.component';
+import {WeaponStakingComponent} from './components/weapon-staking/weapon-staking.component';
 
 
 @NgModule({
@@ -63,6 +63,7 @@ import { WeaponStakingComponent } from './components/weapon-staking/weapon-staki
     MatIconModule,
     MatStepperModule,
     MatTooltipModule,
+    ReactiveFormsModule,
   ],
   providers: [
     Web3Service,
