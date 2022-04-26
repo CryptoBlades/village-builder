@@ -13,6 +13,12 @@
                        [tooltip]="'Weapons'"></app-resource-pill>
     <app-resource-pill [balance]="charactersBalance" image="./assets/Placeholder/character.png"
                        [tooltip]="'Characters'"></app-resource-pill>
+    <app-resource-pill [balance]="clayBalance" image="./assets/Placeholder/clay.png"
+                       [tooltip]="'Clay'"></app-resource-pill>
+    <app-resource-pill [balance]="woodBalance" image="./assets/Placeholder/wood.png"
+                       [tooltip]="'Wood'"></app-resource-pill>
+    <app-resource-pill [balance]="stoneBalance" image="./assets/Placeholder/stone.png"
+                       [tooltip]="'Stone'"></app-resource-pill>
     <div class="text-white">
       <ng-container [ngSwitch]="land.tier">
         <div *ngSwitchCase="1">

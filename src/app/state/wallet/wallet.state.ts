@@ -3,11 +3,14 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {
   ClearWalletState,
   SetCharactersBalance,
+  SetClayBalance,
   SetKingBalance,
   SetMetamaskInstalled,
   SetSkillBalance,
+  SetStoneBalance,
   SetWalletAddress,
-  SetWeaponsBalance
+  SetWeaponsBalance,
+  SetWoodBalance
 } from './wallet.actions';
 
 
@@ -18,6 +21,9 @@ function createInitialData(): WalletStateModel {
     skillBalance: 0,
     weaponsBalance: 0,
     charactersBalance: 0,
+    clayBalance: 0,
+    woodBalance: 0,
+    stoneBalance: 0,
     isConnected: false,
     isInstalled: false,
   };
@@ -29,6 +35,9 @@ export interface WalletStateModel {
   skillBalance: number;
   weaponsBalance: number;
   charactersBalance: number;
+  clayBalance: number;
+  woodBalance: number;
+  stoneBalance: number;
   isConnected: boolean;
   isInstalled: boolean;
 }
@@ -74,6 +83,21 @@ export class WalletState {
   @Action(SetCharactersBalance)
   setCharactersBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetCharactersBalance) {
     patchState({charactersBalance: payload});
+  }
+
+  @Action(SetClayBalance)
+  setClayBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetClayBalance) {
+    patchState({clayBalance: payload});
+  }
+
+  @Action(SetWoodBalance)
+  setWoodBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWoodBalance) {
+    patchState({woodBalance: payload});
+  }
+
+  @Action(SetStoneBalance)
+  setStoneBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetStoneBalance) {
+    patchState({stoneBalance: payload});
   }
 
   @Action(SetMetamaskInstalled)

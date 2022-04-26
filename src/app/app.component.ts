@@ -5,13 +5,13 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Store} from '@ngxs/store';
 import {from, Observable, take} from "rxjs";
 import {
-  SetCharactersBalance,
+  SetCharactersBalance, SetClayBalance,
   SetKingBalance,
   SetMetamaskConnected,
   SetMetamaskInstalled,
-  SetSkillBalance,
+  SetSkillBalance, SetStoneBalance,
   SetWalletAddress,
-  SetWeaponsBalance
+  SetWeaponsBalance, SetWoodBalance
 } from "./state/wallet/wallet.actions";
 import {Web3Service} from "./services/web3.service";
 import {LandService} from "./solidity/land.service";
@@ -26,6 +26,8 @@ import {BuildingDialogComponent} from "./components/building-dialog/building-dia
 import {getBuildingTypeName, getTimeRemaining} from './common/common';
 import {SkillService} from "./solidity/skill.service";
 import {BuildingType} from "./enums/building-type";
+import skillStakingTiers from '../assets/staking-tiers/skill.json';
+import {StakingTier} from "./interfaces/staking-tier";
 
 export interface Building {
   level: number;
@@ -68,6 +70,8 @@ export class AppComponent implements OnInit {
 
   lands: Land[] = [];
   buildings: Building[] = [];
+
+  skillStakingTiers: StakingTier[] = skillStakingTiers;
 
   constructor(
     private store: Store,
@@ -120,10 +124,17 @@ export class AppComponent implements OnInit {
       const provider = await detectEthereumProvider() as any;
       provider?.request({method: 'eth_requestAccounts'}).then(async (accounts: any) => {
         this.store.dispatch(new SetWalletAddress(this.web3.utils.toChecksumAddress(accounts[0])));
-        this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()))
-        this.store.dispatch(new SetSkillBalance(await this.skillService.getOwnedAmount()))
-        this.store.dispatch(new SetWeaponsBalance(await this.weaponsService.getOwnedAmount()))
-        this.store.dispatch(new SetCharactersBalance(await this.charactersService.getOwnedAmount()))
+        this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
+        this.store.dispatch(new SetSkillBalance(await this.skillService.getOwnedAmount()));
+        this.store.dispatch(new SetWeaponsBalance(await this.weaponsService.getOwnedAmount()));
+        this.store.dispatch(new SetCharactersBalance(await this.charactersService.getOwnedAmount()));
+        const resources = Array.from(this.skillStakingTiers.slice(0, await this.skillService.getUnlockedTiers())
+          .flatMap(tier => tier.rewards).filter(reward => reward.type !== 'KING').reduce(
+            (m, {type, amount}) => m.set(type, (m.get(type) || 0) + amount), new Map
+          ), ([type, amount]) => ({type, amount}));
+        this.store.dispatch(new SetClayBalance(resources.find(resource => resource.type === 'Clay')?.amount));
+        this.store.dispatch(new SetWoodBalance(resources.find(resource => resource.type === 'Wood')?.amount));
+        this.store.dispatch(new SetStoneBalance(resources.find(resource => resource.type === 'Stone')?.amount));
         this.store.dispatch(new SetMetamaskConnected(true));
         this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
           this.lands = await this.landService.getOwnedLands(state.publicAddress)
