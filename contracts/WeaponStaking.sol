@@ -13,10 +13,6 @@ contract WeaponStaking is NftStaking {
     super.initialize(_village, nftAddress);
 
     characterStaking = _characterStaking;
-
-    stakes[1] = Stake({duration : 30, requirement : 1, amount : 1});
-    stakes[2] = Stake({duration : 120, requirement : 2, amount : 2});
-    stakes[3] = Stake({duration : 300, requirement : 3, amount : 3});
   }
 
   function stake(uint[] memory ids) public override {

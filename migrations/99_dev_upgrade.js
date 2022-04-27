@@ -8,7 +8,7 @@ const Village = artifacts.require('Village');
 module.exports = async function (deployer) {
   await upgradeProxy(Village.address, Village, {deployer});
   const characterStaking = await upgradeProxy(CharacterStaking.address, CharacterStaking, {deployer});
-  await upgradeProxy(WeaponStaking.address, WeaponStaking, {deployer});
+  const weaponStaking = await upgradeProxy(WeaponStaking.address, WeaponStaking, {deployer});
   const kingStaking = await upgradeProxy(KingStaking.address, KingStaking, {deployer});
 
   const skillStaking = await upgradeProxy(SkillStaking.address, SkillStaking, {deployer});
@@ -84,4 +84,10 @@ module.exports = async function (deployer) {
   await skillStaking.addStake(5, 240, 4, web3.utils.toWei('0.3', 'ether'), 0);
   await skillStaking.addStake(6, 300, 4, web3.utils.toWei('0.4', 'ether'), web3.utils.toWei('3', 'ether'));
   await skillStaking.addStake(7, 600, 4, web3.utils.toWei('0.5', 'ether'), 0);
+
+  await weaponStaking.addStake(1, 30, 1, 1);
+  await weaponStaking.addStake(2, 120, 2, 2);
+  await weaponStaking.addStake(3, 300, 3, 3);
+  await weaponStaking.addStake(4, 600, 4, 4);
+  await weaponStaking.addStake(5, 1500, 5, 5);
 };

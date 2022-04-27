@@ -61,8 +61,6 @@ export class AppComponent implements OnInit {
   currentAccount = '';
   selectedLand?: Land = undefined;
   characters: number[] = [];
-  weapons: number[] = [];
-  weaponsToStake = '';
   king: number = 0;
 
   timeLeft = '';
@@ -102,7 +100,6 @@ export class AppComponent implements OnInit {
       this.buildings = await this.landService.getBuildings();
       console.log(this.buildings);
     });
-    await this.getTimeLeft(+await this.weaponsService.getStakeCompleteTimestamp());
     await this.getKingTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
     this.king = await this.kingService.getRequiredStakeAmount();
   }
@@ -165,18 +162,6 @@ export class AppComponent implements OnInit {
     } catch (err) {
       console.error('Unstake fail:', err);
     }
-  }
-
-  async onClickFetchWeap() {
-    this.weapons = await this.weaponsService.getOwnedWeapons();
-    console.log(this.weapons);
-    await this.getTimeLeft(+await this.weaponsService.getStakeCompleteTimestamp());
-  }
-
-  async onClickStakeWeap() {
-    const ids = [...this.weaponsToStake].map((value: string | number) => +value);
-    await this.weaponsService.stake(ids);
-    console.log('Staked');
   }
 
   getKingTimeLeft(deadlineTimestamp: number) {

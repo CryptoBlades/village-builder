@@ -29,6 +29,7 @@ import {ResourcePillComponent} from './components/resource-pill/resource-pill.co
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {SkillStakingComponent} from './components/skill-staking/skill-staking.component';
 import {WeaponStakingComponent} from './components/weapon-staking/weapon-staking.component';
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import {WeaponStakingComponent} from './components/weapon-staking/weapon-staking
     MatStepperModule,
     MatTooltipModule,
     ReactiveFormsModule,
+    MatChipsModule,
   ],
   providers: [
     Web3Service,

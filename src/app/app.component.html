@@ -22,16 +22,6 @@
     <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickUnstake()">
       {{ 'Common.Unstake' }}
     </button>
-    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickFetchWeap()">
-      {{ 'Common.FetchWeaps' }}
-    </button>
-    <mat-form-field appearance="fill">
-      <mat-label>Input</mat-label>
-      <input matInput type="text" [(ngModel)]="weaponsToStake">
-    </mat-form-field>
-    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickStakeWeap()">
-      {{ 'Common.StakeWeap' }}
-    </button>
     <div>
       <h1>{{ 'King' }}</h1>
       <h2>King needed to upgrade: {{ king }}</h2>

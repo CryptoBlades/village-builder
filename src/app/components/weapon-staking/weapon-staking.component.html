@@ -14,20 +14,31 @@
       <p class="building-requirements">Total staked:</p>
       <p class="secondary-text">{{totalWeaponsStaked}} Weapons</p>
     </div>
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let weapon of filteredOptions | async" [value]="weapon">
-        {{weapon}}
-      </mat-option>
-    </mat-autocomplete>
-    <mat-form-field class="example-form-field" appearance="fill">
+    <mat-form-field class="example-chip-list" appearance="fill">
       <mat-label>Choose weapon</mat-label>
-      <input matInput type="text" [formControl]="selectedWeapon" [matAutocomplete]="auto">
-      <button *ngIf="selectedWeapon.value" matSuffix mat-icon-button aria-label="Clear"
-              (click)="selectedWeapon.setValue(undefined)">
-        <mat-icon>close</mat-icon>
-      </button>
+      <mat-chip-list #chipList aria-label="Weapon selection">
+        <mat-chip
+          *ngFor="let weapon of selectedWeapons"
+          (removed)="remove(weapon)">
+          {{weapon}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input
+          placeholder="Select weapon..."
+          #weaponInput
+          [formControl]="weaponControl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let weapon of filteredWeapons | async" [value]="weapon">
+          {{weapon}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
-    <button [disabled]="!selectedWeapon.value || !meetsStakeRequirements" mat-raised-button
+    <button [disabled]="!selectedWeapons.length || !meetsStakeRequirements" mat-raised-button
             class="btn button-stake"
             (click)="onStake()">
       <ng-container
