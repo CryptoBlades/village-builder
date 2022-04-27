@@ -9,7 +9,7 @@ import {LandService} from "../../solidity/land.service";
 import {CharactersService} from "../../solidity/characters.service";
 import {Store} from "@ngxs/store";
 import {SkillService} from "../../solidity/skill.service";
-import {SetSkillBalance} from "../../state/wallet/wallet.actions";
+import {SetClayBalance, SetSkillBalance, SetStoneBalance, SetWoodBalance} from "../../state/wallet/wallet.actions";
 import {KingService} from "../../solidity/king.service";
 
 @Component({
@@ -54,6 +54,16 @@ export class SkillStakingComponent implements OnInit {
     this.skillRequired = await this.skillService.getRequiredStakeAmount();
     this.kingStakingTierRequired = await this.skillService.getNextRequirement();
     this.kingUnlockedTiers = await this.kingService.getUnlockedTiers();
+    const unlockedSkillTiers = await this.skillService.getUnlockedTiers();
+    if (unlockedSkillTiers) {
+      const resources = Array.from(this.skillStakingTiers.slice(0, unlockedSkillTiers)
+        .flatMap(tier => tier.rewards).filter(reward => reward.type !== 'KING').reduce(
+          (m, {type, amount}) => m.set(type, (m.get(type) || 0) + amount), new Map
+        ), ([type, amount]) => ({type, amount}));
+      this.store.dispatch(new SetClayBalance(resources.find(resource => resource.type === 'Clay')?.amount));
+      this.store.dispatch(new SetWoodBalance(resources.find(resource => resource.type === 'Wood')?.amount));
+      this.store.dispatch(new SetStoneBalance(resources.find(resource => resource.type === 'Stone')?.amount));
+    }
   }
 
   getTimeLeft(deadlineTimestamp: number) {

@@ -5,13 +5,16 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Store} from '@ngxs/store';
 import {from, Observable, take} from "rxjs";
 import {
-  SetCharactersBalance, SetClayBalance,
+  SetCharactersBalance,
+  SetClayBalance,
   SetKingBalance,
   SetMetamaskConnected,
   SetMetamaskInstalled,
-  SetSkillBalance, SetStoneBalance,
+  SetSkillBalance,
+  SetStoneBalance,
   SetWalletAddress,
-  SetWeaponsBalance, SetWoodBalance
+  SetWeaponsBalance,
+  SetWoodBalance
 } from "./state/wallet/wallet.actions";
 import {Web3Service} from "./services/web3.service";
 import {LandService} from "./solidity/land.service";
@@ -128,13 +131,16 @@ export class AppComponent implements OnInit {
         this.store.dispatch(new SetSkillBalance(await this.skillService.getOwnedAmount()));
         this.store.dispatch(new SetWeaponsBalance(await this.weaponsService.getOwnedAmount()));
         this.store.dispatch(new SetCharactersBalance(await this.charactersService.getOwnedAmount()));
-        const resources = Array.from(this.skillStakingTiers.slice(0, await this.skillService.getUnlockedTiers())
-          .flatMap(tier => tier.rewards).filter(reward => reward.type !== 'KING').reduce(
-            (m, {type, amount}) => m.set(type, (m.get(type) || 0) + amount), new Map
-          ), ([type, amount]) => ({type, amount}));
-        this.store.dispatch(new SetClayBalance(resources.find(resource => resource.type === 'Clay')?.amount));
-        this.store.dispatch(new SetWoodBalance(resources.find(resource => resource.type === 'Wood')?.amount));
-        this.store.dispatch(new SetStoneBalance(resources.find(resource => resource.type === 'Stone')?.amount));
+        const unlockedSkillTiers = await this.skillService.getUnlockedTiers();
+        if (unlockedSkillTiers) {
+          const resources = Array.from(this.skillStakingTiers.slice(0, unlockedSkillTiers)
+            .flatMap(tier => tier.rewards).filter(reward => reward.type !== 'KING').reduce(
+              (m, {type, amount}) => m.set(type, (m.get(type) || 0) + amount), new Map
+            ), ([type, amount]) => ({type, amount}));
+          this.store.dispatch(new SetClayBalance(resources.find(resource => resource.type === 'Clay')?.amount));
+          this.store.dispatch(new SetWoodBalance(resources.find(resource => resource.type === 'Wood')?.amount));
+          this.store.dispatch(new SetStoneBalance(resources.find(resource => resource.type === 'Stone')?.amount));
+        }
         this.store.dispatch(new SetMetamaskConnected(true));
         this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
           this.lands = await this.landService.getOwnedLands(state.publicAddress)
