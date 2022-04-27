@@ -30,6 +30,7 @@ export class SkillStakingComponent implements OnInit {
   kingUnlockedTiers?: number;
   canClaim = false;
   skillStakingTiers: StakingTier[] = skillStakingTiers;
+  nextStakingTier?: StakingTier;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -50,6 +51,7 @@ export class SkillStakingComponent implements OnInit {
     this.building = await this.landService.getBuilding(this.data.buildingType);
     this.totalSkillStaked = await this.skillService.getTotalStaked();
     this.unlockedTiers = await this.skillService.getUnlockedTiers();
+    this.nextStakingTier = this.skillStakingTiers[this.unlockedTiers];
     this.canClaim = await this.skillService.canCompleteStake();
     this.skillRequired = await this.skillService.getRequiredStakeAmount();
     this.kingStakingTierRequired = await this.skillService.getNextRequirement();

@@ -19,7 +19,7 @@
         {{character}}
       </mat-option>
     </mat-autocomplete>
-    <mat-form-field class="example-form-field" appearance="fill">
+    <mat-form-field appearance="fill">
       <mat-label>Choose character</mat-label>
       <input matInput type="text" [formControl]="selectedCharacter" [matAutocomplete]="auto">
       <button *ngIf="selectedCharacter.value" matSuffix mat-icon-button aria-label="Clear"
@@ -42,6 +42,21 @@
         You need to upgrade Barracks first
       </ng-template>
     </button>
+    <div *ngIf="nextStakingTier">
+      <p class="building-requirements">Next rewards/unlocks: </p>
+      <p class="secondary-text">Rewards:
+        <span *ngFor="let reward of nextStakingTier.rewards" class="flex items-center h-8">
+              - {{reward.amount}} <img src="./assets/Placeholder/{{reward.type.toLowerCase()}}.png" class="px-1 w-8"
+                                       [alt]="reward.type" [matTooltip]="reward.type"/>
+        </span>
+      </p>
+      <p class="secondary-text">Unlocks:
+        <span *ngFor="let unlock of nextStakingTier.unlocks" class="flex items-center h-8">
+          - {{unlock.amount}} <img src="./assets/Placeholder/{{unlock.type.toLowerCase()}}.png" class="px-1 w-8"
+                                   [alt]="unlock.type" [matTooltip]="unlock.type"/>
+        </span>
+      </p>
+    </div>
   </div>
   <div class="flex-1">
     <app-staking-tiers-stepper [stakingTiers]="characterStakingTiers"

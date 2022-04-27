@@ -18,6 +18,7 @@ import {FormControl} from "@angular/forms";
 export class CharacterStakingComponent implements OnInit {
   getBuildingTypeName = getBuildingTypeName;
   characterStakingTiers: StakingTier[] = characterStakingTiers;
+  nextStakingTier?: StakingTier;
 
   @Input() building!: Building;
   totalCharactersStaked?: number;
@@ -61,6 +62,7 @@ export class CharacterStakingComponent implements OnInit {
     this.charactersRequired = await this.charactersService.getRequiredStakeAmount();
     this.barracksRequired = await this.charactersService.getNextRequirement();
     this.unlockedTiers = await this.charactersService.getUnlockedTiers();
+    this.nextStakingTier = this.characterStakingTiers[this.unlockedTiers];
   }
 
   getTimeLeft(deadlineTimestamp: number) {
