@@ -30,6 +30,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {SkillStakingComponent} from './components/skill-staking/skill-staking.component';
 import {WeaponStakingComponent} from './components/weapon-staking/weapon-staking.component';
 import {MatChipsModule} from "@angular/material/chips";
+import { KingVaultDialogComponent } from './components/king-vault-dialog/king-vault-dialog.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {MatChipsModule} from "@angular/material/chips";
     StakingTiersStepperComponent,
     ResourcePillComponent,
     SkillStakingComponent,
-    WeaponStakingComponent
+    WeaponStakingComponent,
+    KingVaultDialogComponent
   ],
   imports: [
     BrowserModule,

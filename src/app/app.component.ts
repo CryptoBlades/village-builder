@@ -31,6 +31,7 @@ import {SkillService} from "./solidity/skill.service";
 import {BuildingType} from "./enums/building-type";
 import skillStakingTiers from '../assets/staking-tiers/skill.json';
 import {StakingTier} from "./interfaces/staking-tier";
+import {KingVaultDialogComponent} from "./components/king-vault-dialog/king-vault-dialog.component";
 
 export interface Building {
   level: number;
@@ -198,12 +199,16 @@ export class AppComponent implements OnInit {
     }, 1000);
   }
 
-  openBuildingModal(buildingType: BuildingType) {
+  openBuildingDialog(buildingType: BuildingType) {
     this.dialog.open(BuildingDialogComponent, {
       data: {buildingType},
       panelClass: 'building-dialog',
       height: '80vh',
       width: '80vw',
     });
+  }
+
+  openKingVaultDialog() {
+    this.dialog.open(KingVaultDialogComponent);
   }
 }

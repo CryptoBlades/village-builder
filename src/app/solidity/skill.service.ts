@@ -47,4 +47,18 @@ export class SkillService extends SolidityService {
     return +await this.skillStakingContract.methods.getNextRequirement().call({from: this.currentAccount});
   }
 
+  async getTotalKingInVault(): Promise<number> {
+    const amount = await (await this.kingContract).methods.balanceOf(this.skillStakingContract.options.address).call({from: this.currentAccount});
+    return +this.web3.utils.fromWei(amount, 'ether');
+  }
+
+  async getClaimableKing(): Promise<number> {
+    const amount = await this.skillStakingContract.methods.kingVaults(this.currentAccount).call({from: this.currentAccount});
+    return +this.web3.utils.fromWei(amount, 'ether');
+  }
+
+  async claimKing(): Promise<void> {
+    await this.skillStakingContract.methods.claimKingVault().send({from: this.currentAccount});
+  }
+
 }
