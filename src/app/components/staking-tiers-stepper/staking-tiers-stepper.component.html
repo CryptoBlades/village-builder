@@ -1,4 +1,4 @@
-<mat-stepper orientation="vertical" [selectedIndex]="unlockedTiers!" class="overflow-auto max-h-full">
+<mat-stepper orientation="vertical" [selectedIndex]="unlockedTiers!" class="overflow-auto max-h-screen md:max-h-full">
   <mat-step *ngFor="let stakingTier of stakingTiers; index as i"
             [label]="stakingTier.amount + ' ' + stakingTier.type + ' (' + stakingTier.duration / 60 + ' minutes' + ')'"
             [completed]="unlockedTiers! - 1 >= i">

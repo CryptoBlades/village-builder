@@ -203,8 +203,6 @@ export class AppComponent implements OnInit {
     this.dialog.open(BuildingDialogComponent, {
       data: {buildingType},
       panelClass: 'building-dialog',
-      height: '80vh',
-      width: '80vw',
     });
   }
 
