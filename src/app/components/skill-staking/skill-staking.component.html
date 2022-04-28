@@ -19,9 +19,9 @@
             [disabled]="isStakeInProgress || !meetsStakeRequirements"
             (click)="onStake()">
       <ng-container class="w-full"
-        [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : required"></ng-container>
+                    [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : required"></ng-container>
       <ng-template #stakeInProgress>
-        {{ timeLeft }}
+        <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
       </ng-template>
       <ng-template #stake>
         Stake<span *ngIf="skillRequired"> ({{ skillRequired }} SKILL)</span>
@@ -35,8 +35,6 @@
     </button>
     <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
   </div>
-  <div class="flex-1">
-    <app-staking-tiers-stepper [stakingTiers]="skillStakingTiers"
-                               [unlockedTiers]="unlockedTiers!"></app-staking-tiers-stepper>
-  </div>
+  <app-staking-tiers-stepper class="flex-1" [stakingTiers]="skillStakingTiers"
+                             [unlockedTiers]="unlockedTiers!"></app-staking-tiers-stepper>
 </div>

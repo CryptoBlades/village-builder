@@ -32,6 +32,7 @@ import {WeaponStakingComponent} from './components/weapon-staking/weapon-staking
 import {MatChipsModule} from "@angular/material/chips";
 import { KingVaultDialogComponent } from './components/king-vault-dialog/king-vault-dialog.component';
 import { NextTierUnlocksComponent } from './components/next-tier-unlocks/next-tier-unlocks.component';
+import { TimestampCountdownDirective } from './directives/timestamp-countdown.directive';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { NextTierUnlocksComponent } from './components/next-tier-unlocks/next-ti
     SkillStakingComponent,
     WeaponStakingComponent,
     KingVaultDialogComponent,
-    NextTierUnlocksComponent
+    NextTierUnlocksComponent,
+    TimestampCountdownDirective
   ],
   imports: [
     BrowserModule,

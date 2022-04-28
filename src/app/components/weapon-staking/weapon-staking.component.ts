@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {StakingTier} from "../../interfaces/staking-tier";
 import {Building} from "../../app.component";
-import {getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
+import {getBuildingTypeName} from 'src/app/common/common';
 import weaponStakingTiers from '../../../assets/staking-tiers/weapons.json';
 import {CharactersService} from "../../solidity/characters.service";
 import {Store} from "@ngxs/store";
@@ -17,22 +17,21 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
   styleUrls: ['./weapon-staking.component.scss']
 })
 export class WeaponStakingComponent implements OnInit {
-
   getBuildingTypeName = getBuildingTypeName;
   weaponStakingTiers: StakingTier[] = weaponStakingTiers;
+  nextStakingTier?: StakingTier;
 
   @Input() building!: Building;
   totalWeaponsStaked?: number;
   ownedWeapons: string[] = [];
   weaponControl = new FormControl();
-  timeLeft?: string;
-  checkInterval?: any;
   weaponsRequired?: number;
   charactersStakedRequired?: number;
   unlockedTiers?: number;
   charactersUnlockedTiers?: number;
   filteredWeapons?: Observable<string[]>;
   selectedWeapons: string[] = [];
+  stakeCompleteTimestamp?: number;
 
   @ViewChild('weaponInput') weaponInput!: ElementRef<HTMLInputElement>;
 
@@ -44,8 +43,7 @@ export class WeaponStakingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadWeapons();
-    await this.getTimeLeft(+await this.weaponsService.getStakeCompleteTimestamp());
+    await this.loadData();
     this.filteredWeapons = this.weaponControl.valueChanges.pipe(
       startWith(null),
       map((weapon: string | null) => (weapon ? this._filter(weapon) : this.ownedWeapons.slice())),
@@ -59,11 +57,10 @@ export class WeaponStakingComponent implements OnInit {
     this.selectedWeapons = [];
     this.weaponInput.nativeElement.value = '';
     this.weaponControl.setValue(null);
-    await this.getTimeLeft(+await this.weaponsService.getStakeCompleteTimestamp());
-    await this.loadWeapons();
+    await this.loadData();
   }
 
-  async loadWeapons() {
+  async loadData() {
     this.ownedWeapons = (await this.weaponsService.getOwnedWeapons()).map(weapon => weapon.toString());
     this.store.dispatch(new SetWeaponsBalance(this.ownedWeapons.length))
     this.totalWeaponsStaked = await this.weaponsService.getTotalStaked();
@@ -71,27 +68,17 @@ export class WeaponStakingComponent implements OnInit {
     this.charactersStakedRequired = await this.weaponsService.getNextRequirement();
     this.unlockedTiers = await this.weaponsService.getUnlockedTiers();
     this.charactersUnlockedTiers = await this.charactersService.getUnlockedTiers();
-  }
-
-  getTimeLeft(deadlineTimestamp: number) {
-    if (!deadlineTimestamp) return;
-    if (this.checkInterval) {
-      clearInterval(this.checkInterval);
+    this.nextStakingTier = this.weaponStakingTiers[this.unlockedTiers];
+    const stakeCompleteTimestamp = await this.weaponsService.getStakeCompleteTimestamp();
+    if (stakeCompleteTimestamp > Date.now() / 1000) {
+      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+    } else {
+      this.stakeCompleteTimestamp = undefined;
     }
-    this.checkInterval = setInterval(async () => {
-      const {total, days, hours, minutes, seconds} = getTimeRemaining(deadlineTimestamp.toString());
-      this.timeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
-      console.log(this.timeLeft);
-      if (total <= 1000 && this.checkInterval) {
-        clearInterval(this.checkInterval);
-        this.timeLeft = '';
-        await this.loadWeapons();
-      }
-    }, 1000);
   }
 
   get isStakeInProgress() {
-    return !!this.timeLeft;
+    return !!this.stakeCompleteTimestamp;
   }
 
   get meetsStakeRequirements() {

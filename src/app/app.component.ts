@@ -26,7 +26,7 @@ import {WeaponsService} from "./solidity/weapons.service";
 import {KingService} from "./solidity/king.service";
 import {MatDialog} from "@angular/material/dialog";
 import {BuildingDialogComponent} from "./components/building-dialog/building-dialog.component";
-import {getBuildingTypeName, getTimeRemaining} from './common/common';
+import {getBuildingTypeName} from './common/common';
 import {SkillService} from "./solidity/skill.service";
 import {BuildingType} from "./enums/building-type";
 import skillStakingTiers from '../assets/staking-tiers/skill.json';
@@ -64,11 +64,8 @@ export class AppComponent implements OnInit {
   characters: number[] = [];
   king: number = 0;
 
-  timeLeft = '';
-  kingTimeLeft = '';
-  checkInterval: any = null;
-  kingCheckInterval: any = null;
   canCompleteKingStake = false;
+  stakeCompleteTimestamp?: number;
 
   lands: Land[] = [];
   buildings: Building[] = [];
@@ -101,7 +98,12 @@ export class AppComponent implements OnInit {
       this.buildings = await this.landService.getBuildings();
       console.log(this.buildings);
     });
-    await this.getKingTimeLeft(+await this.kingService.getStakeCompleteTimestamp());
+    const stakeCompleteTimestamp = await this.kingService.getStakeCompleteTimestamp();
+    if (stakeCompleteTimestamp > Date.now() / 1000) {
+      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+    } else {
+      this.stakeCompleteTimestamp = undefined;
+    }
     this.king = await this.kingService.getRequiredStakeAmount();
   }
 
@@ -163,40 +165,6 @@ export class AppComponent implements OnInit {
     } catch (err) {
       console.error('Unstake fail:', err);
     }
-  }
-
-  getKingTimeLeft(deadlineTimestamp: number) {
-    if (!deadlineTimestamp) return;
-    if (this.kingCheckInterval) {
-      clearInterval(this.kingCheckInterval);
-    }
-    this.kingCheckInterval = setInterval(async () => {
-      const {total, days, hours, minutes, seconds} = getTimeRemaining(deadlineTimestamp.toString());
-      this.kingTimeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
-      console.log(this.kingTimeLeft);
-      if (total <= 1000 && this.kingCheckInterval) {
-        clearInterval(this.kingCheckInterval);
-        this.kingTimeLeft = '';
-        this.canCompleteKingStake = await this.kingService.canCompleteStake();
-        this.buildings = await this.landService.getBuildings();
-      }
-    }, 1000);
-  }
-
-  getTimeLeft(deadlineTimestamp: number) {
-    if (!deadlineTimestamp) return;
-    if (this.checkInterval) {
-      clearInterval(this.checkInterval);
-    }
-    this.checkInterval = setInterval(() => {
-      const {total, days, hours, minutes, seconds} = getTimeRemaining(deadlineTimestamp.toString());
-      this.timeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
-      console.log(this.timeLeft);
-      if (total <= 1000 && this.checkInterval) {
-        clearInterval(this.checkInterval);
-        this.timeLeft = '';
-      }
-    }, 1000);
   }
 
   openBuildingDialog(buildingType: BuildingType) {

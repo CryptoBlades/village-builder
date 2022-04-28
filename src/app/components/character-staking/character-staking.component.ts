@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {_filter, getBuildingTypeName, getTimeRemaining} from 'src/app/common/common';
+import {_filter, getBuildingTypeName} from 'src/app/common/common';
 import {Building} from "../../app.component";
 import {CharactersService} from "../../solidity/characters.service";
 import characterStakingTiers from '../../../assets/staking-tiers/characters.json';
@@ -24,12 +24,11 @@ export class CharacterStakingComponent implements OnInit {
   totalCharactersStaked?: number;
   characters: number[] = [];
   selectedCharacter = new FormControl();
-  timeLeft?: string;
-  checkInterval?: any;
   charactersRequired?: number;
   barracksRequired?: number;
   unlockedTiers?: number;
   filteredOptions?: Observable<string[]>;
+  stakeCompleteTimestamp?: number;
 
   constructor(
     private charactersService: CharactersService,
@@ -38,8 +37,7 @@ export class CharacterStakingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadCharacters();
-    await this.getTimeLeft(+await this.charactersService.getStakeCompleteTimestamp());
+    await this.loadData();
     this.filteredOptions = this.selectedCharacter.valueChanges.pipe(
       startWith(''),
       map(value => _filter(value, this.characters)),
@@ -50,12 +48,11 @@ export class CharacterStakingComponent implements OnInit {
     if (!this.selectedCharacter.value) return;
     await this.charactersService.stake([this.selectedCharacter.value]);
     console.log('Staked');
-    await this.loadCharacters();
-    await this.getTimeLeft(+await this.charactersService.getStakeCompleteTimestamp());
+    await this.loadData();
     this.selectedCharacter.setValue(undefined);
   }
 
-  async loadCharacters() {
+  async loadData() {
     this.characters = await this.charactersService.getOwnedCharacters();
     this.store.dispatch(new SetCharactersBalance(this.characters.length))
     this.totalCharactersStaked = await this.charactersService.getTotalStaked();
@@ -63,27 +60,16 @@ export class CharacterStakingComponent implements OnInit {
     this.barracksRequired = await this.charactersService.getNextRequirement();
     this.unlockedTiers = await this.charactersService.getUnlockedTiers();
     this.nextStakingTier = this.characterStakingTiers[this.unlockedTiers];
-  }
-
-  getTimeLeft(deadlineTimestamp: number) {
-    if (!deadlineTimestamp) return;
-    if (this.checkInterval) {
-      clearInterval(this.checkInterval);
+    const stakeCompleteTimestamp = await this.charactersService.getStakeCompleteTimestamp();
+    if (stakeCompleteTimestamp > Date.now() / 1000) {
+      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+    } else {
+      this.stakeCompleteTimestamp = undefined;
     }
-    this.checkInterval = setInterval(async () => {
-      const {total, days, hours, minutes, seconds} = getTimeRemaining(deadlineTimestamp.toString());
-      this.timeLeft = `${days !== '00' ? `${days}d ` : ''} ${hours !== '00' ? `${hours}h ` : ''} ${minutes}m ${seconds}s`;
-      console.log(this.timeLeft);
-      if (total <= 1000 && this.checkInterval) {
-        clearInterval(this.checkInterval);
-        this.timeLeft = '';
-        await this.loadCharacters();
-      }
-    }, 1000);
   }
 
   get isStakeInProgress() {
-    return !!this.timeLeft;
+    return !!this.stakeCompleteTimestamp;
   }
 
   get getBarracksType() {

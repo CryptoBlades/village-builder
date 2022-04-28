@@ -44,7 +44,7 @@
       <ng-container
         [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : stakeMoreCharacters"></ng-container>
       <ng-template #stakeInProgress style="color: #43300D">
-        {{ timeLeft }}
+        <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
       </ng-template>
       <ng-template #stake style="color: #43300D">
         Stake <span *ngIf="weaponsRequired"> ({{ weaponsRequired }} Weapon)</span>
@@ -53,9 +53,8 @@
         You need to stake more characters
       </ng-template>
     </button>
+    <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
   </div>
-  <div class="flex-1">
-    <app-staking-tiers-stepper [stakingTiers]="weaponStakingTiers"
-                               [unlockedTiers]="unlockedTiers!"></app-staking-tiers-stepper>
-  </div>
+  <app-staking-tiers-stepper class="flex-1" [stakingTiers]="weaponStakingTiers"
+                             [unlockedTiers]="unlockedTiers!"></app-staking-tiers-stepper>
 </div>

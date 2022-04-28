@@ -31,7 +31,8 @@
       <div class="flex flex-wrap">
         <button *ngFor="let building of buildings" mat-raised-button class="btn btn-primary w-100"
                 (click)="openBuildingDialog(building.type)">
-          {{ getBuildingTypeName(building.type) }} <span *ngIf="building.upgrading"> {{kingTimeLeft}}</span>
+          {{ getBuildingTypeName(building.type) }} <span *ngIf="building.upgrading" appTimestampCountdown
+                                                         [timestamp]="stakeCompleteTimestamp || 0"></span>
         </button>
       </div>
     </div>

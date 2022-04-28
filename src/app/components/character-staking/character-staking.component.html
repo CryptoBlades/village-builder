@@ -33,7 +33,7 @@
       <ng-container
         [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : isBarracksRequirementMet ? stake : upgradeBarracks"></ng-container>
       <ng-template #stakeInProgress style="color: #43300D">
-        {{ timeLeft }}
+        <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
       </ng-template>
       <ng-template #stake style="color: #43300D">
         Stake <span *ngIf="charactersRequired"> ({{ charactersRequired }} Character)</span>
@@ -44,8 +44,6 @@
     </button>
     <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
   </div>
-  <div class="flex-1">
-    <app-staking-tiers-stepper [stakingTiers]="characterStakingTiers"
-                               [unlockedTiers]="unlockedTiers!"></app-staking-tiers-stepper>
-  </div>
+  <app-staking-tiers-stepper class="flex-1" [stakingTiers]="characterStakingTiers"
+                             [unlockedTiers]="unlockedTiers!"></app-staking-tiers-stepper>
 </div>
