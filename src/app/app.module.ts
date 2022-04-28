@@ -31,6 +31,7 @@ import {SkillStakingComponent} from './components/skill-staking/skill-staking.co
 import {WeaponStakingComponent} from './components/weapon-staking/weapon-staking.component';
 import {MatChipsModule} from "@angular/material/chips";
 import { KingVaultDialogComponent } from './components/king-vault-dialog/king-vault-dialog.component';
+import { NextTierUnlocksComponent } from './components/next-tier-unlocks/next-tier-unlocks.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { KingVaultDialogComponent } from './components/king-vault-dialog/king-va
     ResourcePillComponent,
     SkillStakingComponent,
     WeaponStakingComponent,
-    KingVaultDialogComponent
+    KingVaultDialogComponent,
+    NextTierUnlocksComponent
   ],
   imports: [
     BrowserModule,
