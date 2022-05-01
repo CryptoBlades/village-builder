@@ -1,27 +1,34 @@
-<mat-stepper orientation="vertical" [selectedIndex]="unlockedTiers!" class="overflow-auto max-h-screen md:max-h-full">
-  <mat-step *ngFor="let stakingTier of stakingTiers; index as i"
-            [label]="stakingTier.amount + ' ' + stakingTier.type + ' (' + stakingTier.duration / 60 + ' minutes' + ')'"
-            [completed]="unlockedTiers! - 1 >= i">
-    <div class="flex flex-col">
-      <div *ngIf="stakingTier.requirement" class="flex flex-col">
-        <span>Requires: </span>
-        <span>- {{stakingTier.requirement.type + ': ' + stakingTier.requirement.amount}}</span>
-      </div>
-      <div *ngIf="stakingTier.rewards.length" class="flex flex-col">
-        <span>Rewards: </span>
-        <span *ngFor="let reward of stakingTier.rewards" class="flex items-center h-8">
-              - {{reward.amount}} <img src="./assets/Placeholder/{{reward.type.toLowerCase()}}.png" class="px-1 w-8" [alt]="reward.type" [matTooltip]="reward.type"/>
+<div class="overflow-auto max-h-screen md:max-h-full">
+  <mat-stepper orientation="vertical" [selectedIndex]="unlockedTiers!">
+    <mat-step *ngFor="let stakingTier of stakingTiers; index as i"
+              [label]="stakingTier.amount + ' ' + stakingTier.type + ' (' + stakingTier.duration / 60 + ' minutes' + ')'"
+              [completed]="unlockedTiers! - 1 >= i">
+      <div class="flex flex-col">
+        <div *ngIf="stakingTier.requirement" class="flex flex-col">
+          <span>Requires: </span>
+          <span>- {{stakingTier.requirement.type + ': ' + stakingTier.requirement.amount}}</span>
+        </div>
+        <div *ngIf="stakingTier.rewards.length" class="flex flex-col">
+          <span>Rewards: </span>
+          <span *ngFor="let reward of stakingTier.rewards" class="flex items-center h-8">
+              - {{reward.amount}} <img src="./assets/Placeholder/{{reward.type.toLowerCase()}}.png" class="px-1 w-8"
+                                       [alt]="reward.type" [matTooltip]="reward.type"/>
         </span>
-      </div>
-      <div *ngIf="stakingTier.unlocks.length" class="flex flex-col">
-        <span>CBK Unlocks: </span>
-        <span *ngFor="let unlock of stakingTier.unlocks" class="flex items-center h-8">
-          - {{unlock.amount}} <img src="./assets/Placeholder/{{unlock.type.toLowerCase()}}.png" class="px-1 w-8" [alt]="unlock.type" [matTooltip]="unlock.type"/>
+        </div>
+        <div *ngIf="stakingTier.unlocks.length" class="flex flex-col">
+          <span>CBK Unlocks: </span>
+          <span *ngFor="let unlock of stakingTier.unlocks" class="flex items-center h-8">
+          - {{unlock.amount}} <img src="./assets/Placeholder/{{unlock.type.toLowerCase()}}.png" class="px-1 w-8"
+                                   [alt]="unlock.type" [matTooltip]="unlock.type"/>
         </span>
+        </div>
       </div>
-    </div>
-  </mat-step>
-  <ng-template matStepperIcon="edit" let-index="index">
-    {{index + 1}}
-  </ng-template>
-</mat-stepper>
+    </mat-step>
+    <ng-template matStepperIcon="edit" let-index="index">
+      {{index + 1}}
+    </ng-template>
+  </mat-stepper>
+  <button [disabled]="!unlockedTiers" mat-raised-button
+          (click)="onUnstake.emit()" color="warn">Unstake
+  </button>
+</div>

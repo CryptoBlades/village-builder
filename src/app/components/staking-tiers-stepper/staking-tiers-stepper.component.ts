@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {StakingTier} from "../../interfaces/staking-tier";
 
 @Component({
@@ -10,11 +10,11 @@ export class StakingTiersStepperComponent implements OnInit {
 
   @Input() stakingTiers!: StakingTier[];
   @Input() unlockedTiers!: number;
+  @Output() onUnstake: EventEmitter<any> = new EventEmitter();
 
   constructor() {
   }
 
   ngOnInit(): void {
   }
-
 }

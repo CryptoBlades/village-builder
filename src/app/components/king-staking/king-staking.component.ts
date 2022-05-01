@@ -74,6 +74,12 @@ export class KingStakingComponent implements OnInit {
     await this.loadData();
   }
 
+  async onUnstake() {
+    await this.kingService.unstake();
+    console.log('Unstaked');
+    await this.loadData();
+  }
+
   get isMaxLevel() {
     return this.building && (this.building.level >= this.building.maxLevel);
   }
