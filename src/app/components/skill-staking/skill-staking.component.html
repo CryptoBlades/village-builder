@@ -36,5 +36,5 @@
     <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
   </div>
   <app-staking-tiers-stepper class="flex-1" [stakingTiers]="skillStakingTiers"
-                             [unlockedTiers]="unlockedTiers!"></app-staking-tiers-stepper>
+                             [unlockedTiers]="unlockedTiers!" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
 </div>

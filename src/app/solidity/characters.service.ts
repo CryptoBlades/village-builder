@@ -52,7 +52,10 @@ export class CharactersService extends SolidityService {
   }
 
   async getUnlockedTiers(): Promise<number> {
-    return +await this.characterStakingContract.methods.unlockedTiers(this.currentAccount).call({from: this.currentAccount});
+    return +await this.characterStakingContract.methods.getUnlockedTiers().call({from: this.currentAccount});
   }
 
+  async unstake(): Promise<void> {
+    await this.characterStakingContract.methods.unstake().send({from: this.currentAccount});
+  }
 }

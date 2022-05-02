@@ -63,7 +63,7 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
   }
   //extract
   function firstStake() public {
-    require(unlockedTiers[tx.origin] == 0, 'You have already staked');
+    require(getUnlockedTiers() == 0, 'You have already staked');
     currentStake[tx.origin] = 1;
     emit FirstStake(tx.origin);
   }
@@ -109,6 +109,13 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
 
   function canCompleteStake() public view returns (bool) {
     return currentStake[tx.origin] != 0 && !currentStakeRewardClaimed[tx.origin] && (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration);
+  }
+
+  function getUnlockedTiers() public view returns (uint256) {
+    if (currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration < block.timestamp) {
+      return unlockedTiers[tx.origin] + 1;
+    }
+    return unlockedTiers[tx.origin];
   }
 
 }

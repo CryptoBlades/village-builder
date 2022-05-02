@@ -42,7 +42,7 @@ export class KingService extends SolidityService {
   }
 
   async getUnlockedTiers(): Promise<number> {
-    return +await this.kingStakingContract.methods.unlockedTiers(this.currentAccount).call({from: this.currentAccount});
+    return +await this.kingStakingContract.methods.getUnlockedTiers().call({from: this.currentAccount});
   }
 
   async unstake(): Promise<void> {

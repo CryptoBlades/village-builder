@@ -21,7 +21,7 @@ export class SkillService extends SolidityService {
   }
 
   async getUnlockedTiers(): Promise<number> {
-    return +await this.skillStakingContract.methods.unlockedTiers(this.currentAccount).call({from: this.currentAccount});
+    return +await this.skillStakingContract.methods.getUnlockedTiers().call({from: this.currentAccount});
   }
 
   async stake(): Promise<void> {
@@ -61,4 +61,7 @@ export class SkillService extends SolidityService {
     await this.skillStakingContract.methods.claimKingVault().send({from: this.currentAccount});
   }
 
+  async unstake() {
+    await this.skillStakingContract.methods.unstake().send({from: this.currentAccount});
+  }
 }

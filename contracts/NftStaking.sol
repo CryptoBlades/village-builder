@@ -45,7 +45,7 @@ contract NftStaking is Initializable, AccessControlUpgradeable, IERC721ReceiverU
   }
 
   function firstStake() public {
-    require(unlockedTiers[tx.origin] == 0, 'You have already staked');
+    require(getUnlockedTiers() == 0, 'You have already staked');
     currentStake[tx.origin] = 1;
     emit FirstStake(tx.origin);
   }
@@ -113,5 +113,12 @@ contract NftStaking is Initializable, AccessControlUpgradeable, IERC721ReceiverU
 
   function addStake(uint id, uint duration, uint requirement, uint amount) public {
     stakes[id] = Stake({duration : duration, requirement : requirement, amount : amount});
+  }
+
+  function getUnlockedTiers() public view returns (uint256) {
+    if (currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration < block.timestamp) {
+      return unlockedTiers[tx.origin] + 1;
+    }
+    return unlockedTiers[tx.origin];
   }
 }

@@ -49,7 +49,10 @@ export class WeaponsService extends SolidityService {
   }
 
   async getUnlockedTiers(): Promise<number> {
-    return +await this.weaponStakingContract.methods.unlockedTiers(this.currentAccount).call({from: this.currentAccount});
+    return +await this.weaponStakingContract.methods.getUnlockedTiers().call({from: this.currentAccount});
   }
 
+  async unstake(): Promise<void> {
+    await this.weaponStakingContract.methods.unstake().send({from: this.currentAccount});
+  }
 }

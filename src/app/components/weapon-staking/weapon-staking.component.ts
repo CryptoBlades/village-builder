@@ -122,4 +122,10 @@ export class WeaponStakingComponent implements OnInit {
 
     return this.ownedWeapons.filter(weapon => !this.selectedWeapons.includes(weapon)).filter(weapon => weapon.toLowerCase().includes(filterValue));
   }
+
+  async onUnstake() {
+    await this.weaponsService.unstake();
+    console.log('Unstaked');
+    await this.loadData();
+  }
 }

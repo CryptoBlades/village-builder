@@ -94,4 +94,10 @@ export class CharacterStakingComponent implements OnInit {
     return this.building && this.barracksRequired && this.building.level >= this.barracksRequired;
   }
 
+  async onUnstake() {
+    await this.charactersService.unstake();
+    console.log('Unstaked');
+    await this.loadData();
+  }
+
 }

@@ -112,4 +112,9 @@ export class SkillStakingComponent implements OnInit {
     return this.kingStakingTierRequired! <= this.kingUnlockedTiers!;
   }
 
+  async onUnstake() {
+    await this.skillService.unstake();
+    console.log('Unstaked');
+    await this.loadData();
+  }
 }
