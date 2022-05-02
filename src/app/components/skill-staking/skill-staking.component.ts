@@ -46,29 +46,48 @@ export class SkillStakingComponent implements OnInit {
   }
 
   async loadData(): Promise<void> {
-    this.building = await this.landService.getBuilding(this.data.buildingType);
-    this.totalSkillStaked = await this.skillService.getTotalStaked();
-    this.unlockedTiers = await this.skillService.getUnlockedTiers();
+    const [
+      building,
+      totalSkillStaked,
+      unlockedTiers,
+      canClaim,
+      skillRequired,
+      kingStakingTierRequired,
+      skillUnlockedTiers,
+      kingUnlockedTiers,
+      stakeCompleteTimestamp
+    ] = await Promise.all([
+      this.landService.getBuilding(this.data.buildingType),
+      this.skillService.getTotalStaked(),
+      this.skillService.getUnlockedTiers(),
+      this.skillService.canCompleteStake(),
+      this.skillService.getRequiredStakeAmount(),
+      this.skillService.getNextRequirement(),
+      this.skillService.getUnlockedTiers(),
+      this.kingService.getUnlockedTiers(),
+      this.skillService.getStakeCompleteTimestamp(),
+    ]);
+    this.building = building;
+    this.totalSkillStaked = totalSkillStaked;
+    this.unlockedTiers = unlockedTiers;
+    this.canClaim = canClaim;
+    this.skillRequired = skillRequired;
+    this.kingStakingTierRequired = kingStakingTierRequired;
+    this.kingUnlockedTiers = kingUnlockedTiers;
     this.nextStakingTier = this.skillStakingTiers[this.unlockedTiers];
-    this.canClaim = await this.skillService.canCompleteStake();
-    this.skillRequired = await this.skillService.getRequiredStakeAmount();
-    this.kingStakingTierRequired = await this.skillService.getNextRequirement();
-    this.kingUnlockedTiers = await this.kingService.getUnlockedTiers();
-    const unlockedSkillTiers = await this.skillService.getUnlockedTiers();
-    if (unlockedSkillTiers) {
-      const resources = Array.from(this.skillStakingTiers.slice(0, unlockedSkillTiers)
+    if (stakeCompleteTimestamp > Date.now() / 1000) {
+      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+    } else {
+      this.stakeCompleteTimestamp = undefined;
+    }
+    if (skillUnlockedTiers) {
+      const resources = Array.from(this.skillStakingTiers.slice(0, skillUnlockedTiers)
         .flatMap(tier => tier.rewards).filter(reward => reward.type !== 'KING').reduce(
           (m, {type, amount}) => m.set(type, (m.get(type) || 0) + amount), new Map
         ), ([type, amount]) => ({type, amount}));
       this.store.dispatch(new SetClayBalance(resources.find(resource => resource.type === 'Clay')?.amount));
       this.store.dispatch(new SetWoodBalance(resources.find(resource => resource.type === 'Wood')?.amount));
       this.store.dispatch(new SetStoneBalance(resources.find(resource => resource.type === 'Stone')?.amount));
-    }
-    const stakeCompleteTimestamp = await this.skillService.getStakeCompleteTimestamp();
-    if (stakeCompleteTimestamp > Date.now() / 1000) {
-      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
-    } else {
-      this.stakeCompleteTimestamp = undefined;
     }
   }
 

@@ -26,8 +26,12 @@ export class KingVaultDialogComponent implements OnInit {
   }
 
   async loadData() {
-    this.totalKingInVault = await this.skillService.getTotalKingInVault();
-    this.claimableKing = await this.skillService.getClaimableKing();
+    const [totalKingInVault, claimableKing] = await Promise.all([
+      this.skillService.getTotalKingInVault(),
+      this.skillService.getClaimableKing(),
+    ]);
+    this.totalKingInVault = totalKingInVault;
+    this.claimableKing = claimableKing;
     this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
   }
 

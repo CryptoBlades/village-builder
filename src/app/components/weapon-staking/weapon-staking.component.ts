@@ -61,20 +61,36 @@ export class WeaponStakingComponent implements OnInit {
   }
 
   async loadData() {
-    this.ownedWeapons = (await this.weaponsService.getOwnedWeapons()).map(weapon => weapon.toString());
-    this.store.dispatch(new SetWeaponsBalance(this.ownedWeapons.length))
-    this.totalWeaponsStaked = await this.weaponsService.getTotalStaked();
-    this.weaponsRequired = await this.weaponsService.getRequiredStakeAmount();
-    this.charactersStakedRequired = await this.weaponsService.getNextRequirement();
-    this.unlockedTiers = await this.weaponsService.getUnlockedTiers();
-    this.charactersUnlockedTiers = await this.charactersService.getUnlockedTiers();
+    const [
+      ownedWeapons,
+      totalWeaponsStaked,
+      weaponsRequired,
+      charactersStakedRequired,
+      unlockedTiers,
+      charactersUnlockedTiers,
+      stakeCompleteTimestamp
+    ] = await Promise.all([
+      this.weaponsService.getOwnedWeapons(),
+      this.weaponsService.getTotalStaked(),
+      this.weaponsService.getRequiredStakeAmount(),
+      this.weaponsService.getNextRequirement(),
+      this.weaponsService.getUnlockedTiers(),
+      this.charactersService.getUnlockedTiers(),
+      this.weaponsService.getStakeCompleteTimestamp(),
+    ]);
+    this.ownedWeapons = ownedWeapons.map(weapon => weapon.toString());
+    this.totalWeaponsStaked = totalWeaponsStaked;
+    this.weaponsRequired = weaponsRequired;
+    this.charactersStakedRequired = charactersStakedRequired;
+    this.unlockedTiers = unlockedTiers;
+    this.charactersUnlockedTiers = charactersUnlockedTiers;
     this.nextStakingTier = this.weaponStakingTiers[this.unlockedTiers];
-    const stakeCompleteTimestamp = await this.weaponsService.getStakeCompleteTimestamp();
     if (stakeCompleteTimestamp > Date.now() / 1000) {
       this.stakeCompleteTimestamp = stakeCompleteTimestamp;
     } else {
       this.stakeCompleteTimestamp = undefined;
     }
+    this.store.dispatch(new SetWeaponsBalance(this.ownedWeapons.length))
   }
 
   get isStakeInProgress() {

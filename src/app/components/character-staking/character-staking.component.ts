@@ -53,19 +53,33 @@ export class CharacterStakingComponent implements OnInit {
   }
 
   async loadData() {
-    this.characters = await this.charactersService.getOwnedCharacters();
-    this.store.dispatch(new SetCharactersBalance(this.characters.length))
-    this.totalCharactersStaked = await this.charactersService.getTotalStaked();
-    this.charactersRequired = await this.charactersService.getRequiredStakeAmount();
-    this.barracksRequired = await this.charactersService.getNextRequirement();
-    this.unlockedTiers = await this.charactersService.getUnlockedTiers();
+    const [
+      ownedCharacters,
+      totalCharactersStaked,
+      charactersRequired,
+      barracksRequired,
+      unlockedTiers,
+      stakeCompleteTimestamp
+    ] = await Promise.all([
+      this.charactersService.getOwnedCharacters(),
+      this.charactersService.getTotalStaked(),
+      this.charactersService.getRequiredStakeAmount(),
+      this.charactersService.getNextRequirement(),
+      this.charactersService.getUnlockedTiers(),
+      this.charactersService.getStakeCompleteTimestamp(),
+    ]);
+    this.characters = ownedCharacters;
+    this.totalCharactersStaked = totalCharactersStaked;
+    this.charactersRequired = charactersRequired;
+    this.barracksRequired = barracksRequired;
+    this.unlockedTiers = unlockedTiers;
     this.nextStakingTier = this.characterStakingTiers[this.unlockedTiers];
-    const stakeCompleteTimestamp = await this.charactersService.getStakeCompleteTimestamp();
     if (stakeCompleteTimestamp > Date.now() / 1000) {
       this.stakeCompleteTimestamp = stakeCompleteTimestamp;
     } else {
       this.stakeCompleteTimestamp = undefined;
     }
+    this.store.dispatch(new SetCharactersBalance(this.characters.length))
   }
 
   get isStakeInProgress() {
