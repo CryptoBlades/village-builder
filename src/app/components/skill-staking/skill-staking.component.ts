@@ -49,6 +49,7 @@ export class SkillStakingComponent implements OnInit {
     const [
       building,
       totalSkillStaked,
+      skillOwned,
       unlockedTiers,
       canClaim,
       skillRequired,
@@ -59,6 +60,7 @@ export class SkillStakingComponent implements OnInit {
     ] = await Promise.all([
       this.landService.getBuilding(this.data.buildingType),
       this.skillService.getTotalStaked(),
+      this.skillService.getOwnedAmount(),
       this.skillService.getUnlockedTiers(),
       this.skillService.canCompleteStake(),
       this.skillService.getRequiredStakeAmount(),
@@ -89,6 +91,7 @@ export class SkillStakingComponent implements OnInit {
       this.store.dispatch(new SetWoodBalance(resources.find(resource => resource.type === 'Wood')?.amount));
       this.store.dispatch(new SetStoneBalance(resources.find(resource => resource.type === 'Stone')?.amount));
     }
+    this.store.dispatch(new SetSkillBalance(skillOwned));
   }
 
   async onStake() {

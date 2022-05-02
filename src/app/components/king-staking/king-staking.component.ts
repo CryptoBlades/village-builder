@@ -48,6 +48,7 @@ export class KingStakingComponent implements OnInit {
       buildingRequirements,
       kingRequired,
       totalKingStaked,
+      ownedKing,
       unlockedTiers,
       stakeCompleteTimestamp
     ] = await Promise.all([
@@ -55,6 +56,7 @@ export class KingStakingComponent implements OnInit {
       this.landService.getBuildingRequirements(this.data.buildingType),
       this.kingService.getRequiredStakeAmount(),
       this.kingService.getTotalStaked(),
+      this.kingService.getOwnedAmount(),
       this.kingService.getUnlockedTiers(),
       this.kingService.getStakeCompleteTimestamp(),
     ]);
@@ -72,6 +74,7 @@ export class KingStakingComponent implements OnInit {
     if (this.building.upgrading) {
       this.canClaim = await this.kingService.canCompleteStake();
     }
+    this.store.dispatch(new SetKingBalance(ownedKing));
   }
 
   async onClaim() {
@@ -83,7 +86,6 @@ export class KingStakingComponent implements OnInit {
   async onStake() {
     if (!this.building) return;
     await this.kingService.stake(this.building?.type);
-    this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()))
     console.log('Staked');
     await this.loadData();
   }

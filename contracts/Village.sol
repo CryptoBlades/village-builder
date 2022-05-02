@@ -104,9 +104,11 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     if (buildingUpgrade.building != Building.NONE) {
       finishBuildingUpgrade(id);
     }
-    require(getBuildingLevel(id, building) < buildingMaxLevel[building], 'Building is already at max level');
-    BuildingRequirement memory requirement = buildingRequirement[building];
-    require(getBuildingLevel(id, requirement.building) >= requirement.level, 'Required building is not at required level');
+    if (building != Building.NONE) {
+      require(getBuildingLevel(id, building) < buildingMaxLevel[building], 'Building is already at max level');
+      BuildingRequirement memory requirement = buildingRequirement[building];
+      require(getBuildingLevel(id, requirement.building) >= requirement.level, 'Required building is not at required level');
+    }
     currentlyUpgrading[id] = BuildingUpgrade(building, finishTimestamp);
   }
 
