@@ -58,4 +58,8 @@ export class CharactersService extends SolidityService {
   async unstake(): Promise<void> {
     await this.characterStakingContract.methods.unstake().send({from: this.currentAccount});
   }
+
+  async getCurrentStake(): Promise<number> {
+    return +await this.characterStakingContract.methods.currentStake(this.currentAccount).call({from: this.currentAccount});
+  }
 }

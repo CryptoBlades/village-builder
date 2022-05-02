@@ -28,6 +28,7 @@ export class KingStakingComponent implements OnInit {
   kingStakingTiers: StakingTier[] = kingStakingTiers;
   nextStakingTier?: StakingTier;
   stakeCompleteTimestamp?: number;
+  currentStake: number = 0;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -45,6 +46,7 @@ export class KingStakingComponent implements OnInit {
   async loadData(): Promise<void> {
     const [
       building,
+      currentStake,
       buildingRequirements,
       kingRequired,
       totalKingStaked,
@@ -53,6 +55,7 @@ export class KingStakingComponent implements OnInit {
       stakeCompleteTimestamp
     ] = await Promise.all([
       this.landService.getBuilding(this.data.buildingType),
+      this.kingService.getCurrentStake(),
       this.landService.getBuildingRequirements(this.data.buildingType),
       this.kingService.getRequiredStakeAmount(),
       this.kingService.getTotalStaked(),
@@ -61,6 +64,7 @@ export class KingStakingComponent implements OnInit {
       this.kingService.getStakeCompleteTimestamp(),
     ]);
     this.building = building;
+    this.currentStake = currentStake;
     this.buildingRequirements = buildingRequirements;
     this.kingRequired = kingRequired;
     this.totalKingStaked = totalKingStaked;

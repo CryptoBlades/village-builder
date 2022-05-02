@@ -64,4 +64,8 @@ export class SkillService extends SolidityService {
   async unstake() {
     await this.skillStakingContract.methods.unstake().send({from: this.currentAccount});
   }
+
+  async getCurrentStake(): Promise<number> {
+    return +await this.skillStakingContract.methods.currentStake(this.currentAccount).call({from: this.currentAccount});
+  }
 }

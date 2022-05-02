@@ -32,6 +32,7 @@ export class WeaponStakingComponent implements OnInit {
   filteredWeapons?: Observable<string[]>;
   selectedWeapons: string[] = [];
   stakeCompleteTimestamp?: number;
+  currentStake: number = 0;
 
   @ViewChild('weaponInput') weaponInput!: ElementRef<HTMLInputElement>;
 
@@ -63,6 +64,7 @@ export class WeaponStakingComponent implements OnInit {
   async loadData() {
     const [
       ownedWeapons,
+      currentStake,
       totalWeaponsStaked,
       weaponsRequired,
       charactersStakedRequired,
@@ -71,6 +73,7 @@ export class WeaponStakingComponent implements OnInit {
       stakeCompleteTimestamp
     ] = await Promise.all([
       this.weaponsService.getOwnedWeapons(),
+      this.weaponsService.getCurrentStake(),
       this.weaponsService.getTotalStaked(),
       this.weaponsService.getRequiredStakeAmount(),
       this.weaponsService.getNextRequirement(),
@@ -80,6 +83,7 @@ export class WeaponStakingComponent implements OnInit {
     ]);
     this.ownedWeapons = ownedWeapons.map(weapon => weapon.toString());
     this.totalWeaponsStaked = totalWeaponsStaked;
+    this.currentStake = currentStake;
     this.weaponsRequired = weaponsRequired;
     this.charactersStakedRequired = charactersStakedRequired;
     this.unlockedTiers = unlockedTiers;

@@ -55,4 +55,8 @@ export class WeaponsService extends SolidityService {
   async unstake(): Promise<void> {
     await this.weaponStakingContract.methods.unstake().send({from: this.currentAccount});
   }
+
+  async getCurrentStake(): Promise<number> {
+    return +await this.weaponStakingContract.methods.currentStake(this.currentAccount).call({from: this.currentAccount});
+  }
 }

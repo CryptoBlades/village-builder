@@ -28,7 +28,7 @@
       {{index + 1}}
     </ng-template>
   </mat-stepper>
-  <button [disabled]="!unlockedTiers" mat-raised-button
+  <button [disabled]="!unlockedTiers || !currentStake" mat-raised-button
           (click)="onUnstake.emit()" color="warn">Unstake
   </button>
 </div>

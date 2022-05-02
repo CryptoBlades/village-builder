@@ -9,6 +9,7 @@ import {StakingTier} from "../../interfaces/staking-tier";
 export class StakingTiersStepperComponent implements OnInit {
 
   @Input() stakingTiers!: StakingTier[];
+  @Input() currentStake!: number;
   @Input() unlockedTiers!: number;
   @Output() onUnstake: EventEmitter<any> = new EventEmitter();
 

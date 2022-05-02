@@ -86,6 +86,7 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
   }
 
   function unstake() virtual public returns (bool stakeCompleted) {
+    require(currentStake[tx.origin] != 0, 'You have no stakes to unstake');
     if (canCompleteStake()) {
       completeStake();
       stakeCompleted = true;
@@ -112,7 +113,7 @@ contract CurrencyStaking is Initializable, AccessControlUpgradeable {
   }
 
   function getUnlockedTiers() public view returns (uint256) {
-    if (currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration < block.timestamp) {
+    if (currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration < block.timestamp && currentStake[tx.origin] != 0) {
       return unlockedTiers[tx.origin] + 1;
     }
     return unlockedTiers[tx.origin];

@@ -25,6 +25,7 @@ export class CharacterStakingComponent implements OnInit {
   characters: number[] = [];
   selectedCharacter = new FormControl();
   charactersRequired?: number;
+  currentStake: number = 0;
   barracksRequired?: number;
   unlockedTiers?: number;
   filteredOptions?: Observable<string[]>;
@@ -55,6 +56,7 @@ export class CharacterStakingComponent implements OnInit {
   async loadData() {
     const [
       ownedCharacters,
+      currentStake,
       totalCharactersStaked,
       charactersRequired,
       barracksRequired,
@@ -62,6 +64,7 @@ export class CharacterStakingComponent implements OnInit {
       stakeCompleteTimestamp
     ] = await Promise.all([
       this.charactersService.getOwnedCharacters(),
+      this.charactersService.getCurrentStake(),
       this.charactersService.getTotalStaked(),
       this.charactersService.getRequiredStakeAmount(),
       this.charactersService.getNextRequirement(),
@@ -69,6 +72,7 @@ export class CharacterStakingComponent implements OnInit {
       this.charactersService.getStakeCompleteTimestamp(),
     ]);
     this.characters = ownedCharacters;
+    this.currentStake = currentStake;
     this.totalCharactersStaked = totalCharactersStaked;
     this.charactersRequired = charactersRequired;
     this.barracksRequired = barracksRequired;
