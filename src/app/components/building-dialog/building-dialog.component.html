@@ -5,7 +5,7 @@
         <img src="./assets/Placeholder/king.png" class="px-1 w-8" alt="King"/>
         <span class="building-name">KING</span>
       </ng-template>
-      <app-king-staking [building]="building"></app-king-staking>
+      <app-king-staking [building]="building" (onLoadData)="loadData()"></app-king-staking>
     </mat-tab>
     <mat-tab *ngIf="isResourcesGenerator">
       <ng-template mat-tab-label>

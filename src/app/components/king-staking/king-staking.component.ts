@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {Building} from "../../app.component";
 import {BuildingRequirements, LandService} from "../../solidity/land.service";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
@@ -20,6 +20,7 @@ export class KingStakingComponent implements OnInit {
   getBuildingTypeName = getBuildingTypeName;
 
   @Input() building!: Building;
+  @Output() onLoadData: EventEmitter<any> = new EventEmitter();
   canClaim = false;
   buildingRequirements?: BuildingRequirements;
   kingRequired?: number;
@@ -79,6 +80,7 @@ export class KingStakingComponent implements OnInit {
       this.canClaim = await this.kingService.canCompleteStake();
     }
     this.store.dispatch(new SetKingBalance(ownedKing));
+    this.onLoadData.emit();
   }
 
   async onClaim() {

@@ -19,6 +19,10 @@ export class BuildingDialogComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    await this.loadData();
+  }
+
+  async loadData(): Promise<void> {
     this.building = await this.landService.getBuilding(this.data.buildingType);
   }
 

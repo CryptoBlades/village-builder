@@ -37,7 +37,7 @@ export class WeaponsService extends SolidityService {
   }
 
   async getTotalStaked(): Promise<number> {
-    return +await this.weaponStakingContract.methods.getStakedNftsAmount(this.currentAccount).call({from: this.currentAccount});
+    return +await this.weaponStakingContract.methods.getStakedAmount(this.currentAccount).call({from: this.currentAccount});
   }
 
   async getRequiredStakeAmount(): Promise<number> {

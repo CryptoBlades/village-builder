@@ -16,7 +16,7 @@ contract WeaponStaking is NftStaking {
   }
 
   function stake(uint[] memory ids) public override {
-    uint256 stakedCharacters = characterStaking.getStakedNftsAmount(msg.sender);
+    uint256 stakedCharacters = characterStaking.getStakedAmount(msg.sender);
     require(stakedCharacters >= stakes[currentStake[msg.sender] + 1].requirement, 'You need to stake more characters');
     super.stake(ids);
   }
