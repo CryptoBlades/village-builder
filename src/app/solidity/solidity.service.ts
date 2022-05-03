@@ -15,6 +15,7 @@ import KingStaking from "../../../build/contracts/KingStaking.json";
 import SkillToken from "../../../build/contracts/SkillInterface.json";
 import SkillStaking from "../../../build/contracts/SkillStaking.json";
 import Village from "../../../build/contracts/Village.json";
+import KingVault from "../../../build/contracts/KingVault.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @Injectable({
@@ -35,6 +36,7 @@ export class SolidityService {
   kingStakingContract!: Contract;
   skillContract!: Promise<Contract>;
   skillStakingContract!: Contract;
+  kingVaultContract!: Contract;
 
   currentAccount: string = '';
 
@@ -63,6 +65,7 @@ export class SolidityService {
     this.skillContract = this.skillStakingContract.methods.currency().call().then((address: string) => {
       return new this.web3.eth.Contract(SkillToken.abi as any, address);
     });
+    this.kingVaultContract = new this.web3.eth.Contract(KingVault.abi as any, KingVault.networks["5777"]!.address);
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.currentAccount = state.publicAddress;
       console.log(state);

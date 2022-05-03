@@ -2,6 +2,7 @@ const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const Village = artifacts.require('Village');
 const WeaponStaking = artifacts.require('WeaponStaking');
 const CharacterStaking = artifacts.require('CharacterStaking');
+const KingVault = artifacts.require('KingVault');
 module.exports = async function (deployer) {
   const village = await Village.deployed();
   const characterStaking = await CharacterStaking.deployed();

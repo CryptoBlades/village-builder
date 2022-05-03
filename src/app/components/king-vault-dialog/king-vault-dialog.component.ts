@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {KingService} from "../../solidity/king.service";
 import {Store} from "@ngxs/store";
-import {SkillService} from "../../solidity/skill.service";
 import {SetKingBalance} from "../../state/wallet/wallet.actions";
+import {KingVaultService} from "../../solidity/king-vault.service";
 
 @Component({
   selector: 'app-king-vault-dialog',
@@ -16,7 +16,7 @@ export class KingVaultDialogComponent implements OnInit {
 
   constructor(
     private kingService: KingService,
-    private skillService: SkillService,
+    private kingVaultService: KingVaultService,
     private store: Store,
   ) {
   }
@@ -27,8 +27,8 @@ export class KingVaultDialogComponent implements OnInit {
 
   async loadData() {
     const [totalKingInVault, claimableKing] = await Promise.all([
-      this.skillService.getTotalKingInVault(),
-      this.skillService.getClaimableKing(),
+      this.kingVaultService.getTotalInVault(),
+      this.kingVaultService.getClaimable(),
     ]);
     this.totalKingInVault = totalKingInVault;
     this.claimableKing = claimableKing;
@@ -36,7 +36,7 @@ export class KingVaultDialogComponent implements OnInit {
   }
 
   async onClickClaim() {
-    await this.skillService.claimKing();
+    await this.kingVaultService.claimVault();
     await this.loadData();
   }
 
