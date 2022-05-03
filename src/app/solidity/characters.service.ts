@@ -62,4 +62,12 @@ export class CharactersService extends SolidityService {
   async getCurrentStake(): Promise<number> {
     return +await this.characterStakingContract.methods.currentStake(this.currentAccount).call({from: this.currentAccount});
   }
+
+  async claimStakeReward(): Promise<void> {
+    await this.characterStakingContract.methods.completeStake().send({from: this.currentAccount});
+  }
+
+  async canCompleteStake(): Promise<boolean> {
+    return this.characterStakingContract.methods.canCompleteStake().call({from: this.currentAccount});
+  }
 }

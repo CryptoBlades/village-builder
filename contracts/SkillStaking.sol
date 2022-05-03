@@ -43,8 +43,8 @@ contract SkillStaking is CurrencyStaking {
     }
   }
 
-  function claimStakeReward() public {
-    completeStake();
+  function completeStake() public override {
+    super.completeStake();
     kingVaults[msg.sender] = kingVaults[msg.sender].add(kingRewards[unlockedTiers[msg.sender]]);
   }
 

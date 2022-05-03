@@ -31,7 +31,7 @@ export class SkillService extends SolidityService {
   }
 
   async claimStakeReward(): Promise<void> {
-    await this.skillStakingContract.methods.claimStakeReward().send({from: this.currentAccount});
+    await this.skillStakingContract.methods.completeStake().send({from: this.currentAccount});
   }
 
   async canCompleteStake(): Promise<boolean> {

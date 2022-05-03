@@ -53,6 +53,9 @@
         You need to stake more characters
       </ng-template>
     </button>
+    <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
+      {{ 'Claim' }}
+    </button>
     <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
   </div>
   <app-staking-tiers-stepper class="flex-1" [stakingTiers]="weaponStakingTiers" [unlockedTiers]="unlockedTiers!"

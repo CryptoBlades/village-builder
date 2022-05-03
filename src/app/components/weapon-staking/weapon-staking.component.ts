@@ -27,6 +27,7 @@ export class WeaponStakingComponent implements OnInit {
   weaponControl = new FormControl();
   weaponsRequired?: number;
   charactersStakedRequired?: number;
+  canClaim = false;
   unlockedTiers?: number;
   charactersUnlockedTiers?: number;
   filteredWeapons?: Observable<string[]>;
@@ -68,6 +69,7 @@ export class WeaponStakingComponent implements OnInit {
       totalWeaponsStaked,
       weaponsRequired,
       charactersStakedRequired,
+      canClaim,
       unlockedTiers,
       charactersUnlockedTiers,
       stakeCompleteTimestamp
@@ -77,6 +79,7 @@ export class WeaponStakingComponent implements OnInit {
       this.weaponsService.getTotalStaked(),
       this.weaponsService.getRequiredStakeAmount(),
       this.weaponsService.getNextRequirement(),
+      this.weaponsService.canCompleteStake(),
       this.weaponsService.getUnlockedTiers(),
       this.charactersService.getUnlockedTiers(),
       this.weaponsService.getStakeCompleteTimestamp(),
@@ -86,6 +89,7 @@ export class WeaponStakingComponent implements OnInit {
     this.currentStake = currentStake;
     this.weaponsRequired = weaponsRequired;
     this.charactersStakedRequired = charactersStakedRequired;
+    this.canClaim = canClaim;
     this.unlockedTiers = unlockedTiers;
     this.charactersUnlockedTiers = charactersUnlockedTiers;
     this.nextStakingTier = this.weaponStakingTiers[this.unlockedTiers];
@@ -130,6 +134,12 @@ export class WeaponStakingComponent implements OnInit {
   async onUnstake() {
     await this.weaponsService.unstake();
     console.log('Unstaked');
+    await this.loadData();
+  }
+
+  async onClaim() {
+    await this.weaponsService.claimStakeReward();
+    console.log('Claimed');
     await this.loadData();
   }
 }

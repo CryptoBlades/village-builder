@@ -24,6 +24,7 @@ contract NftStaking is Initializable, AccessControlUpgradeable, IERC721ReceiverU
   mapping(uint256 => Stake) public stakes;
   mapping(address => uint256) public currentStake;
   mapping(address => uint256) public currentStakeStart;
+  mapping(address => bool) public currentStakeRewardClaimed;
   mapping(address => uint256) public unlockedTiers;
 
   event FirstStake(address indexed user);
@@ -58,7 +59,9 @@ contract NftStaking is Initializable, AccessControlUpgradeable, IERC721ReceiverU
     if (currentStakeId == 0) {
       firstStake();
     } else {
-      completeStake(currentStakeId);
+      if(!currentStakeRewardClaimed[tx.origin]) {
+        completeStake();
+      }
       assignNextStake(currentStakeId);
     }
     currentStakeStart[tx.origin] = block.timestamp;
@@ -70,9 +73,12 @@ contract NftStaking is Initializable, AccessControlUpgradeable, IERC721ReceiverU
     emit Staked(tx.origin, ids);
   }
 
-  function completeStake(uint currentStakeId) public {
+  function completeStake() public {
+    uint256 currentStakeId = currentStake[tx.origin];
     require(block.timestamp > currentStakeStart[tx.origin] + stakes[currentStakeId].duration, 'Stake not completed');
+    require(!currentStakeRewardClaimed[tx.origin], 'Reward already claimed');
     unlockedTiers[tx.origin] += 1;
+    currentStakeRewardClaimed[tx.origin] = true;
     emit StakeComplete(tx.origin, currentStake[tx.origin]);
   }
 
@@ -82,13 +88,14 @@ contract NftStaking is Initializable, AccessControlUpgradeable, IERC721ReceiverU
     } else {
       currentStake[tx.origin] += 1;
     }
+    currentStakeRewardClaimed[tx.origin] = false;
   }
 
   function unstake() public {
     uint256 currentStakeId = currentStake[tx.origin];
     require(currentStakeId != 0, 'You have no stakes to unstake');
     if (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStakeId].duration) {
-      completeStake(currentStakeId);
+      completeStake();
     }
     currentStake[tx.origin] = 0;
     currentStakeStart[tx.origin] = 0;
@@ -117,9 +124,13 @@ contract NftStaking is Initializable, AccessControlUpgradeable, IERC721ReceiverU
   }
 
   function getUnlockedTiers() public view returns (uint256) {
-    if (currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration < block.timestamp && currentStake[tx.origin] != 0) {
+    if (currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration < block.timestamp && currentStake[tx.origin] != 0 && !currentStakeRewardClaimed[tx.origin]) {
       return unlockedTiers[tx.origin] + 1;
     }
     return unlockedTiers[tx.origin];
+  }
+
+  function canCompleteStake() public view returns (bool) {
+    return currentStake[tx.origin] != 0 && !currentStakeRewardClaimed[tx.origin] && (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration);
   }
 }

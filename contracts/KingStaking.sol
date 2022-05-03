@@ -29,8 +29,8 @@ contract KingStaking is CurrencyStaking {
     village.setCurrentlyUpgrading(stakedLandId, Village.Building.NONE, 0);
   }
 
-  function claimStakeReward() public {
-    completeStake();
+  function completeStake() public override {
+    super.completeStake();
     village.finishBuildingUpgrade(village.stakedLand(msg.sender));
   }
 }

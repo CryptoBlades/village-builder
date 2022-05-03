@@ -59,4 +59,12 @@ export class WeaponsService extends SolidityService {
   async getCurrentStake(): Promise<number> {
     return +await this.weaponStakingContract.methods.currentStake(this.currentAccount).call({from: this.currentAccount});
   }
+
+  async claimStakeReward(): Promise<void> {
+    await this.weaponStakingContract.methods.completeStake().send({from: this.currentAccount});
+  }
+
+  async canCompleteStake(): Promise<boolean> {
+    return this.weaponStakingContract.methods.canCompleteStake().call({from: this.currentAccount});
+  }
 }

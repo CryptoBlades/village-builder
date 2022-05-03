@@ -26,6 +26,7 @@ export class CharacterStakingComponent implements OnInit {
   selectedCharacter = new FormControl();
   charactersRequired?: number;
   currentStake: number = 0;
+  canClaim = false;
   barracksRequired?: number;
   unlockedTiers?: number;
   filteredOptions?: Observable<string[]>;
@@ -61,6 +62,7 @@ export class CharacterStakingComponent implements OnInit {
       charactersRequired,
       barracksRequired,
       unlockedTiers,
+      canClaim,
       stakeCompleteTimestamp
     ] = await Promise.all([
       this.charactersService.getOwnedCharacters(),
@@ -69,6 +71,7 @@ export class CharacterStakingComponent implements OnInit {
       this.charactersService.getRequiredStakeAmount(),
       this.charactersService.getNextRequirement(),
       this.charactersService.getUnlockedTiers(),
+      this.charactersService.canCompleteStake(),
       this.charactersService.getStakeCompleteTimestamp(),
     ]);
     this.characters = ownedCharacters;
@@ -77,6 +80,7 @@ export class CharacterStakingComponent implements OnInit {
     this.charactersRequired = charactersRequired;
     this.barracksRequired = barracksRequired;
     this.unlockedTiers = unlockedTiers;
+    this.canClaim = canClaim;
     this.nextStakingTier = this.characterStakingTiers[this.unlockedTiers];
     if (stakeCompleteTimestamp > Date.now() / 1000) {
       this.stakeCompleteTimestamp = stakeCompleteTimestamp;
@@ -104,4 +108,9 @@ export class CharacterStakingComponent implements OnInit {
     await this.loadData();
   }
 
+  async onClaim() {
+    await this.charactersService.claimStakeReward();
+    console.log('Claimed');
+    await this.loadData();
+  }
 }
