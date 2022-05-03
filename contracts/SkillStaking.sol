@@ -11,7 +11,6 @@ contract SkillStaking is CurrencyStaking {
   KingStaking public kingStaking;
   KingVault public kingVault;
 
-  mapping(address => uint) public kingVaults;
   mapping(uint => uint) public kingRewards;
 
   function initialize(Village _village, KingStaking _kingStaking, address currencyAddress, KingVault _kingVault) public initializer {
@@ -31,11 +30,6 @@ contract SkillStaking is CurrencyStaking {
     }
   }
 
-  function addStake(uint id, uint duration, uint requirement, uint amount, uint kingReward) public {
-    stakes[id] = Stake({duration : duration, requirement : requirement, amount : amount});
-    kingRewards[id] = kingReward;
-  }
-
   function unstake() public override returns (bool stakeCompleted) {
     stakeCompleted = super.unstake();
     if (stakeCompleted) {
@@ -46,5 +40,10 @@ contract SkillStaking is CurrencyStaking {
   function completeStake() public override {
     super.completeStake();
     kingVault.addToVault(msg.sender, kingRewards[unlockedTiers[msg.sender]]);
+  }
+
+  function addStake(uint id, uint duration, uint requirement, uint amount, uint kingReward) public {
+    stakes[id] = Stake({duration : duration, requirement : requirement, amount : amount});
+    kingRewards[id] = kingReward;
   }
 }

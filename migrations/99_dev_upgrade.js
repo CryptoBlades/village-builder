@@ -84,10 +84,10 @@ module.exports = async function (deployer) {
     skillStaking.addStake(6, 300, 4, web3.utils.toWei('0.4', 'ether'), web3.utils.toWei('3', 'ether')),
     skillStaking.addStake(7, 600, 4, web3.utils.toWei('0.5', 'ether'), 0),
 
-    weaponStaking.addStake(1, 30, 1, 1),
-    weaponStaking.addStake(2, 120, 2, 2),
-    weaponStaking.addStake(3, 300, 3, 3),
-    weaponStaking.addStake(4, 600, 4, 4),
-    weaponStaking.addStake(5, 1500, 5, 5),
+    weaponStaking.addStake(1, 30, 1, 1, 0),
+    weaponStaking.addStake(2, 120, 2, 2, 0),
+    weaponStaking.addStake(3, 300, 3, 3, 0),
+    weaponStaking.addStake(4, 600, 4, 4, 0),
+    weaponStaking.addStake(5, 1500, 5, 5, web3.utils.toWei('1', 'ether')),
   ]);
 };
