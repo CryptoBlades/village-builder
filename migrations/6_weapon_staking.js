@@ -6,6 +6,7 @@ const KingVault = artifacts.require('KingVault');
 module.exports = async function (deployer) {
   const village = await Village.deployed();
   const characterStaking = await CharacterStaking.deployed();
-  const weaponsAddress = '0xC74273bBDD31f1bEC912E5ce63C08FF87Bfb8796';
-  await deployProxy(WeaponStaking, [village.address, weaponsAddress, characterStaking.address], {deployer});
+  const kingVault = await KingVault.deployed();
+  const weaponsAddress = '0x10Af96d6266EeE66cbF8c76Bbbe19882990626B8';
+  await deployProxy(WeaponStaking, [village.address, weaponsAddress, characterStaking.address, kingVault.address], {deployer});
 };
