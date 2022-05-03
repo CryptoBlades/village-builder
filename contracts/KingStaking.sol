@@ -10,10 +10,6 @@ contract KingStaking is CurrencyStaking {
     super.initialize(_village, currencyAddress);
   }
 
-  function addStake(uint id, uint duration, uint amount) public {
-    stakes[id] = Stake({duration : duration, requirement : 0, amount : amount});
-  }
-
   function stake(uint amount, Village.Building building) public {
     uint256 stakedLandId = village.stakedLand(msg.sender);
     uint256 finishTimestamp = stake(amount);

@@ -18,9 +18,5 @@ contract CharacterStaking is NftStaking {
     super.stake(ids);
   }
 
-  function getNextRequirement() public view returns (uint256) {
-    return stakes[currentStake[msg.sender] + 1].requirement;
-  }
-
   //TODO: Override unstake, check for stakeComplete event and react accordingly
 }

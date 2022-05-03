@@ -112,14 +112,6 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     currentlyUpgrading[id] = BuildingUpgrade(building, finishTimestamp);
   }
 
-  function getBuildingLevel(uint id, Building building) public view returns (uint256) {
-    BuildingUpgrade memory buildingUpgrade = currentlyUpgrading[id];
-    if (buildingUpgrade.building == building && buildingUpgrade.finishTimestamp < block.timestamp) {
-      return buildings[id][Building(building)] + 1;
-    }
-    return buildings[id][Building(building)];
-  }
-
   function finishBuildingUpgrade(uint id) public {
     BuildingUpgrade memory buildingUpgrade = currentlyUpgrading[id];
     require(buildingUpgrade.building != Building.NONE, 'No upgrade in progress');
@@ -129,13 +121,14 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     currentlyUpgrading[id] = BuildingUpgrade(Building.NONE, 0);
   }
 
-  // TODO: Later move the checks to frontend
-  function hasStakedLand(address user) public view returns (bool) {
-    return stakedLand[user] != 0;
-  }
+  // VIEWS
 
-  function getStakedLand(address user) public view returns (uint256 id) {
-    return stakedLand[user];
+  function getBuildingLevel(uint id, Building building) public view returns (uint256) {
+    BuildingUpgrade memory buildingUpgrade = currentlyUpgrading[id];
+    if (buildingUpgrade.building == building && buildingUpgrade.finishTimestamp < block.timestamp) {
+      return buildings[id][Building(building)] + 1;
+    }
+    return buildings[id][Building(building)];
   }
 
   function canUpgradeBuilding(uint id, Building building) public view returns (bool) {
@@ -143,21 +136,22 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     return getBuildingLevel(id, building) < buildingMaxLevel[building] && getBuildingLevel(id, requirement.building) >= requirement.level;
   }
 
+
   //TODO: Delete later
-  function resetVillage(uint id) public {
-    buildings[id][Building.TOWN_HALL] = 0;
-    buildings[id][Building.HEADQUARTERS] = 0;
-    buildings[id][Building.BARRACKS] = 0;
-    buildings[id][Building.CLAY_PIT] = 0;
-    buildings[id][Building.FOREST_CAMP] = 0;
-    buildings[id][Building.STONE_MINE] = 0;
-    buildings[id][Building.STOREHOUSE] = 0;
-    buildings[id][Building.SMITHY] = 0;
-    buildings[id][Building.FARM] = 0;
-    buildings[id][Building.HIDDEN_STASH] = 0;
-    buildings[id][Building.WALL] = 0;
-    buildings[id][Building.MARKET] = 0;
-    currentlyUpgrading[id] = BuildingUpgrade(Building.NONE, 0);
-  }
+  //  function resetVillage(uint id) public {
+  //    buildings[id][Building.TOWN_HALL] = 0;
+  //    buildings[id][Building.HEADQUARTERS] = 0;
+  //    buildings[id][Building.BARRACKS] = 0;
+  //    buildings[id][Building.CLAY_PIT] = 0;
+  //    buildings[id][Building.FOREST_CAMP] = 0;
+  //    buildings[id][Building.STONE_MINE] = 0;
+  //    buildings[id][Building.STOREHOUSE] = 0;
+  //    buildings[id][Building.SMITHY] = 0;
+  //    buildings[id][Building.FARM] = 0;
+  //    buildings[id][Building.HIDDEN_STASH] = 0;
+  //    buildings[id][Building.WALL] = 0;
+  //    buildings[id][Building.MARKET] = 0;
+  //    currentlyUpgrading[id] = BuildingUpgrade(Building.NONE, 0);
+  //  }
 
 }

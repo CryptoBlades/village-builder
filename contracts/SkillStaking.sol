@@ -38,7 +38,7 @@ contract SkillStaking is CurrencyStaking {
 
   function unstake() public override returns (bool stakeCompleted) {
     stakeCompleted = super.unstake();
-    if(stakeCompleted) {
+    if (stakeCompleted) {
       kingVaults[msg.sender] = kingVaults[msg.sender].add(kingRewards[unlockedTiers[msg.sender]]);
     }
   }
@@ -46,10 +46,6 @@ contract SkillStaking is CurrencyStaking {
   function completeStake() public override {
     super.completeStake();
     kingVaults[msg.sender] = kingVaults[msg.sender].add(kingRewards[unlockedTiers[msg.sender]]);
-  }
-
-  function getNextRequirement() public view returns (uint256) {
-    return stakes[currentStake[msg.sender] + 1].requirement;
   }
 
   function claimKingVault() public {

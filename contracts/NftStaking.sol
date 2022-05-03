@@ -62,6 +62,8 @@ contract NftStaking is Staking, IERC721ReceiverUpgradeable {
     delete stakedNfts[tx.origin];
   }
 
+  // VIEWS
+
   function getRequiredStakeAmount() public view returns (uint256) {
     return stakes[currentStake[tx.origin] + 1].amount - stakedNfts[tx.origin].length;
   }

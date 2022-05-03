@@ -58,12 +58,14 @@ contract Staking is Initializable, AccessControlUpgradeable {
     currentStakeRewardClaimed[tx.origin] = false;
   }
 
-  function getStakeCompleteTimestamp() public view returns (uint256) {
-    return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
-  }
-
   function addStake(uint id, uint duration, uint requirement, uint amount) public {
     stakes[id] = Stake({duration : duration, requirement : requirement, amount : amount});
+  }
+
+  // VIEWS
+
+  function getStakeCompleteTimestamp() public view returns (uint256) {
+    return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }
 
   function getUnlockedTiers() public view returns (uint256) {
@@ -75,5 +77,9 @@ contract Staking is Initializable, AccessControlUpgradeable {
 
   function canCompleteStake() public view returns (bool) {
     return currentStake[tx.origin] != 0 && !currentStakeRewardClaimed[tx.origin] && (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration);
+  }
+
+  function getNextRequirement() public view returns (uint256) {
+    return stakes[currentStake[msg.sender] + 1].requirement;
   }
 }
