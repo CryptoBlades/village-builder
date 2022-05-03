@@ -1,7 +1,7 @@
 <div class="overflow-auto max-h-screen md:max-h-full">
   <mat-stepper orientation="vertical" [selectedIndex]="unlockedTiers!">
     <mat-step *ngFor="let stakingTier of stakingTiers; index as i"
-              [label]="stakingTier.amount + ' ' + stakingTier.type + ' (' + stakingTier.duration / 60 + ' minutes' + ')'"
+              [label]="stakingTier.amount + ' ' + stakingTier.type + ' (' + getDurationString(stakingTier.duration) + ')'"
               [completed]="unlockedTiers! - 1 >= i">
       <div class="flex flex-col">
         <div *ngIf="stakingTier.requirement" class="flex flex-col">

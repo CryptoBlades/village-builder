@@ -18,4 +18,13 @@ export class StakingTiersStepperComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  getDurationString(duration: number): string {
+    const days = Math.floor(duration / (24 * 60 * 60));
+    const hours = Math.floor((duration % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((duration % (60 * 60)) / 60);
+    const seconds = Math.floor(duration % 60);
+
+    return ((days ? `${days}d ` : '') + (hours ? ` ${hours}h` : '') + (minutes ? ` ${minutes}m` : '') + (seconds ? ` ${seconds}s` : '')).trim();
+  }
 }

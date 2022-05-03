@@ -103,5 +103,313 @@
     "type": "KING",
     "rewards": [],
     "unlocks": []
+  },
+  {
+    "duration": 1380,
+    "amount": 40,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 1680,
+    "amount": 45,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 2040,
+    "amount": 50,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 2400,
+    "amount": 55,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 3000,
+    "amount": 60,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 3660,
+    "amount": 65,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 4320,
+    "amount": 70,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 4980,
+    "amount": 75,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 5640,
+    "amount": 80,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 6300,
+    "amount": 85,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 7200,
+    "amount": 90,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 9000,
+    "amount": 95,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 10800,
+    "amount": 100,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 12600,
+    "amount": 120,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 15000,
+    "amount": 140,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 17400,
+    "amount": 160,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 19800,
+    "amount": 180,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 24000,
+    "amount": 200,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 30600,
+    "amount": 230,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 37200,
+    "amount": 260,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 43800,
+    "amount": 290,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 50400,
+    "amount": 320,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 57000,
+    "amount": 350,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 66000,
+    "amount": 400,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 75000,
+    "amount": 450,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 87000,
+    "amount": 500,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 102000,
+    "amount": 550,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 120000,
+    "amount": 600,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 144000,
+    "amount": 700,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 168000,
+    "amount": 800,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 192000,
+    "amount": 900,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 216000,
+    "amount": 1000,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 240000,
+    "amount": 1200,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 246000,
+    "amount": 1400,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 252000,
+    "amount": 1600,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 258000,
+    "amount": 1800,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 264000,
+    "amount": 2000,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 270000,
+    "amount": 2300,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 276000,
+    "amount": 2600,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 282000,
+    "amount": 2900,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 288000,
+    "amount": 3200,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 294000,
+    "amount": 3500,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 300000,
+    "amount": 4000,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
+  },
+  {
+    "duration": 306000,
+    "amount": 5000,
+    "type": "KING",
+    "rewards": [],
+    "unlocks": []
   }
 ]
