@@ -33,7 +33,7 @@ contract SkillStaking is CurrencyStaking {
   function unstake() public override returns (bool stakeCompleted) {
     stakeCompleted = super.unstake();
     if (stakeCompleted) {
-      kingVault.addToVault(msg.sender, kingRewards[unlockedTiers[msg.sender]]);
+      kingVault.addToVault(msg.sender, kingRewards[unlockedTiers[tx.origin]]);
     }
   }
 

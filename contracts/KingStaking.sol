@@ -17,7 +17,7 @@ contract KingStaking is CurrencyStaking {
   }
 
   function unstake() public override returns (bool stakeCompleted) {
-    uint256 stakedLandId = village.stakedLand(msg.sender);
+    uint256 stakedLandId = village.stakedLand(tx.origin);
     stakeCompleted = super.unstake();
     if (stakeCompleted) {
       village.finishBuildingUpgrade(stakedLandId);

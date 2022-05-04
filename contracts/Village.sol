@@ -14,6 +14,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
 
   mapping(address => uint256) public stakedLand;
   mapping(address => uint256) public stakedFrom;
+  mapping(address => uint256) public stakedTo;
   mapping(uint256 => mapping(Building => uint256)) public buildings; // land to building to level
   mapping(uint256 => BuildingUpgrade) public currentlyUpgrading;
   mapping(Building => uint256) public buildingMaxLevel;
@@ -92,10 +93,10 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     emit Staked(msg.sender, id);
   }
 
-  function unstake(uint id) public assertStakesLand(msg.sender, id) {
+  function unstake(uint id) public assertStakesLand(tx.origin, id) {
     stakedLand[msg.sender] = 0;
-    stakedFrom[msg.sender] = 0;
-    cbkLand.safeTransferFrom(address(this), msg.sender, id);
+    stakedTo[msg.sender] = block.timestamp;
+    cbkLand.safeTransferFrom(address(this), tx.origin, id);
     emit Unstaked(msg.sender, id);
   }
 
