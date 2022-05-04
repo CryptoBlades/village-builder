@@ -16,8 +16,6 @@ export interface BuildingRequirements {
 })
 export class LandService extends SolidityService {
 
-  selectedLand?: Land;
-
   async getOwnedLands(address: string): Promise<Land[]> {
     const landsIds = await (await this.landContract).methods.getOwned(address).call();
     return await Promise.all(landsIds.map(async (landId: number) => {
@@ -51,13 +49,31 @@ export class LandService extends SolidityService {
     return await this.villageContract.methods.stake(id).send({from: this.currentAccount});
   }
 
-  async unstakeLand(id: number): Promise<void> {
-    return await this.villageContract.methods.unstake(id).send({from: this.currentAccount});
-  }
-
-  async hasStakedLand(): Promise<boolean> {
-    const stakedId = +await this.villageContract.methods.stakedLand(this.currentAccount).call({from: this.currentAccount});
-    return stakedId !== 0;
+  async unstake(): Promise<void> {
+    const [
+      kingStakingCurrentStake,
+      skillStakingCurrentStake,
+      characterStakingCurrentStake,
+      weaponStakingCurrentStake,
+    ] = await Promise.all([
+      this.kingStakingContract.methods.currentStake(this.currentAccount).call({from: this.currentAccount}),
+      this.skillStakingContract.methods.currentStake(this.currentAccount).call({from: this.currentAccount}),
+      this.characterStakingContract.methods.currentStake(this.currentAccount).call({from: this.currentAccount}),
+      this.weaponStakingContract.methods.currentStake(this.currentAccount).call({from: this.currentAccount}),
+    ]);
+    if (kingStakingCurrentStake > 0) {
+      await this.kingStakingContract.methods.unstake().send({from: this.currentAccount});
+    }
+    if (skillStakingCurrentStake > 0) {
+      await this.skillStakingContract.methods.unstake().send({from: this.currentAccount});
+    }
+    if (characterStakingCurrentStake > 0) {
+      await this.characterStakingContract.methods.unstake().send({from: this.currentAccount});
+    }
+    if (weaponStakingCurrentStake > 0) {
+      await this.weaponStakingContract.methods.unstake().send({from: this.currentAccount});
+    }
+    return await this.villageContract.methods.unstake().send({from: this.currentAccount});
   }
 
   async getStakedLand(): Promise<Land | undefined> {

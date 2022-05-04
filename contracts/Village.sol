@@ -72,20 +72,21 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     require(cbkLand.ownerOf(id) == user, 'Not land owner');
   }
 
-  modifier assertStakesLand(address user, uint id) {
-    _assertStakesLand(user, id);
+  modifier assertStakesLand(address user) {
+    _assertStakesLand(user);
     _;
   }
 
-  function _assertStakesLand(address user, uint id) internal view {
-    require(stakedLand[user] == id, 'You do not stake this land');
+  function _assertStakesLand(address user) internal view {
+    require(stakedLand[user] != 0, 'You do not stake land');
   }
 
   function onERC721Received(address, address, uint256, bytes calldata) pure external override returns (bytes4) {
     return IERC721ReceiverUpgradeable.onERC721Received.selector;
   }
 
-  function stake(uint id) public assertOwnsLand(msg.sender, id) {
+  function stake(uint id) public assertOwnsLand(tx.origin, id) {
+    require(stakedTo[msg.sender] == 0, 'You have already staked land');
     require(stakedLand[msg.sender] == 0, 'You already have a land staked');
     stakedLand[msg.sender] = id;
     stakedFrom[msg.sender] = block.timestamp;
@@ -93,14 +94,15 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     emit Staked(msg.sender, id);
   }
 
-  function unstake(uint id) public assertStakesLand(tx.origin, id) {
+  function unstake() public assertStakesLand(tx.origin) {
+    uint landId = stakedLand[tx.origin];
     stakedLand[msg.sender] = 0;
     stakedTo[msg.sender] = block.timestamp;
-    cbkLand.safeTransferFrom(address(this), tx.origin, id);
-    emit Unstaked(msg.sender, id);
+    cbkLand.safeTransferFrom(address(this), tx.origin, landId);
+    emit Unstaked(msg.sender, landId);
   }
 
-  function setCurrentlyUpgrading(uint id, Building building, uint finishTimestamp) public assertStakesLand(tx.origin, id) {
+  function setCurrentlyUpgrading(uint id, Building building, uint finishTimestamp) public assertStakesLand(tx.origin) {
     BuildingUpgrade memory buildingUpgrade = currentlyUpgrading[id];
     if (buildingUpgrade.building != Building.NONE) {
       finishBuildingUpgrade(id);
@@ -136,23 +138,5 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     BuildingRequirement memory requirement = buildingRequirement[building];
     return getBuildingLevel(id, building) < buildingMaxLevel[building] && getBuildingLevel(id, requirement.building) >= requirement.level;
   }
-
-
-  //TODO: Delete later
-  //  function resetVillage(uint id) public {
-  //    buildings[id][Building.TOWN_HALL] = 0;
-  //    buildings[id][Building.HEADQUARTERS] = 0;
-  //    buildings[id][Building.BARRACKS] = 0;
-  //    buildings[id][Building.CLAY_PIT] = 0;
-  //    buildings[id][Building.FOREST_CAMP] = 0;
-  //    buildings[id][Building.STONE_MINE] = 0;
-  //    buildings[id][Building.STOREHOUSE] = 0;
-  //    buildings[id][Building.SMITHY] = 0;
-  //    buildings[id][Building.FARM] = 0;
-  //    buildings[id][Building.HIDDEN_STASH] = 0;
-  //    buildings[id][Building.WALL] = 0;
-  //    buildings[id][Building.MARKET] = 0;
-  //    currentlyUpgrading[id] = BuildingUpgrade(Building.NONE, 0);
-  //  }
 
 }

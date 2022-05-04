@@ -159,7 +159,7 @@ export class AppComponent implements OnInit {
   async onClickUnstake() {
     if (!this.selectedLand?.id) return;
     try {
-      await this.landService.unstakeLand(this.selectedLand.id);
+      await this.landService.unstake();
       this.lands = await this.landService.getOwnedLands(this.currentAccount);
       this.selectedLand = undefined;
     } catch (err) {

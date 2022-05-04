@@ -27,7 +27,7 @@
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-    <button [disabled]="!selectedCharacter.value || !isBarracksRequirementMet" mat-raised-button
+    <button [disabled]="!selectedCharacter.value || !isBarracksRequirementMet || isStakeInProgress" mat-raised-button
             class="btn button-stake"
             (click)="onStake()">
       <ng-container
