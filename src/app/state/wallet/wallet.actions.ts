@@ -33,22 +33,43 @@ export class SetCharactersBalance {
   }
 }
 
-export class SetClayBalance {
-  static readonly type = '[Wallet] Set Clay Balance';
+export class SetSkillClayBalance {
+  static readonly type = '[Wallet] Set Skill Clay Balance';
 
   constructor(public payload: number) {
   }
 }
 
-export class SetWoodBalance {
-  static readonly type = '[Wallet] Set Wood Balance';
+export class SetWeaponsClayBalance {
+  static readonly type = '[Wallet] Set Weapons Clay Balance';
 
   constructor(public payload: number) {
   }
 }
 
-export class SetStoneBalance {
-  static readonly type = '[Wallet] Set Stone Balance';
+export class SetSkillWoodBalance {
+  static readonly type = '[Wallet] Set Skill Wood Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetWeaponsWoodBalance {
+  static readonly type = '[Wallet] Set Weapons Wood Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetSkillStoneBalance {
+  static readonly type = '[Wallet] Set Skill Stone Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetWeaponsStoneBalance {
+  static readonly type = '[Wallet] Set Weapons Stone Balance';
 
   constructor(public payload: number) {
   }

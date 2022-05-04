@@ -38,9 +38,9 @@ export class HeaderComponent implements OnInit {
       this.skillBalance = state.skillBalance;
       this.weaponsBalance = state.weaponsBalance;
       this.charactersBalance = state.charactersBalance;
-      this.clayBalance = state.clayBalance;
-      this.woodBalance = state.woodBalance;
-      this.stoneBalance = state.stoneBalance;
+      this.clayBalance = state.claySkillBalance + state.clayWeaponsBalance;
+      this.woodBalance = state.woodSkillBalance + state.woodWeaponsBalance;
+      this.stoneBalance = state.stoneSkillBalance + state.stoneWeaponsBalance;
     });
     this.land$.pipe(untilDestroyed(this)).subscribe((state: LandStateModel) => {
       this.land = state.selectedLand;

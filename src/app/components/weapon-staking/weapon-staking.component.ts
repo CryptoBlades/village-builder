@@ -1,12 +1,17 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {StakingTier} from "../../interfaces/staking-tier";
 import {Building} from "../../app.component";
-import {getBuildingTypeName} from 'src/app/common/common';
+import {extractResourcesFromUnlockedTiers, getBuildingTypeName} from 'src/app/common/common';
 import weaponStakingTiers from '../../../assets/staking-tiers/weapons.json';
 import {CharactersService} from "../../solidity/characters.service";
 import {Store} from "@ngxs/store";
 import {WeaponsService} from "../../solidity/weapons.service";
-import {SetWeaponsBalance} from "../../state/wallet/wallet.actions";
+import {
+  SetWeaponsBalance,
+  SetWeaponsClayBalance,
+  SetWeaponsStoneBalance,
+  SetWeaponsWoodBalance
+} from "../../state/wallet/wallet.actions";
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
@@ -97,6 +102,14 @@ export class WeaponStakingComponent implements OnInit {
       this.stakeCompleteTimestamp = stakeCompleteTimestamp;
     } else {
       this.stakeCompleteTimestamp = undefined;
+    }
+    if (unlockedTiers) {
+      const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.weaponStakingTiers, unlockedTiers);
+      this.store.dispatch([
+        this.store.dispatch(new SetWeaponsClayBalance(clay)),
+        this.store.dispatch(new SetWeaponsWoodBalance(wood)),
+        this.store.dispatch(new SetWeaponsStoneBalance(stone)),
+      ]);
     }
     this.store.dispatch(new SetWeaponsBalance(this.ownedWeapons.length))
   }

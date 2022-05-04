@@ -6,15 +6,18 @@ import {Store} from '@ngxs/store';
 import {from, Observable, take} from "rxjs";
 import {
   SetCharactersBalance,
-  SetClayBalance,
   SetKingBalance,
   SetMetamaskConnected,
   SetMetamaskInstalled,
   SetSkillBalance,
-  SetStoneBalance,
+  SetSkillClayBalance,
+  SetSkillStoneBalance,
+  SetSkillWoodBalance,
   SetWalletAddress,
   SetWeaponsBalance,
-  SetWoodBalance
+  SetWeaponsClayBalance,
+  SetWeaponsStoneBalance,
+  SetWeaponsWoodBalance
 } from "./state/wallet/wallet.actions";
 import {Web3Service} from "./services/web3.service";
 import {LandService} from "./solidity/land.service";
@@ -26,10 +29,11 @@ import {WeaponsService} from "./solidity/weapons.service";
 import {KingService} from "./solidity/king.service";
 import {MatDialog} from "@angular/material/dialog";
 import {BuildingDialogComponent} from "./components/building-dialog/building-dialog.component";
-import {getBuildingTypeName} from './common/common';
+import {extractResourcesFromUnlockedTiers, getBuildingTypeName} from './common/common';
 import {SkillService} from "./solidity/skill.service";
 import {BuildingType} from "./enums/building-type";
 import skillStakingTiers from '../assets/staking-tiers/skill.json';
+import weaponsStakingTiers from '../assets/staking-tiers/weapons.json';
 import {StakingTier} from "./interfaces/staking-tier";
 import {KingVaultDialogComponent} from "./components/king-vault-dialog/king-vault-dialog.component";
 
@@ -71,6 +75,7 @@ export class AppComponent implements OnInit {
   buildings: Building[] = [];
 
   skillStakingTiers: StakingTier[] = skillStakingTiers;
+  weaponsStakingTiers: StakingTier[] = weaponsStakingTiers;
 
   constructor(
     private store: Store,
@@ -127,19 +132,34 @@ export class AppComponent implements OnInit {
       const provider = await detectEthereumProvider() as any;
       provider?.request({method: 'eth_requestAccounts'}).then(async (accounts: any) => {
         this.store.dispatch(new SetWalletAddress(this.web3.utils.toChecksumAddress(accounts[0])));
-        this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
-        this.store.dispatch(new SetSkillBalance(await this.skillService.getOwnedAmount()));
-        this.store.dispatch(new SetWeaponsBalance(await this.weaponsService.getOwnedAmount()));
-        this.store.dispatch(new SetCharactersBalance(await this.charactersService.getOwnedAmount()));
+        this.store.dispatch([
+          new SetKingBalance(await this.kingService.getOwnedAmount()),
+          new SetSkillBalance(await this.skillService.getOwnedAmount()),
+          new SetWeaponsBalance(await this.weaponsService.getOwnedAmount()),
+          new SetCharactersBalance(await this.charactersService.getOwnedAmount()),
+        ]);
         const unlockedSkillTiers = await this.skillService.getUnlockedTiers();
-        if (unlockedSkillTiers) {
-          const resources = Array.from(this.skillStakingTiers.slice(0, unlockedSkillTiers)
-            .flatMap(tier => tier.rewards).filter(reward => reward.type !== 'KING').reduce(
-              (m, {type, amount}) => m.set(type, (m.get(type) || 0) + amount), new Map
-            ), ([type, amount]) => ({type, amount}));
-          this.store.dispatch(new SetClayBalance(resources.find(resource => resource.type === 'Clay')?.amount));
-          this.store.dispatch(new SetWoodBalance(resources.find(resource => resource.type === 'Wood')?.amount));
-          this.store.dispatch(new SetStoneBalance(resources.find(resource => resource.type === 'Stone')?.amount));
+        const unlockedWeaponsTiers = await this.weaponsService.getUnlockedTiers();
+        if (unlockedSkillTiers || unlockedWeaponsTiers) {
+          console.log(unlockedSkillTiers, unlockedWeaponsTiers);
+          const {
+            clay: skillClay,
+            wood: skillWood,
+            stone: skillStone
+          } = extractResourcesFromUnlockedTiers(this.skillStakingTiers, unlockedSkillTiers);
+          const {
+            clay: weaponClay,
+            wood: weaponWood,
+            stone: weaponStone
+          } = extractResourcesFromUnlockedTiers(this.weaponsStakingTiers, unlockedWeaponsTiers);
+          this.store.dispatch([
+            new SetSkillClayBalance(skillClay),
+            new SetSkillWoodBalance(skillWood),
+            new SetSkillStoneBalance(skillStone),
+            new SetWeaponsClayBalance(weaponClay),
+            new SetWeaponsWoodBalance(weaponWood),
+            new SetWeaponsStoneBalance(weaponStone),
+          ]);
         }
         this.store.dispatch(new SetMetamaskConnected(true));
         this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {

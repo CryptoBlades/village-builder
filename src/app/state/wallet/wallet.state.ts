@@ -3,14 +3,14 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {
   ClearWalletState,
   SetCharactersBalance,
-  SetClayBalance,
+  SetSkillClayBalance,
   SetKingBalance,
   SetMetamaskInstalled,
   SetSkillBalance,
-  SetStoneBalance,
+  SetSkillStoneBalance,
   SetWalletAddress,
   SetWeaponsBalance,
-  SetWoodBalance
+  SetSkillWoodBalance, SetWeaponsClayBalance, SetWeaponsWoodBalance, SetWeaponsStoneBalance
 } from './wallet.actions';
 
 
@@ -21,9 +21,12 @@ function createInitialData(): WalletStateModel {
     skillBalance: 0,
     weaponsBalance: 0,
     charactersBalance: 0,
-    clayBalance: 0,
-    woodBalance: 0,
-    stoneBalance: 0,
+    claySkillBalance: 0,
+    woodSkillBalance: 0,
+    stoneSkillBalance: 0,
+    clayWeaponsBalance: 0,
+    woodWeaponsBalance: 0,
+    stoneWeaponsBalance: 0,
     isConnected: false,
     isInstalled: false,
   };
@@ -35,9 +38,12 @@ export interface WalletStateModel {
   skillBalance: number;
   weaponsBalance: number;
   charactersBalance: number;
-  clayBalance: number;
-  woodBalance: number;
-  stoneBalance: number;
+  claySkillBalance: number;
+  woodSkillBalance: number;
+  stoneSkillBalance: number;
+  clayWeaponsBalance: number;
+  woodWeaponsBalance: number;
+  stoneWeaponsBalance: number;
   isConnected: boolean;
   isInstalled: boolean;
 }
@@ -85,19 +91,34 @@ export class WalletState {
     patchState({charactersBalance: payload});
   }
 
-  @Action(SetClayBalance)
-  setClayBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetClayBalance) {
-    patchState({clayBalance: payload});
+  @Action(SetSkillClayBalance)
+  setClaySkillBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSkillClayBalance) {
+    patchState({claySkillBalance: payload});
   }
 
-  @Action(SetWoodBalance)
-  setWoodBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWoodBalance) {
-    patchState({woodBalance: payload});
+  @Action(SetWeaponsClayBalance)
+  setWeaponsClayBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsClayBalance) {
+    patchState({clayWeaponsBalance: payload});
   }
 
-  @Action(SetStoneBalance)
-  setStoneBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetStoneBalance) {
-    patchState({stoneBalance: payload});
+  @Action(SetSkillWoodBalance)
+  setWoodSkillBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSkillWoodBalance) {
+    patchState({woodSkillBalance: payload});
+  }
+
+  @Action(SetWeaponsWoodBalance)
+  setWeaponsWoodBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsWoodBalance) {
+    patchState({woodWeaponsBalance: payload});
+  }
+
+  @Action(SetSkillStoneBalance)
+  setStoneSkillBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSkillStoneBalance) {
+    patchState({stoneSkillBalance: payload});
+  }
+
+  @Action(SetWeaponsStoneBalance)
+  setWeaponsStoneBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsStoneBalance) {
+    patchState({stoneWeaponsBalance: payload});
   }
 
   @Action(SetMetamaskInstalled)

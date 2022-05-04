@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Building} from "../../app.component";
-import {getBuildingTypeName} from 'src/app/common/common';
+import {extractResourcesFromUnlockedTiers, getBuildingTypeName} from 'src/app/common/common';
 import {StakingTier} from "../../interfaces/staking-tier";
 import skillStakingTiers from '../../../assets/staking-tiers/skill.json';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
@@ -9,7 +9,12 @@ import {LandService} from "../../solidity/land.service";
 import {CharactersService} from "../../solidity/characters.service";
 import {Store} from "@ngxs/store";
 import {SkillService} from "../../solidity/skill.service";
-import {SetClayBalance, SetSkillBalance, SetStoneBalance, SetWoodBalance} from "../../state/wallet/wallet.actions";
+import {
+  SetSkillBalance,
+  SetSkillClayBalance,
+  SetSkillStoneBalance,
+  SetSkillWoodBalance
+} from "../../state/wallet/wallet.actions";
 import {KingService} from "../../solidity/king.service";
 
 @Component({
@@ -88,13 +93,12 @@ export class SkillStakingComponent implements OnInit {
       this.stakeCompleteTimestamp = undefined;
     }
     if (skillUnlockedTiers) {
-      const resources = Array.from(this.skillStakingTiers.slice(0, skillUnlockedTiers)
-        .flatMap(tier => tier.rewards).filter(reward => reward.type !== 'KING').reduce(
-          (m, {type, amount}) => m.set(type, (m.get(type) || 0) + amount), new Map
-        ), ([type, amount]) => ({type, amount}));
-      this.store.dispatch(new SetClayBalance(resources.find(resource => resource.type === 'Clay')?.amount));
-      this.store.dispatch(new SetWoodBalance(resources.find(resource => resource.type === 'Wood')?.amount));
-      this.store.dispatch(new SetStoneBalance(resources.find(resource => resource.type === 'Stone')?.amount));
+      const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.skillStakingTiers, skillUnlockedTiers);
+      this.store.dispatch([
+        this.store.dispatch(new SetSkillClayBalance(clay)),
+        this.store.dispatch(new SetSkillWoodBalance(wood)),
+        this.store.dispatch(new SetSkillStoneBalance(stone)),
+      ]);
     }
     this.store.dispatch(new SetSkillBalance(skillOwned));
   }
