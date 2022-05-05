@@ -7,26 +7,24 @@
       </ng-template>
       <app-king-staking [building]="building" (onLoadData)="loadData()"></app-king-staking>
     </mat-tab>
-    <mat-tab *ngIf="isResourcesGenerator">
+    <mat-tab *ngIf="isResourcesGenerator" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
         <img src="./assets/Placeholder/skill.png" class="px-1 w-8" alt="Skill"/>
-        <span class="building-name">SKILL</span>
+        <span class="building-name" [matTooltip]="getTabTooltip()">SKILL</span>
       </ng-template>
       <app-skill-staking [building]="building"></app-skill-staking>
     </mat-tab>
     <mat-tab *ngIf="isBarracks" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
         <img src="./assets/Placeholder/character.png" class="px-1 w-8" alt="Character"/>
-        <span class="building-name"
-              [matTooltip]="building.level === 0 ? 'You need to build Barracks first' : ''">CHARACTERS</span>
+        <span class="building-name" [matTooltip]="getTabTooltip()">CHARACTERS</span>
       </ng-template>
       <app-character-staking [building]="building"></app-character-staking>
     </mat-tab>
     <mat-tab *ngIf="isSmithy" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
         <img src="./assets/Placeholder/weapon.png" class="px-1 w-8" alt="Weapon"/>
-        <span class="building-name"
-              [matTooltip]="building.level === 0 ? 'You need to build Smithy first' : ''">WEAPONS</span>
+        <span class="building-name" [matTooltip]="getTabTooltip()">WEAPONS</span>
       </ng-template>
       <app-weapon-staking [building]="building"></app-weapon-staking>
     </mat-tab>

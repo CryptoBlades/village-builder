@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {Building} from "../../app.component";
 import {LandService} from "../../solidity/land.service";
 import {BuildingType} from "../../enums/building-type";
+import {getBuildingTypeName} from "../../common/common";
 
 @Component({
   selector: 'app-building-dialog',
@@ -38,6 +39,12 @@ export class BuildingDialogComponent implements OnInit {
 
   get isSmithy() {
     return this.building?.type === BuildingType.SMITHY;
+  }
+
+  getTabTooltip() {
+    if (this.building && this.building.level === 0) {
+      return `You need to build ${getBuildingTypeName(this.building.type)} first`
+    } else return '';
   }
 
 }
