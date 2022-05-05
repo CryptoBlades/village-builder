@@ -6,19 +6,35 @@
   You are connected!
   <div *ngIf="selectedLand; else landNotSelectedBlock">
     You selected:
-    <div class="p-3">
-      <ng-container>
         <div>
-          {{ 'Common.ID' }} : {{ selectedLand.id }}
+          <ng-container [ngSwitch]="selectedLand.tier">
+            <div *ngSwitchCase="1">
+              <img src="assets/Land/t1.png" class="w-64" alt="">
+            </div>
+            <div *ngSwitchCase="2">
+              <img src="assets/Land/t2.png" class="w-64" alt="">
+            </div>
+            <div *ngSwitchCase="3">
+              <img src="assets/Land/t3.png" class="w-64" alt="">
+            </div>
+            <div *ngSwitchDefault>
+              <img src="assets/Land/t1.png" class="w-64" alt="">
+            </div>
+          </ng-container>
+          <div class="p-3">
+            <ng-container>
+              <div>
+                {{ 'Common.ID' }} : {{ selectedLand.id }}
+              </div>
+              <div>
+                {{ 'Common.Tier'}} : {{ selectedLand.tier }}
+              </div>
+              <div>
+                {{ 'Common.ChunkId'}} : {{ selectedLand.chunkID }}
+              </div>
+            </ng-container>
+          </div>
         </div>
-        <div>
-          {{ 'Common.Tier'}} : {{ selectedLand.tier }}
-        </div>
-        <div>
-          {{ 'Common.ChunkId'}} : {{ selectedLand.chunkID }}
-        </div>
-      </ng-container>
-    </div>
     <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickUnstake()">
       {{ 'Common.Unstake' }}
     </button>

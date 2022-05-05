@@ -13,6 +13,7 @@ export class KingVaultDialogComponent implements OnInit {
 
   totalKingInVault?: number;
   claimableKing?: number;
+  claimedKing?: number;
 
   constructor(
     private kingService: KingService,
@@ -26,12 +27,14 @@ export class KingVaultDialogComponent implements OnInit {
   }
 
   async loadData() {
-    const [totalKingInVault, claimableKing] = await Promise.all([
+    const [totalKingInVault, claimableKing, claimedKing] = await Promise.all([
       this.kingVaultService.getTotalInVault(),
       this.kingVaultService.getClaimable(),
+      this.kingVaultService.getClaimed(),
     ]);
     this.totalKingInVault = totalKingInVault;
     this.claimableKing = claimableKing;
+    this.claimedKing = claimedKing;
     this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
   }
 

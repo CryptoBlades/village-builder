@@ -14,6 +14,7 @@ contract KingVault is Initializable, AccessControlUpgradeable {
   KingToken public kingToken;
 
   mapping(address => uint256) public vaults;
+  mapping(address => uint256) public claimed;
 
   function initialize(address kingAddress) public initializer {
     __AccessControl_init_unchained();
@@ -26,6 +27,7 @@ contract KingVault is Initializable, AccessControlUpgradeable {
   function claimVault() public {
     require(vaults[msg.sender] > 0, "You don't have any king in the vault to claim");
     kingToken.transfer(msg.sender, vaults[msg.sender]);
+    claimed[msg.sender] += vaults[msg.sender];
     vaults[msg.sender] = 0;
   }
 

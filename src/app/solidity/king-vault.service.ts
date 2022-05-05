@@ -16,6 +16,11 @@ export class KingVaultService extends SolidityService {
     return +this.web3.utils.fromWei(amount, 'ether');
   }
 
+  async getClaimed(): Promise<number> {
+    const amount = await this.kingVaultContract.methods.claimed(this.currentAccount).call({from: this.currentAccount});
+    return +this.web3.utils.fromWei(amount, 'ether');
+  }
+
   async claimVault(): Promise<void> {
     await this.kingVaultContract.methods.claimVault().send({from: this.currentAccount});
   }
