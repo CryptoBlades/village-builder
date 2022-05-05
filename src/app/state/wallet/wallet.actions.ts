@@ -75,6 +75,41 @@ export class SetWeaponsStoneBalance {
   }
 }
 
+export class SetMercenaryBalance {
+  static readonly type = '[Wallet] Set Mercenary Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetBruiserBalance {
+  static readonly type = '[Wallet] Set Bruiser Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetMageBalance {
+  static readonly type = '[Wallet] Set Mage Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetArcherBalance {
+  static readonly type = '[Wallet] Set Archer Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetPaladinBalance {
+  static readonly type = '[Wallet] Set Paladin Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
 export class SetMetamaskInstalled {
   static readonly type = '[Wallet] Set MetaMask Installed';
 

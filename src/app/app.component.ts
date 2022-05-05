@@ -5,10 +5,15 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Store} from '@ngxs/store';
 import {from, Observable, take} from "rxjs";
 import {
+  SetArcherBalance,
+  SetBruiserBalance,
   SetCharactersBalance,
   SetKingBalance,
+  SetMageBalance,
+  SetMercenaryBalance,
   SetMetamaskConnected,
   SetMetamaskInstalled,
+  SetPaladinBalance,
   SetSkillBalance,
   SetSkillClayBalance,
   SetSkillStoneBalance,
@@ -29,11 +34,12 @@ import {WeaponsService} from "./solidity/weapons.service";
 import {KingService} from "./solidity/king.service";
 import {MatDialog} from "@angular/material/dialog";
 import {BuildingDialogComponent} from "./components/building-dialog/building-dialog.component";
-import {extractResourcesFromUnlockedTiers, getBuildingTypeName} from './common/common';
+import {extractResourcesFromUnlockedTiers, extractUnitsFromUnlockedTiers, getBuildingTypeName} from './common/common';
 import {SkillService} from "./solidity/skill.service";
 import {BuildingType} from "./enums/building-type";
 import skillStakingTiers from '../assets/staking-tiers/skill.json';
 import weaponsStakingTiers from '../assets/staking-tiers/weapons.json';
+import charactersStakingTiers from '../assets/staking-tiers/characters.json';
 import {StakingTier} from "./interfaces/staking-tier";
 import {KingVaultDialogComponent} from "./components/king-vault-dialog/king-vault-dialog.component";
 
@@ -76,6 +82,7 @@ export class AppComponent implements OnInit {
 
   skillStakingTiers: StakingTier[] = skillStakingTiers;
   weaponsStakingTiers: StakingTier[] = weaponsStakingTiers;
+  charactersStakingTiers: StakingTier[] = charactersStakingTiers;
 
   constructor(
     private store: Store,
@@ -159,6 +166,23 @@ export class AppComponent implements OnInit {
             new SetWeaponsClayBalance(weaponClay),
             new SetWeaponsWoodBalance(weaponWood),
             new SetWeaponsStoneBalance(weaponStone),
+          ]);
+        }
+        const unlockedCharactersTiers = await this.charactersService.getUnlockedTiers();
+        if (unlockedCharactersTiers) {
+          const {
+            mercenary,
+            bruiser,
+            mage,
+            archer,
+            paladin
+          } = extractUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
+          this.store.dispatch([
+            new SetMercenaryBalance(mercenary),
+            new SetBruiserBalance(bruiser),
+            new SetMageBalance(mage),
+            new SetArcherBalance(archer),
+            new SetPaladinBalance(paladin),
           ]);
         }
         this.store.dispatch(new SetMetamaskConnected(true));

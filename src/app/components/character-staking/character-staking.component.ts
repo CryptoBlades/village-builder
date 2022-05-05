@@ -1,11 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {_filter, getBuildingTypeName} from 'src/app/common/common';
+import {_filter, extractUnitsFromUnlockedTiers, getBuildingTypeName} from 'src/app/common/common';
 import {Building} from "../../app.component";
 import {CharactersService} from "../../solidity/characters.service";
-import characterStakingTiers from '../../../assets/staking-tiers/characters.json';
+import charactersStakingTiers from '../../../assets/staking-tiers/characters.json';
 import {StakingTier} from "../../interfaces/staking-tier";
 import {Store} from "@ngxs/store";
-import {SetCharactersBalance} from "../../state/wallet/wallet.actions";
+import {
+  SetArcherBalance,
+  SetBruiserBalance,
+  SetCharactersBalance,
+  SetMageBalance,
+  SetMercenaryBalance,
+  SetPaladinBalance
+} from "../../state/wallet/wallet.actions";
 import {BuildingType} from "../../enums/building-type";
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
@@ -17,7 +24,7 @@ import {FormControl} from "@angular/forms";
 })
 export class CharacterStakingComponent implements OnInit {
   getBuildingTypeName = getBuildingTypeName;
-  characterStakingTiers: StakingTier[] = characterStakingTiers;
+  charactersStakingTiers: StakingTier[] = charactersStakingTiers;
   nextStakingTier?: StakingTier;
 
   @Input() building!: Building;
@@ -81,13 +88,30 @@ export class CharacterStakingComponent implements OnInit {
     this.barracksRequired = barracksRequired;
     this.unlockedTiers = unlockedTiers;
     this.canClaim = canClaim;
-    this.nextStakingTier = this.characterStakingTiers[this.unlockedTiers];
+    this.nextStakingTier = this.charactersStakingTiers[this.unlockedTiers];
     if (stakeCompleteTimestamp > Date.now() / 1000) {
       this.stakeCompleteTimestamp = stakeCompleteTimestamp;
     } else {
       this.stakeCompleteTimestamp = undefined;
     }
-    this.store.dispatch(new SetCharactersBalance(this.characters.length))
+    this.store.dispatch(new SetCharactersBalance(this.characters.length));
+    const unlockedCharactersTiers = await this.charactersService.getUnlockedTiers();
+    if (unlockedCharactersTiers) {
+      const {
+        mercenary,
+        bruiser,
+        mage,
+        archer,
+        paladin
+      } = extractUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
+      this.store.dispatch([
+        new SetMercenaryBalance(mercenary),
+        new SetBruiserBalance(bruiser),
+        new SetMageBalance(mage),
+        new SetArcherBalance(archer),
+        new SetPaladinBalance(paladin),
+      ]);
+    }
   }
 
   get isStakeInProgress() {

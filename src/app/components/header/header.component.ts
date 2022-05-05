@@ -24,6 +24,11 @@ export class HeaderComponent implements OnInit {
   clayBalance: number = 0;
   woodBalance: number = 0;
   stoneBalance: number = 0;
+  mercenaryBalance: number = 0;
+  bruiserBalance: number = 0;
+  mageBalance: number = 0;
+  archerBalance: number = 0;
+  paladinBalance: number = 0;
   land?: Land;
 
   constructor(
@@ -41,6 +46,11 @@ export class HeaderComponent implements OnInit {
       this.clayBalance = state.claySkillBalance + state.clayWeaponsBalance;
       this.woodBalance = state.woodSkillBalance + state.woodWeaponsBalance;
       this.stoneBalance = state.stoneSkillBalance + state.stoneWeaponsBalance;
+      this.mercenaryBalance = state.mercenaryBalance;
+      this.bruiserBalance = state.bruiserBalance;
+      this.mageBalance = state.mageBalance;
+      this.archerBalance = state.archerBalance;
+      this.paladinBalance = state.paladinBalance;
     });
     this.land$.pipe(untilDestroyed(this)).subscribe((state: LandStateModel) => {
       this.land = state.selectedLand;

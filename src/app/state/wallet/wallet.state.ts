@@ -10,7 +10,12 @@ import {
   SetSkillStoneBalance,
   SetWalletAddress,
   SetWeaponsBalance,
-  SetSkillWoodBalance, SetWeaponsClayBalance, SetWeaponsWoodBalance, SetWeaponsStoneBalance
+  SetSkillWoodBalance,
+  SetWeaponsClayBalance,
+  SetWeaponsWoodBalance,
+  SetWeaponsStoneBalance,
+  SetPaladinBalance,
+  SetArcherBalance, SetMageBalance, SetBruiserBalance, SetMercenaryBalance
 } from './wallet.actions';
 
 
@@ -27,6 +32,11 @@ function createInitialData(): WalletStateModel {
     clayWeaponsBalance: 0,
     woodWeaponsBalance: 0,
     stoneWeaponsBalance: 0,
+    mercenaryBalance: 0,
+    bruiserBalance: 0,
+    mageBalance: 0,
+    archerBalance: 0,
+    paladinBalance: 0,
     isConnected: false,
     isInstalled: false,
   };
@@ -44,6 +54,11 @@ export interface WalletStateModel {
   clayWeaponsBalance: number;
   woodWeaponsBalance: number;
   stoneWeaponsBalance: number;
+  mercenaryBalance: number;
+  bruiserBalance: number;
+  mageBalance: number;
+  archerBalance: number;
+  paladinBalance: number;
   isConnected: boolean;
   isInstalled: boolean;
 }
@@ -119,6 +134,31 @@ export class WalletState {
   @Action(SetWeaponsStoneBalance)
   setWeaponsStoneBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsStoneBalance) {
     patchState({stoneWeaponsBalance: payload});
+  }
+
+  @Action(SetMercenaryBalance)
+  setMercenaryBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetMercenaryBalance) {
+    patchState({mercenaryBalance: payload});
+  }
+
+  @Action(SetBruiserBalance)
+  setBruiserBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetBruiserBalance) {
+    patchState({bruiserBalance: payload});
+  }
+
+  @Action(SetMageBalance)
+  setMageBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetMageBalance) {
+    patchState({mageBalance: payload});
+  }
+
+  @Action(SetArcherBalance)
+  setArcherBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetArcherBalance) {
+    patchState({archerBalance: payload});
+  }
+
+  @Action(SetPaladinBalance)
+  setPaladinBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetPaladinBalance) {
+    patchState({paladinBalance: payload});
   }
 
   @Action(SetMetamaskInstalled)
