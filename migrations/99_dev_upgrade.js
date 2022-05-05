@@ -3,6 +3,7 @@ const CharacterStaking = artifacts.require('CharacterStaking');
 const WeaponStaking = artifacts.require('WeaponStaking');
 const KingStaking = artifacts.require('KingStaking');
 const SkillStaking = artifacts.require('SkillStaking');
+const KingVault = artifacts.require('KingVault');
 const Village = artifacts.require('Village');
 
 module.exports = async function (deployer, network) {
@@ -11,6 +12,7 @@ module.exports = async function (deployer, network) {
   const weaponStaking = await upgradeProxy(WeaponStaking.address, WeaponStaking, {deployer});
   const kingStaking = await upgradeProxy(KingStaking.address, KingStaking, {deployer});
   const skillStaking = await upgradeProxy(SkillStaking.address, SkillStaking, {deployer});
+  await upgradeProxy(KingVault.address, KingVault, {deployer});
 
   await Promise.all([
     characterStaking.addStake(1, 30, 1, 1),
@@ -114,7 +116,51 @@ module.exports = async function (deployer, network) {
     skillStaking.addStake(5, 240, 4, web3.utils.toWei('0.3', 'ether'), 0),
     skillStaking.addStake(6, 300, 4, web3.utils.toWei('0.4', 'ether'), web3.utils.toWei('3', 'ether')),
     skillStaking.addStake(7, 600, 4, web3.utils.toWei('0.5', 'ether'), 0),
-
+    skillStaking.addStake(8, 720, 4, web3.utils.toWei('1', 'ether'), web3.utils.toWei('4', 'ether')),
+    skillStaking.addStake(9, 900, 4, web3.utils.toWei('1.25', 'ether'), 0),
+    skillStaking.addStake(10, 1200, 4, web3.utils.toWei('1.5', 'ether'), web3.utils.toWei('5', 'ether')),
+    skillStaking.addStake(11, 1500, 4, web3.utils.toWei('1.75', 'ether'), 0),
+    skillStaking.addStake(12, 1800, 4, web3.utils.toWei('2', 'ether'), web3.utils.toWei('6', 'ether')),
+    skillStaking.addStake(13, 2700, 4, web3.utils.toWei('2.25', 'ether'), 0),
+    skillStaking.addStake(14, 3600, 4, web3.utils.toWei('2.5', 'ether'), web3.utils.toWei('7', 'ether')),
+    skillStaking.addStake(15, 4200, 4, web3.utils.toWei('2.75', 'ether'), 0),
+    skillStaking.addStake(16, 4800, 4, web3.utils.toWei('3', 'ether'), web3.utils.toWei('8', 'ether')),
+    skillStaking.addStake(17, 5400, 4, web3.utils.toWei('3.5', 'ether'), 0),
+    skillStaking.addStake(18, 6000, 4, web3.utils.toWei('4', 'ether'), web3.utils.toWei('9', 'ether')),
+    skillStaking.addStake(19, 6600, 4, web3.utils.toWei('4.5', 'ether'), 0),
+    skillStaking.addStake(20, 7200, 4, web3.utils.toWei('5', 'ether'), web3.utils.toWei('10', 'ether')),
+    // skillStaking.addStake(21, 9000, 4, web3.utils.toWei('6', 'ether'), 0),
+    // skillStaking.addStake(22, 10800, 4, web3.utils.toWei('7', 'ether'), web3.utils.toWei('11', 'ether')),
+    // skillStaking.addStake(23, 12600, 4, web3.utils.toWei('8', 'ether'), 0),
+    // skillStaking.addStake(24, 14400, 4, web3.utils.toWei('9', 'ether'), web3.utils.toWei('12', 'ether')),
+    // skillStaking.addStake(25, 18000, 4, web3.utils.toWei('10', 'ether'), 0),
+    // skillStaking.addStake(26, 21600, 4, web3.utils.toWei('12', 'ether'), web3.utils.toWei('13', 'ether')),
+    // skillStaking.addStake(27, 25200, 4, web3.utils.toWei('14', 'ether'), 0),
+    // skillStaking.addStake(28, 30000, 4, web3.utils.toWei('16', 'ether'), web3.utils.toWei('14', 'ether')),
+    // skillStaking.addStake(29, 34800, 4, web3.utils.toWei('18', 'ether'), 0),
+    // skillStaking.addStake(30, 42000, 4, web3.utils.toWei('20', 'ether'), web3.utils.toWei('15', 'ether')),
+    // skillStaking.addStake(31, 49800, 4, web3.utils.toWei('23', 'ether'), 0),
+    // skillStaking.addStake(32, 57000, 4, web3.utils.toWei('26', 'ether'), web3.utils.toWei('16', 'ether')),
+    // skillStaking.addStake(33, 66000, 4, web3.utils.toWei('29', 'ether'), 0),
+    // skillStaking.addStake(34, 72000, 4, web3.utils.toWei('32', 'ether'), web3.utils.toWei('17', 'ether')),
+    // skillStaking.addStake(35, 78000, 4, web3.utils.toWei('35', 'ether'), 0),
+    // skillStaking.addStake(36, 84000, 4, web3.utils.toWei('39', 'ether'), web3.utils.toWei('18', 'ether')),
+    // skillStaking.addStake(37, 90000, 4, web3.utils.toWei('41', 'ether'), 0),
+    // skillStaking.addStake(38, 108000, 4, web3.utils.toWei('43', 'ether'), web3.utils.toWei('19', 'ether')),
+    // skillStaking.addStake(39, 126000, 4, web3.utils.toWei('45', 'ether'), 0),
+    // skillStaking.addStake(40, 144000, 4, web3.utils.toWei('47', 'ether'), web3.utils.toWei('20', 'ether')),
+    // skillStaking.addStake(41, 162000, 4, web3.utils.toWei('50', 'ether'), 0),
+    // skillStaking.addStake(42, 180000, 4, web3.utils.toWei('55', 'ether'), web3.utils.toWei('21', 'ether')),
+    // skillStaking.addStake(43, 204000, 4, web3.utils.toWei('60', 'ether'), 0),
+    // skillStaking.addStake(44, 228000, 4, web3.utils.toWei('65', 'ether'), web3.utils.toWei('22', 'ether')),
+    // skillStaking.addStake(45, 252000, 4, web3.utils.toWei('70', 'ether'), 0),
+    // skillStaking.addStake(46, 276000, 4, web3.utils.toWei('75', 'ether'), web3.utils.toWei('23', 'ether')),
+    // skillStaking.addStake(47, 300000, 4, web3.utils.toWei('80', 'ether'), 0),
+    // skillStaking.addStake(48, 330000, 4, web3.utils.toWei('85', 'ether'), web3.utils.toWei('24', 'ether')),
+    // skillStaking.addStake(49, 360000, 4, web3.utils.toWei('90', 'ether'), 0),
+    // skillStaking.addStake(50, 390000, 4, web3.utils.toWei('95', 'ether'), web3.utils.toWei('25', 'ether')),
+    // skillStaking.addStake(51, 420000, 4, web3.utils.toWei('100', 'ether'), 0),
+    //SKILL_STAKING FINISHED
 
     weaponStaking.addStake(1, 30, 1, 1, 0),
     weaponStaking.addStake(2, 120, 2, 2, 0),
