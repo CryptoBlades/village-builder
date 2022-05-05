@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {StakingTier} from "../../interfaces/staking-tier";
+import {MatDialog} from "@angular/material/dialog";
+import {SimpleConfirmationDialogComponent} from "../simple-confirmation-dialog/simple-confirmation-dialog.component";
 
 @Component({
   selector: 'app-staking-tiers-stepper',
@@ -13,7 +15,9 @@ export class StakingTiersStepperComponent implements OnInit {
   @Input() unlockedTiers!: number;
   @Output() onUnstake: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
+  constructor(
+    public dialog: MatDialog,
+  ) {
   }
 
   ngOnInit(): void {
@@ -26,5 +30,23 @@ export class StakingTiersStepperComponent implements OnInit {
     const seconds = Math.floor(duration % 60);
 
     return ((days ? `${days}d ` : '') + (hours ? ` ${hours}h` : '') + (minutes ? ` ${minutes}m` : '') + (seconds ? ` ${seconds}s` : '')).trim();
+  }
+
+  openUnstakeConfirmationDialog() {
+    const dialogRef = this.dialog.open(SimpleConfirmationDialogComponent, {
+      data: {
+        dialogs: [
+          {title: 'Unstake?', content: 'Are you sure you know what you\'re doing?'},
+          {title: 'Unstake is permanent', content: 'You won\t be able to stake anymore, are you sure?'},
+          {title: 'No coming back', content: 'You won\t be able to come back from this, are you sure?'},
+        ]
+      }
+    });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.onUnstake.emit();
+      }
+      console.log('The dialog was closed', confirmed);
+    });
   }
 }

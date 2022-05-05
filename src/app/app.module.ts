@@ -33,6 +33,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import { KingVaultDialogComponent } from './components/king-vault-dialog/king-vault-dialog.component';
 import { NextTierUnlocksComponent } from './components/next-tier-unlocks/next-tier-unlocks.component';
 import { TimestampCountdownDirective } from './directives/timestamp-countdown.directive';
+import { SimpleConfirmationDialogComponent } from './components/simple-confirmation-dialog/simple-confirmation-dialog.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { TimestampCountdownDirective } from './directives/timestamp-countdown.di
     WeaponStakingComponent,
     KingVaultDialogComponent,
     NextTierUnlocksComponent,
-    TimestampCountdownDirective
+    TimestampCountdownDirective,
+    SimpleConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
