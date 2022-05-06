@@ -12,6 +12,7 @@ import {getBuildingTypeName} from "../../common/common";
 })
 export class BuildingDialogComponent implements OnInit {
   building?: Building;
+  isLoading = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -20,7 +21,12 @@ export class BuildingDialogComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadData();
+    try {
+      this.isLoading = true;
+      await this.loadData();
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   async loadData(): Promise<void> {

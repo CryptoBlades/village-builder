@@ -1,4 +1,4 @@
-<ng-template [ngIf]="building">
+<ng-template [ngIf]="!isLoading && building" [ngIfElse]="loading">
   <mat-tab-group color="accent" mat-align-tabs="center" class="h-full" selectedIndex="0">
     <mat-tab>
       <ng-template mat-tab-label>
@@ -29,4 +29,9 @@
       <app-weapon-staking [building]="building"></app-weapon-staking>
     </mat-tab>
   </mat-tab-group>
+</ng-template>
+<ng-template #loading>
+  <div class="flex items-center justify-center h-full">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
 </ng-template>

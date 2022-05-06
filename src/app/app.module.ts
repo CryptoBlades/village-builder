@@ -34,6 +34,7 @@ import { KingVaultDialogComponent } from './components/king-vault-dialog/king-va
 import { NextTierUnlocksComponent } from './components/next-tier-unlocks/next-tier-unlocks.component';
 import { TimestampCountdownDirective } from './directives/timestamp-countdown.directive';
 import { SimpleConfirmationDialogComponent } from './components/simple-confirmation-dialog/simple-confirmation-dialog.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { SimpleConfirmationDialogComponent } from './components/simple-confirmat
     MatTooltipModule,
     ReactiveFormsModule,
     MatChipsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     Web3Service,
