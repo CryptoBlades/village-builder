@@ -7,7 +7,12 @@
       "type": "Characters Staked",
       "amount": 1
     },
-    "rewards": [],
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 50
+      }
+    ],
     "unlocks": []
   },
   {
@@ -18,8 +23,26 @@
       "type": "Characters Staked",
       "amount": 2
     },
-    "rewards": [],
-    "unlocks": []
+    "rewards": [
+      {
+        "type": "Wood",
+        "amount": 50
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 1
+      },
+      {
+        "type": "Wood",
+        "amount": 1
+      },
+      {
+        "type": "Stone",
+        "amount": 1
+      }
+    ]
   },
   {
     "duration": 300,
@@ -29,7 +52,12 @@
       "type": "Characters Staked",
       "amount": 3
     },
-    "rewards": [],
+    "rewards": [
+      {
+        "type": "Stone",
+        "amount": 50
+      }
+    ],
     "unlocks": []
   },
   {
@@ -40,8 +68,34 @@
       "type": "Characters Staked",
       "amount": 4
     },
-    "rewards": [],
-    "unlocks": []
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 25
+      },
+      {
+        "type": "Wood",
+        "amount": 25
+      },
+      {
+        "type": "Stone",
+        "amount": 25
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 2
+      },
+      {
+        "type": "Wood",
+        "amount": 2
+      },
+      {
+        "type": "Stone",
+        "amount": 2
+      }
+    ]
   },
   {
     "duration": 1500,
@@ -67,7 +121,12 @@
       "type": "Characters Staked",
       "amount": 6
     },
-    "rewards": [],
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 75
+      }
+    ],
     "unlocks": []
   },
   {
@@ -78,8 +137,26 @@
       "type": "Characters Staked",
       "amount": 7
     },
-    "rewards": [],
-    "unlocks": []
+    "rewards": [
+      {
+        "type": "Wood",
+        "amount": 75
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 3
+      },
+      {
+        "type": "Wood",
+        "amount": 3
+      },
+      {
+        "type": "Stone",
+        "amount": 3
+      }
+    ]
   },
   {
     "duration": 7200,
@@ -89,7 +166,12 @@
       "type": "Characters Staked",
       "amount": 8
     },
-    "rewards": [],
+    "rewards": [
+      {
+        "type": "Stone",
+        "amount": 75
+      }
+    ],
     "unlocks": []
   },
   {
@@ -100,8 +182,34 @@
       "type": "Characters Staked",
       "amount": 9
     },
-    "rewards": [],
-    "unlocks": []
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 50
+      },
+      {
+        "type": "Wood",
+        "amount": 50
+      },
+      {
+        "type": "Stone",
+        "amount": 50
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 4
+      },
+      {
+        "type": "Wood",
+        "amount": 4
+      },
+      {
+        "type": "Stone",
+        "amount": 4
+      }
+    ]
   },
   {
     "duration": 14400,
@@ -111,7 +219,12 @@
       "type": "Characters Staked",
       "amount": 10
     },
-    "rewards": [],
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 2
+      }
+    ],
     "unlocks": []
   },
   {
@@ -122,7 +235,12 @@
       "type": "Characters Staked",
       "amount": 11
     },
-    "rewards": [],
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 100
+      }
+    ],
     "unlocks": []
   },
   {
@@ -133,7 +251,817 @@
       "type": "Characters Staked",
       "amount": 11
     },
-    "rewards": [],
+    "rewards": [
+      {
+        "type": "Wood",
+        "amount": 100
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 11
+      },
+      {
+        "type": "Wood",
+        "amount": 11
+      },
+      {
+        "type": "Stone",
+        "amount": 11
+      }
+    ]
+  },
+  {
+    "duration": 30000,
+    "amount": 16,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 11
+    },
+    "rewards": [
+      {
+        "type": "Stone",
+        "amount": 100
+      }
+    ],
     "unlocks": []
+  },
+  {
+    "duration": 36000,
+    "amount": 18,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 12
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 75
+      },
+      {
+        "type": "Wood",
+        "amount": 75
+      },
+      {
+        "type": "Stone",
+        "amount": 75
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 12
+      },
+      {
+        "type": "Wood",
+        "amount": 12
+      },
+      {
+        "type": "Stone",
+        "amount": 12
+      }
+    ]
+  },
+  {
+    "duration": 42000,
+    "amount": 20,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 12
+    },
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 48000,
+    "amount": 22,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 12
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 150
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 54000,
+    "amount": 24,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 13
+    },
+    "rewards": [
+      {
+        "type": "Wood",
+        "amount": 150
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 13
+      },
+      {
+        "type": "Wood",
+        "amount": 13
+      },
+      {
+        "type": "Stone",
+        "amount": 13
+      }
+    ]
+  },
+  {
+    "duration": 60000,
+    "amount": 26,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 13
+    },
+    "rewards": [
+      {
+        "type": "Stone",
+        "amount": 150
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 66000,
+    "amount": 28,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 13
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 100
+      },
+      {
+        "type": "Wood",
+        "amount": 100
+      },
+      {
+        "type": "Stone",
+        "amount": 100
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 14
+      },
+      {
+        "type": "Wood",
+        "amount": 14
+      },
+      {
+        "type": "Stone",
+        "amount": 14
+      }
+    ]
+  },
+  {
+    "duration": 72000,
+    "amount": 30,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 14
+    },
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 4
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 90000,
+    "amount": 33,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 14
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 200
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 108000,
+    "amount": 36,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 14
+    },
+    "rewards": [
+      {
+        "type": "Wood",
+        "amount": 200
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 21
+      },
+      {
+        "type": "Wood",
+        "amount": 21
+      },
+      {
+        "type": "Stone",
+        "amount": 21
+      }
+    ]
+  },
+  {
+    "duration": 126000,
+    "amount": 39,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 15
+    },
+    "rewards": [
+      {
+        "type": "Stone",
+        "amount": 200
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 144000,
+    "amount": 42,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 15
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 150
+      },
+      {
+        "type": "Wood",
+        "amount": 150
+      },
+      {
+        "type": "Stone",
+        "amount": 150
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 22
+      },
+      {
+        "type": "Wood",
+        "amount": 22
+      },
+      {
+        "type": "Stone",
+        "amount": 22
+      }
+    ]
+  },
+  {
+    "duration": 162000,
+    "amount": 45,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 15
+    },
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 5
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 180000,
+    "amount": 48,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 16
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 250
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 186000,
+    "amount": 51,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 16
+    },
+    "rewards": [
+      {
+        "type": "Wood",
+        "amount": 250
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 23
+      },
+      {
+        "type": "Wood",
+        "amount": 23
+      },
+      {
+        "type": "Stone",
+        "amount": 23
+      }
+    ]
+  },
+  {
+    "duration": 192000,
+    "amount": 54,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 17
+    },
+    "rewards": [
+      {
+        "type": "Stone",
+        "amount": 250
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 198000,
+    "amount": 57,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 17
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 200
+      },
+      {
+        "type": "Wood",
+        "amount": 200
+      },
+      {
+        "type": "Stone",
+        "amount": 200
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 24
+      },
+      {
+        "type": "Wood",
+        "amount": 24
+      },
+      {
+        "type": "Stone",
+        "amount": 24
+      }
+    ]
+  },
+  {
+    "duration": 204000,
+    "amount": 60,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 18
+    },
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 6
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 210000,
+    "amount": 64,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 18
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 300
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 216000,
+    "amount": 68,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 19
+    },
+    "rewards": [
+      {
+        "type": "Wood",
+        "amount": 300
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 31
+      },
+      {
+        "type": "Wood",
+        "amount": 31
+      },
+      {
+        "type": "Stone",
+        "amount": 31
+      }
+    ]
+  },
+  {
+    "duration": 222000,
+    "amount": 72,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 19
+    },
+    "rewards": [
+      {
+        "type": "Stone",
+        "amount": 300
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 228000,
+    "amount": 76,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 20
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 250
+      },
+      {
+        "type": "Wood",
+        "amount": 250
+      },
+      {
+        "type": "Stone",
+        "amount": 250
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 32
+      },
+      {
+        "type": "Wood",
+        "amount": 32
+      },
+      {
+        "type": "Stone",
+        "amount": 32
+      }
+    ]
+  },
+  {
+    "duration": 234000,
+    "amount": 80,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 20
+    },
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 7
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 240000,
+    "amount": 85,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 21
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 500
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 33
+      },
+      {
+        "type": "Wood",
+        "amount": 33
+      },
+      {
+        "type": "Stone",
+        "amount": 33
+      }
+    ]
+  },
+  {
+    "duration": 246000,
+    "amount": 90,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 22
+    },
+    "rewards": [
+      {
+        "type": "Wood",
+        "amount": 500
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 252000,
+    "amount": 95,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 23
+    },
+    "rewards": [
+      {
+        "type": "Stone",
+        "amount": 500
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 34
+      },
+      {
+        "type": "Wood",
+        "amount": 34
+      },
+      {
+        "type": "Stone",
+        "amount": 34
+      }
+    ]
+  },
+  {
+    "duration": 258000,
+    "amount": 100,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 24
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 300
+      },
+      {
+        "type": "Wood",
+        "amount": 300
+      },
+      {
+        "type": "Stone",
+        "amount": 300
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 264000,
+    "amount": 110,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 25
+    },
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 8
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 40
+      },
+      {
+        "type": "Wood",
+        "amount": 40
+      },
+      {
+        "type": "Stone",
+        "amount": 40
+      }
+    ]
+  },
+  {
+    "duration": 270000,
+    "amount": 120,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 26
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 1000
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "duration": 300000,
+    "amount": 130,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 27
+    },
+    "rewards": [
+      {
+        "type": "Wood",
+        "amount": 1000
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 50
+      },
+      {
+        "type": "Wood",
+        "amount": 50
+      },
+      {
+        "type": "Stone",
+        "amount": 50
+      }
+    ]
+  },
+  {
+    "duration": 318000,
+    "amount": 140,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 28
+    },
+    "rewards": [
+      {
+        "type": "Stone",
+        "amount": 1000
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 65
+      },
+      {
+        "type": "Wood",
+        "amount": 65
+      },
+      {
+        "type": "Stone",
+        "amount": 65
+      }
+    ]
+  },
+  {
+    "duration": 336000,
+    "amount": 150,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 29
+    },
+    "rewards": [
+      {
+        "type": "Clay",
+        "amount": 500
+      },
+      {
+        "type": "Wood",
+        "amount": 500
+      },
+      {
+        "type": "Stone",
+        "amount": 500
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 80
+      },
+      {
+        "type": "Wood",
+        "amount": 80
+      },
+      {
+        "type": "Stone",
+        "amount": 80
+      }
+    ]
+  },
+  {
+    "duration": 354000,
+    "amount": 175,
+    "type": "Weapons",
+    "requirement": {
+      "type": "Characters Staked",
+      "amount": 30
+    },
+    "rewards": [
+      {
+        "type": "KING",
+        "amount": 9
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Clay",
+        "amount": 100
+      },
+      {
+        "type": "Wood",
+        "amount": 100
+      },
+      {
+        "type": "Stone",
+        "amount": 100
+      }
+    ]
   }
 ]
