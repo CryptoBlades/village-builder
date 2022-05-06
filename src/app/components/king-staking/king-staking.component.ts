@@ -30,6 +30,7 @@ export class KingStakingComponent implements OnInit {
   nextStakingTier?: StakingTier;
   stakeCompleteTimestamp?: number;
   currentStake: number = 0;
+  isLoading = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -45,42 +46,47 @@ export class KingStakingComponent implements OnInit {
   }
 
   async loadData(): Promise<void> {
-    const [
-      building,
-      currentStake,
-      buildingRequirements,
-      kingRequired,
-      totalKingStaked,
-      ownedKing,
-      unlockedTiers,
-      stakeCompleteTimestamp
-    ] = await Promise.all([
-      this.landService.getBuilding(this.data.buildingType),
-      this.kingService.getCurrentStake(),
-      this.landService.getBuildingRequirements(this.data.buildingType),
-      this.kingService.getRequiredStakeAmount(),
-      this.kingService.getTotalStaked(),
-      this.kingService.getOwnedAmount(),
-      this.kingService.getUnlockedTiers(),
-      this.kingService.getStakeCompleteTimestamp(),
-    ]);
-    this.building = building;
-    this.currentStake = currentStake;
-    this.buildingRequirements = buildingRequirements;
-    this.kingRequired = kingRequired;
-    this.totalKingStaked = totalKingStaked;
-    this.unlockedTiers = unlockedTiers;
-    this.nextStakingTier = this.kingStakingTiers[this.unlockedTiers];
-    if (stakeCompleteTimestamp > Date.now() / 1000) {
-      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
-    } else {
-      this.stakeCompleteTimestamp = undefined;
+    try {
+      this.isLoading = true;
+      const [
+        building,
+        currentStake,
+        buildingRequirements,
+        kingRequired,
+        totalKingStaked,
+        ownedKing,
+        unlockedTiers,
+        stakeCompleteTimestamp
+      ] = await Promise.all([
+        this.landService.getBuilding(this.data.buildingType),
+        this.kingService.getCurrentStake(),
+        this.landService.getBuildingRequirements(this.data.buildingType),
+        this.kingService.getRequiredStakeAmount(),
+        this.kingService.getTotalStaked(),
+        this.kingService.getOwnedAmount(),
+        this.kingService.getUnlockedTiers(),
+        this.kingService.getStakeCompleteTimestamp(),
+      ]);
+      this.building = building;
+      this.currentStake = currentStake;
+      this.buildingRequirements = buildingRequirements;
+      this.kingRequired = kingRequired;
+      this.totalKingStaked = totalKingStaked;
+      this.unlockedTiers = unlockedTiers;
+      this.nextStakingTier = this.kingStakingTiers[this.unlockedTiers];
+      if (stakeCompleteTimestamp > Date.now() / 1000) {
+        this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+      } else {
+        this.stakeCompleteTimestamp = undefined;
+      }
+      if (this.building.upgrading) {
+        this.canClaim = await this.kingService.canCompleteStake();
+      }
+      this.store.dispatch(new SetKingBalance(ownedKing));
+      this.onLoadData.emit();
+    } finally {
+      this.isLoading = false;
     }
-    if (this.building.upgrading) {
-      this.canClaim = await this.kingService.canCompleteStake();
-    }
-    this.store.dispatch(new SetKingBalance(ownedKing));
-    this.onLoadData.emit();
   }
 
   async onClaim() {

@@ -38,6 +38,7 @@ export class CharacterStakingComponent implements OnInit {
   unlockedTiers?: number;
   filteredOptions?: Observable<string[]>;
   stakeCompleteTimestamp?: number;
+  isLoading = true;
 
   constructor(
     private charactersService: CharactersService,
@@ -62,55 +63,60 @@ export class CharacterStakingComponent implements OnInit {
   }
 
   async loadData() {
-    const [
-      ownedCharacters,
-      currentStake,
-      totalCharactersStaked,
-      charactersRequired,
-      barracksRequired,
-      unlockedTiers,
-      canClaim,
-      stakeCompleteTimestamp
-    ] = await Promise.all([
-      this.charactersService.getOwnedCharacters(),
-      this.charactersService.getCurrentStake(),
-      this.charactersService.getTotalStaked(),
-      this.charactersService.getRequiredStakeAmount(),
-      this.charactersService.getNextRequirement(),
-      this.charactersService.getUnlockedTiers(),
-      this.charactersService.canCompleteStake(),
-      this.charactersService.getStakeCompleteTimestamp(),
-    ]);
-    this.characters = ownedCharacters;
-    this.currentStake = currentStake;
-    this.totalCharactersStaked = totalCharactersStaked;
-    this.charactersRequired = charactersRequired;
-    this.barracksRequired = barracksRequired;
-    this.unlockedTiers = unlockedTiers;
-    this.canClaim = canClaim;
-    this.nextStakingTier = this.charactersStakingTiers[this.unlockedTiers];
-    if (stakeCompleteTimestamp > Date.now() / 1000) {
-      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
-    } else {
-      this.stakeCompleteTimestamp = undefined;
-    }
-    this.store.dispatch(new SetCharactersBalance(this.characters.length));
-    const unlockedCharactersTiers = await this.charactersService.getUnlockedTiers();
-    if (unlockedCharactersTiers) {
-      const {
-        mercenary,
-        bruiser,
-        mage,
-        archer,
-        paladin
-      } = extractUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
-      this.store.dispatch([
-        new SetMercenaryBalance(mercenary),
-        new SetBruiserBalance(bruiser),
-        new SetMageBalance(mage),
-        new SetArcherBalance(archer),
-        new SetPaladinBalance(paladin),
+    try {
+      this.isLoading = true;
+      const [
+        ownedCharacters,
+        currentStake,
+        totalCharactersStaked,
+        charactersRequired,
+        barracksRequired,
+        unlockedTiers,
+        canClaim,
+        stakeCompleteTimestamp
+      ] = await Promise.all([
+        this.charactersService.getOwnedCharacters(),
+        this.charactersService.getCurrentStake(),
+        this.charactersService.getTotalStaked(),
+        this.charactersService.getRequiredStakeAmount(),
+        this.charactersService.getNextRequirement(),
+        this.charactersService.getUnlockedTiers(),
+        this.charactersService.canCompleteStake(),
+        this.charactersService.getStakeCompleteTimestamp(),
       ]);
+      this.characters = ownedCharacters;
+      this.currentStake = currentStake;
+      this.totalCharactersStaked = totalCharactersStaked;
+      this.charactersRequired = charactersRequired;
+      this.barracksRequired = barracksRequired;
+      this.unlockedTiers = unlockedTiers;
+      this.canClaim = canClaim;
+      this.nextStakingTier = this.charactersStakingTiers[this.unlockedTiers];
+      if (stakeCompleteTimestamp > Date.now() / 1000) {
+        this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+      } else {
+        this.stakeCompleteTimestamp = undefined;
+      }
+      this.store.dispatch(new SetCharactersBalance(this.characters.length));
+      const unlockedCharactersTiers = await this.charactersService.getUnlockedTiers();
+      if (unlockedCharactersTiers) {
+        const {
+          mercenary,
+          bruiser,
+          mage,
+          archer,
+          paladin
+        } = extractUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
+        this.store.dispatch([
+          new SetMercenaryBalance(mercenary),
+          new SetBruiserBalance(bruiser),
+          new SetMageBalance(mage),
+          new SetArcherBalance(archer),
+          new SetPaladinBalance(paladin),
+        ]);
+      }
+    } finally {
+      this.isLoading = false;
     }
   }
 

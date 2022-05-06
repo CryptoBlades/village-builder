@@ -1,40 +1,47 @@
-<div class="stake-tab">
-  <div class="building-image-container">
-    <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
-  </div>
-  <div class="staking-container">
-    <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
-    <span class="building-level">Level: {{ building.level }}</span>
-    <p class="building-level">Max level: {{building.maxLevel}}</p>
-    <div>
-      <p class="building-requirements">Requirements: </p>
-      <p class="secondary-text">Staking tier unlocked: (KING: {{ kingStakingTierRequired}})</p>
+<ng-template [ngIf]="!isLoading" [ngIfElse]="loading">
+  <div class="stake-tab">
+    <div class="building-image-container">
+      <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
     </div>
-    <div *ngIf="totalSkillStaked">
-      <p class="building-requirements">Total staked:</p>
-      <p class="secondary-text">{{totalSkillStaked}} SKILL</p>
+    <div class="staking-container">
+      <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
+      <span class="building-level">Level: {{ building.level }}</span>
+      <p class="building-level">Max level: {{building.maxLevel}}</p>
+      <div>
+        <p class="building-requirements">Requirements: </p>
+        <p class="secondary-text">Staking tier unlocked: (KING: {{ kingStakingTierRequired}})</p>
+      </div>
+      <div *ngIf="totalSkillStaked">
+        <p class="building-requirements">Total staked:</p>
+        <p class="secondary-text">{{totalSkillStaked}} SKILL</p>
+      </div>
+      <button mat-raised-button
+              class="btn button-stake"
+              [disabled]="isStakeInProgress || !meetsStakeRequirements"
+              (click)="onStake()">
+        <ng-container class="w-full"
+                      [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : required"></ng-container>
+        <ng-template #stakeInProgress>
+          <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
+        </ng-template>
+        <ng-template #stake>
+          Stake<span *ngIf="skillRequired"> ({{ skillRequired }} SKILL)</span>
+        </ng-template>
+        <ng-template #required>
+          You need to unlock at least {{ kingStakingTierRequired}} KING staking tiers
+        </ng-template>
+      </button>
+      <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
+        {{ 'Claim' }}
+      </button>
+      <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
     </div>
-    <button mat-raised-button
-            class="btn button-stake"
-            [disabled]="isStakeInProgress || !meetsStakeRequirements"
-            (click)="onStake()">
-      <ng-container class="w-full"
-                    [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : required"></ng-container>
-      <ng-template #stakeInProgress>
-        <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
-      </ng-template>
-      <ng-template #stake>
-        Stake<span *ngIf="skillRequired"> ({{ skillRequired }} SKILL)</span>
-      </ng-template>
-      <ng-template #required>
-        You need to unlock at least {{ kingStakingTierRequired}} KING staking tiers
-      </ng-template>
-    </button>
-    <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
-      {{ 'Claim' }}
-    </button>
-    <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
+    <app-staking-tiers-stepper class="flex-1" [stakingTiers]="skillStakingTiers" [unlockedTiers]="unlockedTiers!"
+                               [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
-  <app-staking-tiers-stepper class="flex-1" [stakingTiers]="skillStakingTiers" [unlockedTiers]="unlockedTiers!"
-                             [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
-</div>
+</ng-template>
+<ng-template #loading>
+  <div class="flex items-center justify-center h-full">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>

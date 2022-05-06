@@ -1,63 +1,70 @@
-<div class="stake-tab">
-  <div class="building-image-container">
-    <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
-  </div>
-  <div class="staking-container">
-    <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
-    <span class="building-level">Level: {{ building.level }}</span>
-    <p class="building-level">Max level: {{building.maxLevel}}</p>
-    <div *ngIf="charactersStakedRequired">
-      <p class="building-requirements">Requirements: </p>
-      <p class="secondary-text">Staking tier unlocked: (Characters: {{ charactersStakedRequired}})</p>
+<ng-template [ngIf]="!isLoading" [ngIfElse]="loading">
+  <div class="stake-tab">
+    <div class="building-image-container">
+      <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
     </div>
-    <div *ngIf="totalWeaponsStaked">
-      <p class="building-requirements">Total staked:</p>
-      <p class="secondary-text">{{totalWeaponsStaked}} Weapons</p>
+    <div class="staking-container">
+      <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
+      <span class="building-level">Level: {{ building.level }}</span>
+      <p class="building-level">Max level: {{building.maxLevel}}</p>
+      <div *ngIf="charactersStakedRequired">
+        <p class="building-requirements">Requirements: </p>
+        <p class="secondary-text">Staking tier unlocked: (Characters: {{ charactersStakedRequired}})</p>
+      </div>
+      <div *ngIf="totalWeaponsStaked">
+        <p class="building-requirements">Total staked:</p>
+        <p class="secondary-text">{{totalWeaponsStaked}} Weapons</p>
+      </div>
+      <mat-form-field class="example-chip-list" appearance="fill">
+        <mat-label>Choose weapon</mat-label>
+        <mat-chip-list #chipList aria-label="Weapon selection">
+          <mat-chip
+            *ngFor="let weapon of selectedWeapons"
+            (removed)="remove(weapon)">
+            {{weapon}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            placeholder="Select weapon..."
+            #weaponInput
+            [formControl]="weaponControl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let weapon of filteredWeapons | async" [value]="weapon">
+            {{weapon}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <button [disabled]="!selectedWeapons.length || !meetsStakeRequirements" mat-raised-button
+              class="btn button-stake"
+              (click)="onStake()">
+        <ng-container
+          [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : stakeMoreCharacters"></ng-container>
+        <ng-template #stakeInProgress style="color: #43300D">
+          <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
+        </ng-template>
+        <ng-template #stake style="color: #43300D">
+          Stake <span *ngIf="weaponsRequired"> ({{ weaponsRequired }} Weapon)</span>
+        </ng-template>
+        <ng-template #stakeMoreCharacters>
+          You need to stake more characters
+        </ng-template>
+      </button>
+      <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
+        {{ 'Claim' }}
+      </button>
+      <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
     </div>
-    <mat-form-field class="example-chip-list" appearance="fill">
-      <mat-label>Choose weapon</mat-label>
-      <mat-chip-list #chipList aria-label="Weapon selection">
-        <mat-chip
-          *ngFor="let weapon of selectedWeapons"
-          (removed)="remove(weapon)">
-          {{weapon}}
-          <button matChipRemove>
-            <mat-icon>cancel</mat-icon>
-          </button>
-        </mat-chip>
-        <input
-          placeholder="Select weapon..."
-          #weaponInput
-          [formControl]="weaponControl"
-          [matAutocomplete]="auto"
-          [matChipInputFor]="chipList">
-      </mat-chip-list>
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-        <mat-option *ngFor="let weapon of filteredWeapons | async" [value]="weapon">
-          {{weapon}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <button [disabled]="!selectedWeapons.length || !meetsStakeRequirements" mat-raised-button
-            class="btn button-stake"
-            (click)="onStake()">
-      <ng-container
-        [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : stakeMoreCharacters"></ng-container>
-      <ng-template #stakeInProgress style="color: #43300D">
-        <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
-      </ng-template>
-      <ng-template #stake style="color: #43300D">
-        Stake <span *ngIf="weaponsRequired"> ({{ weaponsRequired }} Weapon)</span>
-      </ng-template>
-      <ng-template #stakeMoreCharacters>
-        You need to stake more characters
-      </ng-template>
-    </button>
-    <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
-      {{ 'Claim' }}
-    </button>
-    <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
+    <app-staking-tiers-stepper class="flex-1" [stakingTiers]="weaponStakingTiers" [unlockedTiers]="unlockedTiers!"
+                               [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
-  <app-staking-tiers-stepper class="flex-1" [stakingTiers]="weaponStakingTiers" [unlockedTiers]="unlockedTiers!"
-                             [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
-</div>
+</ng-template>
+<ng-template #loading>
+  <div class="flex items-center justify-center h-full">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>

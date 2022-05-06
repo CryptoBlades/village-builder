@@ -36,6 +36,7 @@ export class SkillStakingComponent implements OnInit {
   nextStakingTier?: StakingTier;
   stakeCompleteTimestamp?: number;
   currentStake: number = 0;
+  isLoading = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -52,55 +53,59 @@ export class SkillStakingComponent implements OnInit {
   }
 
   async loadData(): Promise<void> {
-    const [
-      building,
-      currentStake,
-      totalSkillStaked,
-      skillOwned,
-      unlockedTiers,
-      canClaim,
-      skillRequired,
-      kingStakingTierRequired,
-      skillUnlockedTiers,
-      kingUnlockedTiers,
-      stakeCompleteTimestamp
-    ] = await Promise.all([
-      this.landService.getBuilding(this.data.buildingType),
-      this.skillService.getCurrentStake(),
-      this.skillService.getTotalStaked(),
-      this.skillService.getOwnedAmount(),
-      this.skillService.getUnlockedTiers(),
-      this.skillService.canCompleteStake(),
-      this.skillService.getRequiredStakeAmount(),
-      this.skillService.getNextRequirement(),
-      this.skillService.getUnlockedTiers(),
-      this.kingService.getUnlockedTiers(),
-      this.skillService.getStakeCompleteTimestamp(),
-    ]);
-    this.building = building;
-    this.currentStake = currentStake;
-    console.log(this.currentStake);
-    this.totalSkillStaked = totalSkillStaked;
-    this.unlockedTiers = unlockedTiers;
-    this.canClaim = canClaim;
-    this.skillRequired = skillRequired;
-    this.kingStakingTierRequired = kingStakingTierRequired;
-    this.kingUnlockedTiers = kingUnlockedTiers;
-    this.nextStakingTier = this.skillStakingTiers[this.unlockedTiers];
-    if (stakeCompleteTimestamp > Date.now() / 1000) {
-      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
-    } else {
-      this.stakeCompleteTimestamp = undefined;
-    }
-    if (skillUnlockedTiers) {
-      const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.skillStakingTiers, skillUnlockedTiers);
-      this.store.dispatch([
-        this.store.dispatch(new SetSkillClayBalance(clay)),
-        this.store.dispatch(new SetSkillWoodBalance(wood)),
-        this.store.dispatch(new SetSkillStoneBalance(stone)),
+    try {
+      this.isLoading = true;
+      const [
+        building,
+        currentStake,
+        totalSkillStaked,
+        skillOwned,
+        unlockedTiers,
+        canClaim,
+        skillRequired,
+        kingStakingTierRequired,
+        skillUnlockedTiers,
+        kingUnlockedTiers,
+        stakeCompleteTimestamp
+      ] = await Promise.all([
+        this.landService.getBuilding(this.data.buildingType),
+        this.skillService.getCurrentStake(),
+        this.skillService.getTotalStaked(),
+        this.skillService.getOwnedAmount(),
+        this.skillService.getUnlockedTiers(),
+        this.skillService.canCompleteStake(),
+        this.skillService.getRequiredStakeAmount(),
+        this.skillService.getNextRequirement(),
+        this.skillService.getUnlockedTiers(),
+        this.kingService.getUnlockedTiers(),
+        this.skillService.getStakeCompleteTimestamp(),
       ]);
+      this.building = building;
+      this.currentStake = currentStake;
+      this.totalSkillStaked = totalSkillStaked;
+      this.unlockedTiers = unlockedTiers;
+      this.canClaim = canClaim;
+      this.skillRequired = skillRequired;
+      this.kingStakingTierRequired = kingStakingTierRequired;
+      this.kingUnlockedTiers = kingUnlockedTiers;
+      this.nextStakingTier = this.skillStakingTiers[this.unlockedTiers];
+      if (stakeCompleteTimestamp > Date.now() / 1000) {
+        this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+      } else {
+        this.stakeCompleteTimestamp = undefined;
+      }
+      if (skillUnlockedTiers) {
+        const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.skillStakingTiers, skillUnlockedTiers);
+        this.store.dispatch([
+          this.store.dispatch(new SetSkillClayBalance(clay)),
+          this.store.dispatch(new SetSkillWoodBalance(wood)),
+          this.store.dispatch(new SetSkillStoneBalance(stone)),
+        ]);
+      }
+      this.store.dispatch(new SetSkillBalance(skillOwned));
+    } finally {
+      this.isLoading = false;
     }
-    this.store.dispatch(new SetSkillBalance(skillOwned));
   }
 
   async onStake() {

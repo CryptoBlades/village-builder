@@ -12,7 +12,7 @@ import {getBuildingTypeName} from "../../common/common";
 })
 export class BuildingDialogComponent implements OnInit {
   building?: Building;
-  isLoading = false;
+  isLoading = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },

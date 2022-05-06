@@ -39,6 +39,7 @@ export class WeaponStakingComponent implements OnInit {
   selectedWeapons: string[] = [];
   stakeCompleteTimestamp?: number;
   currentStake: number = 0;
+  isLoading = true;
 
   @ViewChild('weaponInput') weaponInput!: ElementRef<HTMLInputElement>;
 
@@ -68,50 +69,55 @@ export class WeaponStakingComponent implements OnInit {
   }
 
   async loadData() {
-    const [
-      ownedWeapons,
-      currentStake,
-      totalWeaponsStaked,
-      weaponsRequired,
-      charactersStakedRequired,
-      canClaim,
-      unlockedTiers,
-      charactersUnlockedTiers,
-      stakeCompleteTimestamp
-    ] = await Promise.all([
-      this.weaponsService.getOwnedWeapons(),
-      this.weaponsService.getCurrentStake(),
-      this.weaponsService.getTotalStaked(),
-      this.weaponsService.getRequiredStakeAmount(),
-      this.weaponsService.getNextRequirement(),
-      this.weaponsService.canCompleteStake(),
-      this.weaponsService.getUnlockedTiers(),
-      this.charactersService.getUnlockedTiers(),
-      this.weaponsService.getStakeCompleteTimestamp(),
-    ]);
-    this.ownedWeapons = ownedWeapons.map(weapon => weapon.toString());
-    this.totalWeaponsStaked = totalWeaponsStaked;
-    this.currentStake = currentStake;
-    this.weaponsRequired = weaponsRequired;
-    this.charactersStakedRequired = charactersStakedRequired;
-    this.canClaim = canClaim;
-    this.unlockedTiers = unlockedTiers;
-    this.charactersUnlockedTiers = charactersUnlockedTiers;
-    this.nextStakingTier = this.weaponStakingTiers[this.unlockedTiers];
-    if (stakeCompleteTimestamp > Date.now() / 1000) {
-      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
-    } else {
-      this.stakeCompleteTimestamp = undefined;
-    }
-    if (unlockedTiers) {
-      const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.weaponStakingTiers, unlockedTiers);
-      this.store.dispatch([
-        this.store.dispatch(new SetWeaponsClayBalance(clay)),
-        this.store.dispatch(new SetWeaponsWoodBalance(wood)),
-        this.store.dispatch(new SetWeaponsStoneBalance(stone)),
+    try {
+      this.isLoading = true;
+      const [
+        ownedWeapons,
+        currentStake,
+        totalWeaponsStaked,
+        weaponsRequired,
+        charactersStakedRequired,
+        canClaim,
+        unlockedTiers,
+        charactersUnlockedTiers,
+        stakeCompleteTimestamp
+      ] = await Promise.all([
+        this.weaponsService.getOwnedWeapons(),
+        this.weaponsService.getCurrentStake(),
+        this.weaponsService.getTotalStaked(),
+        this.weaponsService.getRequiredStakeAmount(),
+        this.weaponsService.getNextRequirement(),
+        this.weaponsService.canCompleteStake(),
+        this.weaponsService.getUnlockedTiers(),
+        this.charactersService.getUnlockedTiers(),
+        this.weaponsService.getStakeCompleteTimestamp(),
       ]);
+      this.ownedWeapons = ownedWeapons.map(weapon => weapon.toString());
+      this.totalWeaponsStaked = totalWeaponsStaked;
+      this.currentStake = currentStake;
+      this.weaponsRequired = weaponsRequired;
+      this.charactersStakedRequired = charactersStakedRequired;
+      this.canClaim = canClaim;
+      this.unlockedTiers = unlockedTiers;
+      this.charactersUnlockedTiers = charactersUnlockedTiers;
+      this.nextStakingTier = this.weaponStakingTiers[this.unlockedTiers];
+      if (stakeCompleteTimestamp > Date.now() / 1000) {
+        this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+      } else {
+        this.stakeCompleteTimestamp = undefined;
+      }
+      if (unlockedTiers) {
+        const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.weaponStakingTiers, unlockedTiers);
+        this.store.dispatch([
+          this.store.dispatch(new SetWeaponsClayBalance(clay)),
+          this.store.dispatch(new SetWeaponsWoodBalance(wood)),
+          this.store.dispatch(new SetWeaponsStoneBalance(stone)),
+        ]);
+      }
+      this.store.dispatch(new SetWeaponsBalance(this.ownedWeapons.length));
+    } finally {
+      this.isLoading = false;
     }
-    this.store.dispatch(new SetWeaponsBalance(this.ownedWeapons.length))
   }
 
   get isStakeInProgress() {

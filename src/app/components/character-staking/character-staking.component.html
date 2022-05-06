@@ -1,52 +1,59 @@
-<div class="stake-tab">
-  <div class="building-image-container">
-    <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
-  </div>
-  <div class="staking-container">
-    <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
-    <span class="building-level">Level: {{ building.level }}</span>
-    <p class="building-level">Max level: {{building.maxLevel}}</p>
-    <div *ngIf="barracksRequired">
-      <p class="building-requirements">Requirements: </p>
-      <p class="secondary-text">{{getBuildingTypeName(getBarracksType)}} (Level: {{barracksRequired}})</p>
+<ng-template [ngIf]="!isLoading" [ngIfElse]="loading">
+  <div class="stake-tab">
+    <div class="building-image-container">
+      <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
     </div>
-    <div *ngIf="totalCharactersStaked">
-      <p class="building-requirements">Total staked:</p>
-      <p class="secondary-text">{{totalCharactersStaked}} Characters</p>
-    </div>
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let character of filteredOptions | async" [value]="character">
-        {{character}}
-      </mat-option>
-    </mat-autocomplete>
-    <mat-form-field appearance="fill">
-      <mat-label>Choose character</mat-label>
-      <input matInput type="text" [formControl]="selectedCharacter" [matAutocomplete]="auto">
-      <button *ngIf="selectedCharacter.value" matSuffix mat-icon-button aria-label="Clear"
-              (click)="selectedCharacter.setValue(undefined)">
-        <mat-icon>close</mat-icon>
+    <div class="staking-container">
+      <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
+      <span class="building-level">Level: {{ building.level }}</span>
+      <p class="building-level">Max level: {{building.maxLevel}}</p>
+      <div *ngIf="barracksRequired">
+        <p class="building-requirements">Requirements: </p>
+        <p class="secondary-text">{{getBuildingTypeName(getBarracksType)}} (Level: {{barracksRequired}})</p>
+      </div>
+      <div *ngIf="totalCharactersStaked">
+        <p class="building-requirements">Total staked:</p>
+        <p class="secondary-text">{{totalCharactersStaked}} Characters</p>
+      </div>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let character of filteredOptions | async" [value]="character">
+          {{character}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-form-field appearance="fill">
+        <mat-label>Choose character</mat-label>
+        <input matInput type="text" [formControl]="selectedCharacter" [matAutocomplete]="auto">
+        <button *ngIf="selectedCharacter.value" matSuffix mat-icon-button aria-label="Clear"
+                (click)="selectedCharacter.setValue(undefined)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button [disabled]="!selectedCharacter.value || !isBarracksRequirementMet || isStakeInProgress" mat-raised-button
+              class="btn button-stake"
+              (click)="onStake()">
+        <ng-container
+          [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : isBarracksRequirementMet ? stake : upgradeBarracks"></ng-container>
+        <ng-template #stakeInProgress style="color: #43300D">
+          <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
+        </ng-template>
+        <ng-template #stake style="color: #43300D">
+          Stake <span *ngIf="charactersRequired"> ({{ charactersRequired }} Character)</span>
+        </ng-template>
+        <ng-template #upgradeBarracks>
+          You need to upgrade Barracks first
+        </ng-template>
       </button>
-    </mat-form-field>
-    <button [disabled]="!selectedCharacter.value || !isBarracksRequirementMet || isStakeInProgress" mat-raised-button
-            class="btn button-stake"
-            (click)="onStake()">
-      <ng-container
-        [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : isBarracksRequirementMet ? stake : upgradeBarracks"></ng-container>
-      <ng-template #stakeInProgress style="color: #43300D">
-        <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
-      </ng-template>
-      <ng-template #stake style="color: #43300D">
-        Stake <span *ngIf="charactersRequired"> ({{ charactersRequired }} Character)</span>
-      </ng-template>
-      <ng-template #upgradeBarracks>
-        You need to upgrade Barracks first
-      </ng-template>
-    </button>
-    <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
-      {{ 'Claim' }}
-    </button>
-    <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
+      <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
+        {{ 'Claim' }}
+      </button>
+      <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
+    </div>
+    <app-staking-tiers-stepper class="flex-1" [stakingTiers]="charactersStakingTiers" [unlockedTiers]="unlockedTiers!"
+                               [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
-  <app-staking-tiers-stepper class="flex-1" [stakingTiers]="charactersStakingTiers" [unlockedTiers]="unlockedTiers!"
-                             [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
-</div>
+</ng-template>
+<ng-template #loading>
+  <div class="flex items-center justify-center h-full">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>

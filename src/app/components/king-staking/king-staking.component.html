@@ -1,48 +1,55 @@
-<div class="stake-tab">
-  <div class="building-image-container">
-    <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
+<ng-template [ngIf]="!isLoading" [ngIfElse]="loading">
+  <div class="stake-tab">
+    <div class="building-image-container">
+      <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
+    </div>
+    <div class="staking-container">
+      <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
+      <div class="level-container">
+        <span class="building-level">Level: {{ building.level }} </span>
+        <mat-icon class="arrow-icon" *ngIf="!isMaxLevel">keyboard_arrow_right</mat-icon>
+        <span class="building-level" *ngIf="!isMaxLevel"> {{ building.level + 1 }} </span>
+      </div>
+      <p class="building-level">Max level: {{building.maxLevel}}</p>
+      <div *ngIf="buildingRequirements">
+        <p class="building-requirements">Requirements: </p>
+        <p class="secondary-text"
+           *ngIf="buildingRequirements.building">{{getBuildingTypeName(buildingRequirements.building)}}
+          (Level: {{buildingRequirements.level}})</p>
+      </div>
+      <div *ngIf="totalKingStaked">
+        <p class="building-requirements">Total staked:</p>
+        <p class="secondary-text">{{totalKingStaked}} KING</p>
+      </div>
+      <button [disabled]="isMaxLevel || isStakeInProgress || !building.canUpgrade" mat-raised-button
+              class="btn button-stake"
+              (click)="onStake()">
+        <ng-container
+          [ngTemplateOutlet]="isMaxLevel ? maxLevel : isStakeInProgress ? stakeInProgress : isBuilt ? upgrade : build"></ng-container>
+        <ng-template #maxLevel>
+          {{ 'Max level reached' }}
+        </ng-template>
+        <ng-template #stakeInProgress>
+          <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
+        </ng-template>
+        <ng-template #upgrade>
+          Upgrade<span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
+        </ng-template>
+        <ng-template #build>
+          Build <span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
+        </ng-template>
+      </button>
+      <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
+        {{ 'Claim' }}
+      </button>
+      <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
+    </div>
+    <app-staking-tiers-stepper class="flex-1" [stakingTiers]="kingStakingTiers" [unlockedTiers]="unlockedTiers!"
+                               [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
-  <div class="staking-container">
-    <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
-    <div class="level-container">
-      <span class="building-level">Level: {{ building.level }} </span>
-      <mat-icon class="arrow-icon" *ngIf="!isMaxLevel">keyboard_arrow_right</mat-icon>
-      <span class="building-level" *ngIf="!isMaxLevel"> {{ building.level + 1 }} </span>
-    </div>
-    <p class="building-level">Max level: {{building.maxLevel}}</p>
-    <div *ngIf="buildingRequirements">
-      <p class="building-requirements">Requirements: </p>
-      <p class="secondary-text"
-         *ngIf="buildingRequirements.building">{{getBuildingTypeName(buildingRequirements.building)}}
-        (Level: {{buildingRequirements.level}})</p>
-    </div>
-    <div *ngIf="totalKingStaked">
-      <p class="building-requirements">Total staked:</p>
-      <p class="secondary-text">{{totalKingStaked}} KING</p>
-    </div>
-    <button [disabled]="isMaxLevel || isStakeInProgress || !building.canUpgrade" mat-raised-button
-            class="btn button-stake"
-            (click)="onStake()">
-      <ng-container
-        [ngTemplateOutlet]="isMaxLevel ? maxLevel : isStakeInProgress ? stakeInProgress : isBuilt ? upgrade : build"></ng-container>
-      <ng-template #maxLevel>
-        {{ 'Max level reached' }}
-      </ng-template>
-      <ng-template #stakeInProgress>
-        <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
-      </ng-template>
-      <ng-template #upgrade>
-        Upgrade<span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
-      </ng-template>
-      <ng-template #build>
-        Build <span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
-      </ng-template>
-    </button>
-    <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
-      {{ 'Claim' }}
-    </button>
-    <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
+</ng-template>
+<ng-template #loading>
+  <div class="flex items-center justify-center h-full">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>
-  <app-staking-tiers-stepper class="flex-1" [stakingTiers]="kingStakingTiers" [unlockedTiers]="unlockedTiers!"
-                             [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
-</div>
+</ng-template>
