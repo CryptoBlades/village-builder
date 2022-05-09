@@ -6,35 +6,35 @@
   You are connected!
   <div *ngIf="selectedLand; else landNotSelectedBlock">
     You selected:
-        <div>
-          <ng-container [ngSwitch]="selectedLand.tier">
-            <div *ngSwitchCase="1">
-              <img src="assets/Land/t1.png" class="w-64" alt="">
-            </div>
-            <div *ngSwitchCase="2">
-              <img src="assets/Land/t2.png" class="w-64" alt="">
-            </div>
-            <div *ngSwitchCase="3">
-              <img src="assets/Land/t3.png" class="w-64" alt="">
-            </div>
-            <div *ngSwitchDefault>
-              <img src="assets/Land/t1.png" class="w-64" alt="">
-            </div>
-          </ng-container>
-          <div class="p-3">
-            <ng-container>
-              <div>
-                {{ 'Common.ID' }} : {{ selectedLand.id }}
-              </div>
-              <div>
-                {{ 'Common.Tier'}} : {{ selectedLand.tier }}
-              </div>
-              <div>
-                {{ 'Common.ChunkId'}} : {{ selectedLand.chunkID }}
-              </div>
-            </ng-container>
-          </div>
+    <div>
+      <ng-container [ngSwitch]="selectedLand.tier">
+        <div *ngSwitchCase="1">
+          <img src="assets/Land/t1.png" class="w-64" alt="">
         </div>
+        <div *ngSwitchCase="2">
+          <img src="assets/Land/t2.png" class="w-64" alt="">
+        </div>
+        <div *ngSwitchCase="3">
+          <img src="assets/Land/t3.png" class="w-64" alt="">
+        </div>
+        <div *ngSwitchDefault>
+          <img src="assets/Land/t1.png" class="w-64" alt="">
+        </div>
+      </ng-container>
+      <div class="p-3">
+        <ng-container>
+          <div>
+            {{ 'Common.ID' }} : {{ selectedLand.id }}
+          </div>
+          <div>
+            {{ 'Common.Tier'}} : {{ selectedLand.tier }}
+          </div>
+          <div>
+            {{ 'Common.ChunkId'}} : {{ selectedLand.chunkID }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
     <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickUnstake()">
       {{ 'Common.Unstake' }}
     </button>
@@ -47,8 +47,19 @@
       <div class="flex flex-wrap">
         <button *ngFor="let building of buildings" mat-raised-button class="btn btn-primary w-100"
                 (click)="openBuildingDialog(building.type)">
-          {{ getBuildingTypeName(building.type) }} <span *ngIf="building.upgrading" appTimestampCountdown
-                                                         [timestamp]="stakeCompleteTimestamp || 0"></span>
+          <ng-container class="w-full"
+                        [ngTemplateOutlet]="(building.upgrading && !stakeCompleteTimestamp) ? complete : building.upgrading ? inProgress : notInProgress"></ng-container>
+          <ng-template #complete>
+            <span>{{ getBuildingTypeName(building.type) }} (COMPLETE)</span>
+          </ng-template>
+          <ng-template #inProgress>
+            <span>{{ getBuildingTypeName(building.type) }} (<span appTimestampCountdown
+                                                                  [timestamp]="stakeCompleteTimestamp || 0"
+                                                                  (isFinished)="loadData()"></span>)</span>
+          </ng-template>
+          <ng-template #notInProgress>
+            <span>{{ getBuildingTypeName(building.type) }}</span>
+          </ng-template>
         </button>
       </div>
     </div>

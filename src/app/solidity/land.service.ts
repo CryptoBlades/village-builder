@@ -90,9 +90,12 @@ export class LandService extends SolidityService {
       if (isNaN(Number(buildingType))) {
         return buildings;
       }
-      const buildingLevel = await this.villageContract.methods.getBuildingLevel(landId, buildingType).call({from: this.currentAccount});
-      const canUpgrade = await this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount});
-      const maxLevel = await this.villageContract.methods.buildingMaxLevel(buildingType).call({from: this.currentAccount});
+      const [buildingLevel, canUpgrade, maxLevel] = await Promise.all([
+        this.villageContract.methods.getBuildingLevel(landId, buildingType).call({from: this.currentAccount}),
+        this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount}),
+        this.villageContract.methods.buildingMaxLevel(buildingType).call({from: this.currentAccount}),
+      ]);
+
       buildings.push({
         type: +buildingType,
         level: +buildingLevel,
@@ -107,10 +110,12 @@ export class LandService extends SolidityService {
 
   async getBuilding(buildingType: BuildingType): Promise<Building> {
     const landId = +await this.villageContract.methods.stakedLand(this.currentAccount).call({from: this.currentAccount});
-    const buildingLevel = await this.villageContract.methods.getBuildingLevel(landId, buildingType).call({from: this.currentAccount});
-    const currentlyUpgrading = await this.villageContract.methods.currentlyUpgrading(landId).call({from: this.currentAccount});
-    const canUpgrade = await this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount});
-    const maxLevel = await this.villageContract.methods.buildingMaxLevel(buildingType).call({from: this.currentAccount});
+    const [buildingLevel, currentlyUpgrading, canUpgrade, maxLevel] = await Promise.all([
+      this.villageContract.methods.getBuildingLevel(landId, buildingType).call({from: this.currentAccount}),
+      this.villageContract.methods.currentlyUpgrading(landId).call({from: this.currentAccount}),
+      this.villageContract.methods.canUpgradeBuilding(landId, buildingType).call({from: this.currentAccount}),
+      this.villageContract.methods.buildingMaxLevel(buildingType).call({from: this.currentAccount}),
+    ]);
     const building = {
       type: buildingType,
       level: +buildingLevel,

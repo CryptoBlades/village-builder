@@ -105,6 +105,10 @@ export class AppComponent implements OnInit {
       this.currentAccount = state.publicAddress;
       this.canCompleteKingStake = await this.kingService.canCompleteStake();
     });
+    await this.loadData();
+  }
+
+  async loadData(): Promise<void> {
     this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
       this.selectedLand = state.selectedLand;
       this.buildings = await this.landService.getBuildings();
@@ -212,9 +216,12 @@ export class AppComponent implements OnInit {
   }
 
   openBuildingDialog(buildingType: BuildingType) {
-    this.dialog.open(BuildingDialogComponent, {
+    const dialogRef = this.dialog.open(BuildingDialogComponent, {
       data: {buildingType},
       panelClass: 'building-dialog',
+    });
+    dialogRef.afterClosed().subscribe(async () => {
+      await this.loadData();
     });
   }
 
