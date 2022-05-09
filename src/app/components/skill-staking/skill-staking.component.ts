@@ -36,7 +36,8 @@ export class SkillStakingComponent implements OnInit {
   nextStakingTier?: StakingTier;
   stakeCompleteTimestamp?: number;
   currentStake: number = 0;
-  isLoading = true;
+  isInitializing = true;
+  isLoading = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -49,7 +50,12 @@ export class SkillStakingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadData();
+    try {
+      this.isInitializing = true;
+      await this.loadData();
+    } finally {
+      this.isInitializing = false;
+    }
   }
 
   async loadData(): Promise<void> {
@@ -109,15 +115,25 @@ export class SkillStakingComponent implements OnInit {
   }
 
   async onStake() {
-    await this.skillService.stake();
-    this.store.dispatch(new SetSkillBalance(await this.skillService.getOwnedAmount()))
-    console.log('Staked');
+    try {
+      this.isLoading = true;
+      await this.skillService.stake();
+      this.store.dispatch(new SetSkillBalance(await this.skillService.getOwnedAmount()))
+      console.log('Staked');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 
   async onClaim() {
-    await this.skillService.claimStakeReward();
-    console.log('Claimed');
+    try {
+      this.isLoading = true;
+      await this.skillService.claimStakeReward();
+      console.log('Claimed');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 
@@ -130,8 +146,13 @@ export class SkillStakingComponent implements OnInit {
   }
 
   async onUnstake() {
-    await this.skillService.unstake();
-    console.log('Unstaked');
+    try {
+      this.isLoading = true;
+      await this.skillService.unstake();
+      console.log('Unstaked');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 }

@@ -1,4 +1,4 @@
-<ng-template [ngIf]="!isLoading" [ngIfElse]="loading">
+<ng-template [ngIf]="!isInitializing" [ngIfElse]="initializing">
   <div class="stake-tab">
     <div class="building-image-container">
       <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
@@ -17,10 +17,15 @@
       </div>
       <button mat-raised-button
               class="btn button-stake"
-              [disabled]="isStakeInProgress || !meetsStakeRequirements"
+              [disabled]="isLoading || isStakeInProgress || !meetsStakeRequirements"
               (click)="onStake()">
         <ng-container class="w-full"
-                      [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : required"></ng-container>
+                      [ngTemplateOutlet]="isLoading ? loading : isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : required"></ng-container>
+        <ng-template #loading>
+          <span class="flex items-center justify-center">
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+          </span>
+        </ng-template>
         <ng-template #stakeInProgress>
           <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
         </ng-template>
@@ -40,7 +45,7 @@
                                [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
 </ng-template>
-<ng-template #loading>
+<ng-template #initializing>
   <div class="flex items-center justify-center h-full">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>

@@ -1,4 +1,4 @@
-<ng-template [ngIf]="!isLoading" [ngIfElse]="loading">
+<ng-template [ngIf]="!isInitializing" [ngIfElse]="initializing">
   <div class="stake-tab">
     <div class="building-image-container">
       <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
@@ -39,15 +39,20 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <button [disabled]="!selectedWeapons.length || !meetsStakeRequirements" mat-raised-button
+      <button [disabled]="isLoading || !selectedWeapons.length || !meetsStakeRequirements" mat-raised-button
               class="btn button-stake"
               (click)="onStake()">
         <ng-container
-          [ngTemplateOutlet]="isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : stakeMoreCharacters"></ng-container>
-        <ng-template #stakeInProgress style="color: #43300D">
+          [ngTemplateOutlet]="isLoading ? loading : isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : stakeMoreCharacters"></ng-container>
+        <ng-template #loading>
+          <span class="flex items-center justify-center">
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+          </span>
+        </ng-template>
+        <ng-template #stakeInProgress>
           <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
         </ng-template>
-        <ng-template #stake style="color: #43300D">
+        <ng-template #stake>
           Stake <span *ngIf="weaponsRequired"> ({{ weaponsRequired }} Weapon)</span>
         </ng-template>
         <ng-template #stakeMoreCharacters>
@@ -63,7 +68,7 @@
                                [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
 </ng-template>
-<ng-template #loading>
+<ng-template #initializing>
   <div class="flex items-center justify-center h-full">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>

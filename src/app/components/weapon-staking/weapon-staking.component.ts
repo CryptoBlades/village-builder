@@ -39,7 +39,8 @@ export class WeaponStakingComponent implements OnInit {
   selectedWeapons: string[] = [];
   stakeCompleteTimestamp?: number;
   currentStake: number = 0;
-  isLoading = true;
+  isInitializing = true;
+  isLoading = false;
 
   @ViewChild('weaponInput') weaponInput!: ElementRef<HTMLInputElement>;
 
@@ -51,7 +52,12 @@ export class WeaponStakingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadData();
+    try {
+      this.isInitializing = true;
+      await this.loadData();
+    } finally {
+      this.isInitializing = false;
+    }
     this.filteredWeapons = this.weaponControl.valueChanges.pipe(
       startWith(null),
       map((weapon: string | null) => (weapon ? this._filter(weapon) : this.ownedWeapons.slice())),
@@ -60,8 +66,13 @@ export class WeaponStakingComponent implements OnInit {
 
   async onStake() {
     if (!this.selectedWeapons.length) return;
-    await this.weaponsService.stake(this.selectedWeapons.map(weapon => +weapon));
-    console.log('Staked');
+    try {
+      this.isLoading = true;
+      await this.weaponsService.stake(this.selectedWeapons.map(weapon => +weapon));
+      console.log('Staked');
+    } finally {
+      this.isLoading = false;
+    }
     this.selectedWeapons = [];
     this.weaponInput.nativeElement.value = '';
     this.weaponControl.setValue(null);
@@ -151,14 +162,24 @@ export class WeaponStakingComponent implements OnInit {
   }
 
   async onUnstake() {
-    await this.weaponsService.unstake();
-    console.log('Unstaked');
+    try {
+      this.isLoading = true;
+      await this.weaponsService.unstake();
+      console.log('Unstaked');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 
   async onClaim() {
-    await this.weaponsService.claimStakeReward();
-    console.log('Claimed');
+    try {
+      this.isLoading = true;
+      await this.weaponsService.claimStakeReward();
+      console.log('Claimed');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 }

@@ -38,7 +38,8 @@ export class CharacterStakingComponent implements OnInit {
   unlockedTiers?: number;
   filteredOptions?: Observable<string[]>;
   stakeCompleteTimestamp?: number;
-  isLoading = true;
+  isInitializing = true;
+  isLoading = false;
 
   constructor(
     private charactersService: CharactersService,
@@ -47,7 +48,12 @@ export class CharacterStakingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadData();
+    try {
+      this.isInitializing = true;
+      await this.loadData();
+    } finally {
+      this.isInitializing = false;
+    }
     this.filteredOptions = this.selectedCharacter.valueChanges.pipe(
       startWith(''),
       map(value => _filter(value, this.characters)),
@@ -56,8 +62,13 @@ export class CharacterStakingComponent implements OnInit {
 
   async onStake() {
     if (!this.selectedCharacter.value) return;
-    await this.charactersService.stake([this.selectedCharacter.value]);
-    console.log('Staked');
+    try {
+      this.isLoading = true;
+      await this.charactersService.stake([this.selectedCharacter.value]);
+      console.log('Staked');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
     this.selectedCharacter.setValue(undefined);
   }
@@ -133,14 +144,24 @@ export class CharacterStakingComponent implements OnInit {
   }
 
   async onUnstake() {
-    await this.charactersService.unstake();
-    console.log('Unstaked');
+    try {
+      this.isLoading = true;
+      await this.charactersService.unstake();
+      console.log('Unstaked');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 
   async onClaim() {
-    await this.charactersService.claimStakeReward();
-    console.log('Claimed');
+    try {
+      this.isLoading = true;
+      await this.charactersService.claimStakeReward();
+      console.log('Claimed');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 }

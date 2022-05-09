@@ -1,4 +1,4 @@
-<ng-template [ngIf]="!isLoading" [ngIfElse]="loading">
+<ng-template [ngIf]="!isInitializing" [ngIfElse]="initializing">
   <div class="stake-tab">
     <div class="building-image-container">
       <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
@@ -21,11 +21,16 @@
         <p class="building-requirements">Total staked:</p>
         <p class="secondary-text">{{totalKingStaked}} KING</p>
       </div>
-      <button [disabled]="isMaxLevel || isStakeInProgress || !building.canUpgrade" mat-raised-button
+      <button [disabled]="isLoading || isMaxLevel || isStakeInProgress || !building.canUpgrade" mat-raised-button
               class="btn button-stake"
               (click)="onStake()">
         <ng-container
-          [ngTemplateOutlet]="isMaxLevel ? maxLevel : isStakeInProgress ? stakeInProgress : isBuilt ? upgrade : build"></ng-container>
+          [ngTemplateOutlet]="isLoading ? loading : isMaxLevel ? maxLevel : isStakeInProgress ? stakeInProgress : isBuilt ? upgrade : build"></ng-container>
+        <ng-template #loading>
+          <span class="flex items-center justify-center">
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+          </span>
+        </ng-template>
         <ng-template #maxLevel>
           {{ 'Max level reached' }}
         </ng-template>
@@ -48,7 +53,7 @@
                                [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
 </ng-template>
-<ng-template #loading>
+<ng-template #initializing>
   <div class="flex items-center justify-center h-full">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>

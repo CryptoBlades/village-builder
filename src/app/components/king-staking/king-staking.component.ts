@@ -30,7 +30,8 @@ export class KingStakingComponent implements OnInit {
   nextStakingTier?: StakingTier;
   stakeCompleteTimestamp?: number;
   currentStake: number = 0;
-  isLoading = true;
+  isInitializing = true;
+  isLoading = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { buildingType: BuildingType },
@@ -42,7 +43,12 @@ export class KingStakingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadData();
+    try {
+      this.isInitializing = true;
+      await this.loadData();
+    } finally {
+      this.isInitializing = false;
+    }
   }
 
   async loadData(): Promise<void> {
@@ -54,7 +60,6 @@ export class KingStakingComponent implements OnInit {
         buildingRequirements,
         kingRequired,
         totalKingStaked,
-        ownedKing,
         unlockedTiers,
         stakeCompleteTimestamp
       ] = await Promise.all([
@@ -63,7 +68,6 @@ export class KingStakingComponent implements OnInit {
         this.landService.getBuildingRequirements(this.data.buildingType),
         this.kingService.getRequiredStakeAmount(),
         this.kingService.getTotalStaked(),
-        this.kingService.getOwnedAmount(),
         this.kingService.getUnlockedTiers(),
         this.kingService.getStakeCompleteTimestamp(),
       ]);
@@ -82,7 +86,6 @@ export class KingStakingComponent implements OnInit {
       if (this.building.upgrading) {
         this.canClaim = await this.kingService.canCompleteStake();
       }
-      this.store.dispatch(new SetKingBalance(ownedKing));
       this.onLoadData.emit();
     } finally {
       this.isLoading = false;
@@ -90,21 +93,38 @@ export class KingStakingComponent implements OnInit {
   }
 
   async onClaim() {
-    await this.kingService.claimStakeReward();
-    console.log('Claimed');
+    try {
+      this.isLoading = true;
+      await this.kingService.claimStakeReward();
+      console.log('Claimed');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 
   async onStake() {
     if (!this.building) return;
-    await this.kingService.stake(this.building?.type);
-    console.log('Staked');
+    try {
+      this.isLoading = true;
+      await this.kingService.stake(this.building?.type);
+      this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
+      console.log('Staked');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 
   async onUnstake() {
-    await this.kingService.unstake();
-    console.log('Unstaked');
+    try {
+      this.isLoading = true;
+      await this.kingService.unstake();
+      this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
+      console.log('Unstaked');
+    } finally {
+      this.isLoading = false;
+    }
     await this.loadData();
   }
 
