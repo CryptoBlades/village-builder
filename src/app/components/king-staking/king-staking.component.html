@@ -44,7 +44,7 @@
           Build <span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
         </ng-template>
       </button>
-      <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
+      <button *ngIf="canClaim" [disabled]="isLoading" mat-raised-button class="btn button-stake" (click)="onClaim()">
         {{ 'Claim' }}
       </button>
       <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>

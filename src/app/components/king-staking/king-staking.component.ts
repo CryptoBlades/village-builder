@@ -83,9 +83,7 @@ export class KingStakingComponent implements OnInit {
       } else {
         this.stakeCompleteTimestamp = undefined;
       }
-      if (this.building.upgrading) {
-        this.canClaim = await this.kingService.canCompleteStake();
-      }
+      this.canClaim = await this.kingService.canCompleteStake();
       this.onLoadData.emit();
     } finally {
       this.isLoading = false;

@@ -69,7 +69,7 @@ contract Staking is Initializable, AccessControlUpgradeable {
   }
 
   function getUnlockedTiers() public view returns (uint256) {
-    if (currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration < block.timestamp && currentStake[tx.origin] != 0 && !currentStakeRewardClaimed[tx.origin]) {
+    if (canCompleteStake()) {
       return unlockedTiers[tx.origin] + 1;
     }
     return unlockedTiers[tx.origin];
