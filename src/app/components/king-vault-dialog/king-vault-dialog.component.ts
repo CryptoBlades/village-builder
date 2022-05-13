@@ -14,6 +14,8 @@ export class KingVaultDialogComponent implements OnInit {
   totalKingInVault?: number;
   claimableKing?: number;
   claimedKing?: number;
+  isInitializing = true;
+  isLoading = false;
 
   constructor(
     private kingService: KingService,
@@ -23,19 +25,29 @@ export class KingVaultDialogComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadData();
+    try {
+      this.isInitializing = true;
+      await this.loadData();
+    } finally {
+      this.isInitializing = false;
+    }
   }
 
   async loadData() {
-    const [totalKingInVault, claimableKing, claimedKing] = await Promise.all([
-      this.kingVaultService.getTotalInVault(),
-      this.kingVaultService.getClaimable(),
-      this.kingVaultService.getClaimed(),
-    ]);
-    this.totalKingInVault = totalKingInVault;
-    this.claimableKing = claimableKing;
-    this.claimedKing = claimedKing;
-    this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
+    try {
+      this.isLoading = true;
+      const [totalKingInVault, claimableKing, claimedKing] = await Promise.all([
+        this.kingVaultService.getTotalInVault(),
+        this.kingVaultService.getClaimable(),
+        this.kingVaultService.getClaimed(),
+      ]);
+      this.totalKingInVault = totalKingInVault;
+      this.claimableKing = claimableKing;
+      this.claimedKing = claimedKing;
+      this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   async onClickClaim() {

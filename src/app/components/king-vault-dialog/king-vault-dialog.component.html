@@ -1,8 +1,28 @@
-<div>
-  <p>Total available: {{totalKingInVault}}</p>
-  <p>Claimable by you: {{claimableKing}}</p>
-  <p>Already claimed by you: {{claimedKing}}</p>
-  <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickClaim()" [disabled]="!claimableKing">
-    Claim KING
-  </button>
-</div>
+<ng-template [ngIf]="!isInitializing" [ngIfElse]="initializing">
+  <div>
+    <p>Total available: {{totalKingInVault}}</p>
+    <p>Claimable by you: {{claimableKing}}</p>
+    <p>Already claimed by you: {{claimedKing}}</p>
+    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickClaim()"
+            [disabled]="isLoading || !claimableKing">
+      <ng-container
+        [ngTemplateOutlet]="isLoading ? loading : claimableKing ? claim : noKingToClaim"></ng-container>
+      <ng-template #loading>
+          <span class="flex items-center justify-center">
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+          </span>
+      </ng-template>
+      <ng-template #claim>
+        {{ 'Claim KING' }}
+      </ng-template>
+      <ng-template #noKingToClaim>
+        {{ 'No KING to claim' }}
+      </ng-template>
+    </button>
+  </div>
+</ng-template>
+<ng-template #initializing>
+  <div class="flex items-center justify-center h-full">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>
