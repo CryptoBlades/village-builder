@@ -31,6 +31,20 @@
                        [tooltip]="'Paladin'"></app-resource-pill>
   </div>
   <div class="text-white flex items-center">
-    <span>Logged in as: {{formattedWalletAddress}}</span>
+    <button mat-raised-button class="btn button-stake" (click)="isConnected ? disconnectMetamask() : connectMetamask()">
+      <ng-container
+        [ngTemplateOutlet]="isLoading ? loading : isConnected ? connected : connectWallet"></ng-container>
+      <ng-template #loading>
+          <span class="flex items-center justify-center">
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+          </span>
+      </ng-template>
+      <ng-template #connected>
+        <mat-icon aria-hidden="false" aria-label="Wallet icon">account_balance_wallet</mat-icon> {{formattedWalletAddress}}
+      </ng-template>
+      <ng-template #connectWallet>
+        {{'Connect Wallet'}}
+      </ng-template>
+    </button>
   </div>
 </div>

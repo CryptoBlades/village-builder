@@ -173,7 +173,20 @@ export class WalletState {
       kingBalance: 0,
       skillBalance: 0,
       weaponsBalance: 0,
-      charactersBalance: 0
+      charactersBalance: 0,
+      claySkillBalance: 0,
+      clayWeaponsBalance: 0,
+      woodSkillBalance: 0,
+      woodWeaponsBalance: 0,
+      stoneSkillBalance: 0,
+      stoneWeaponsBalance: 0,
+      mercenaryBalance: 0,
+      bruiserBalance: 0,
+      mageBalance: 0,
+      archerBalance: 0,
+      paladinBalance: 0,
+      isInstalled: false,
+      isConnected: false
     });
   }
 }

@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div *ngIf="!isConnected; else connectedBlock" class="buttons-container">
-  <button mat-raised-button (click)="connectMetamask()">Connect Wallet</button>
+  Connect wallet to access the app
 </div>
 <ng-template #connectedBlock>
   You are connected!

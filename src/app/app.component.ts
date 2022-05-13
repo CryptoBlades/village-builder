@@ -4,26 +4,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {Store} from '@ngxs/store';
 import {from, Observable, take} from "rxjs";
-import {
-  SetArcherBalance,
-  SetBruiserBalance,
-  SetCharactersBalance,
-  SetKingBalance,
-  SetMageBalance,
-  SetMercenaryBalance,
-  SetMetamaskConnected,
-  SetMetamaskInstalled,
-  SetPaladinBalance,
-  SetSkillBalance,
-  SetSkillClayBalance,
-  SetSkillStoneBalance,
-  SetSkillWoodBalance,
-  SetWalletAddress,
-  SetWeaponsBalance,
-  SetWeaponsClayBalance,
-  SetWeaponsStoneBalance,
-  SetWeaponsWoodBalance
-} from "./state/wallet/wallet.actions";
+import {SetMetamaskInstalled} from "./state/wallet/wallet.actions";
 import {Web3Service} from "./services/web3.service";
 import {LandService} from "./solidity/land.service";
 import {Land} from "./interfaces/land";
@@ -34,8 +15,7 @@ import {WeaponsService} from "./solidity/weapons.service";
 import {KingService} from "./solidity/king.service";
 import {MatDialog} from "@angular/material/dialog";
 import {BuildingDialogComponent} from "./components/building-dialog/building-dialog.component";
-import {extractResourcesFromUnlockedTiers, extractUnitsFromUnlockedTiers, getBuildingTypeName} from './common/common';
-import {SkillService} from "./solidity/skill.service";
+import {getBuildingTypeName} from './common/common';
 import {BuildingType} from "./enums/building-type";
 import skillStakingTiers from '../assets/staking-tiers/skill.json';
 import weaponsStakingTiers from '../assets/staking-tiers/weapons.json';
@@ -74,7 +54,6 @@ export class AppComponent implements OnInit {
   characters: number[] = [];
   king: number = 0;
 
-  canCompleteKingStake = false;
   stakeCompleteTimestamp?: number;
 
   lands: Land[] = [];
@@ -92,18 +71,21 @@ export class AppComponent implements OnInit {
     private charactersService: CharactersService,
     private weaponsService: WeaponsService,
     private kingService: KingService,
-    private skillService: SkillService,
   ) {
   }
 
   async ngOnInit(): Promise<void> {
     from(this.detectMetamask()).pipe(take(1)).subscribe();
-    await this.connectMetamask();
     this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
       this.isInstalled = state.isInstalled;
       this.isConnected = state.isConnected;
       this.currentAccount = state.publicAddress;
-      this.canCompleteKingStake = await this.kingService.canCompleteStake();
+      this.lands = await this.landService.getOwnedLands(state.publicAddress)
+      const stakedLand = await this.landService.getStakedLand();
+      console.log(stakedLand);
+      if (stakedLand) {
+        this.store.dispatch(new SetLandSelected(stakedLand));
+      }
     });
     await this.loadData();
   }
@@ -135,72 +117,6 @@ export class AppComponent implements OnInit {
       this.store.dispatch(new SetMetamaskInstalled(true));
     } else {
       this.store.dispatch(new SetMetamaskInstalled(false));
-    }
-  }
-
-  async connectMetamask() {
-    try {
-      const provider = await detectEthereumProvider() as any;
-      provider?.request({method: 'eth_requestAccounts'}).then(async (accounts: any) => {
-        this.store.dispatch(new SetWalletAddress(this.web3.utils.toChecksumAddress(accounts[0])));
-        this.store.dispatch([
-          new SetKingBalance(await this.kingService.getOwnedAmount()),
-          new SetSkillBalance(await this.skillService.getOwnedAmount()),
-          new SetWeaponsBalance(await this.weaponsService.getOwnedAmount()),
-          new SetCharactersBalance(await this.charactersService.getOwnedAmount()),
-        ]);
-        const unlockedSkillTiers = await this.skillService.getUnlockedTiers();
-        const unlockedWeaponsTiers = await this.weaponsService.getUnlockedTiers();
-        if (unlockedSkillTiers || unlockedWeaponsTiers) {
-          console.log(unlockedSkillTiers, unlockedWeaponsTiers);
-          const {
-            clay: skillClay,
-            wood: skillWood,
-            stone: skillStone
-          } = extractResourcesFromUnlockedTiers(this.skillStakingTiers, unlockedSkillTiers);
-          const {
-            clay: weaponClay,
-            wood: weaponWood,
-            stone: weaponStone
-          } = extractResourcesFromUnlockedTiers(this.weaponsStakingTiers, unlockedWeaponsTiers);
-          this.store.dispatch([
-            new SetSkillClayBalance(skillClay),
-            new SetSkillWoodBalance(skillWood),
-            new SetSkillStoneBalance(skillStone),
-            new SetWeaponsClayBalance(weaponClay),
-            new SetWeaponsWoodBalance(weaponWood),
-            new SetWeaponsStoneBalance(weaponStone),
-          ]);
-        }
-        const unlockedCharactersTiers = await this.charactersService.getUnlockedTiers();
-        if (unlockedCharactersTiers) {
-          const {
-            mercenary,
-            bruiser,
-            mage,
-            archer,
-            paladin
-          } = extractUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
-          this.store.dispatch([
-            new SetMercenaryBalance(mercenary),
-            new SetBruiserBalance(bruiser),
-            new SetMageBalance(mage),
-            new SetArcherBalance(archer),
-            new SetPaladinBalance(paladin),
-          ]);
-        }
-        this.store.dispatch(new SetMetamaskConnected(true));
-        this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
-          this.lands = await this.landService.getOwnedLands(state.publicAddress)
-          const stakedLand = await this.landService.getStakedLand();
-          console.log(stakedLand);
-          if (stakedLand) {
-            this.store.dispatch(new SetLandSelected(stakedLand));
-          }
-        });
-      });
-    } catch (err) {
-      console.error('Connect metamask fail:', err);
     }
   }
 
