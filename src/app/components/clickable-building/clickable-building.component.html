@@ -1,0 +1,17 @@
+<a (click)="openBuildingDialog(building.type)" class="cursor-pointer relative text-center">
+  <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
+  <ng-container
+    [ngTemplateOutlet]="(building.upgrading && !stakeCompleteTimestamp) ? complete : building.upgrading ? inProgress : notInProgress"></ng-container>
+  <ng-template #complete>
+    <span class="centered-image-description">{{ getBuildingTypeName(building.type) }} (COMPLETE)</span>
+  </ng-template>
+  <ng-template #inProgress>
+            <span class="centered-image-description">{{ getBuildingTypeName(building.type) }} (<span
+              appTimestampCountdown
+              [timestamp]="stakeCompleteTimestamp || 0"
+              (isFinished)="onLoadData.emit()"></span>)</span>
+  </ng-template>
+  <ng-template #notInProgress>
+    <span class="centered-image-description">{{ getBuildingTypeName(building.type) }}</span>
+  </ng-template>
+</a>

@@ -9,18 +9,13 @@ import {Web3Service} from "./services/web3.service";
 import {LandService} from "./solidity/land.service";
 import {Land} from "./interfaces/land";
 import {LandState, LandStateModel} from "./state/land/land.state";
-import {SetLandSelected} from "./state/land/land.actions";
+import {SetBuildings, SetLandSelected} from "./state/land/land.actions";
 import {CharactersService} from "./solidity/characters.service";
 import {WeaponsService} from "./solidity/weapons.service";
 import {KingService} from "./solidity/king.service";
 import {MatDialog} from "@angular/material/dialog";
-import {BuildingDialogComponent} from "./components/building-dialog/building-dialog.component";
 import {getBuildingTypeName} from './common/common';
 import {BuildingType} from "./enums/building-type";
-import skillStakingTiers from '../assets/staking-tiers/skill.json';
-import weaponsStakingTiers from '../assets/staking-tiers/weapons.json';
-import charactersStakingTiers from '../assets/staking-tiers/characters.json';
-import {StakingTier} from "./interfaces/staking-tier";
 import {KingVaultDialogComponent} from "./components/king-vault-dialog/king-vault-dialog.component";
 
 export interface Building {
@@ -59,10 +54,6 @@ export class AppComponent implements OnInit {
   lands: Land[] = [];
   buildings: Building[] = [];
 
-  skillStakingTiers: StakingTier[] = skillStakingTiers;
-  weaponsStakingTiers: StakingTier[] = weaponsStakingTiers;
-  charactersStakingTiers: StakingTier[] = charactersStakingTiers;
-
   constructor(
     private store: Store,
     public dialog: MatDialog,
@@ -80,22 +71,25 @@ export class AppComponent implements OnInit {
       this.isInstalled = state.isInstalled;
       this.isConnected = state.isConnected;
       this.currentAccount = state.publicAddress;
-      this.lands = await this.landService.getOwnedLands(state.publicAddress)
+      this.lands = await this.landService.getOwnedLands(this.currentAccount)
       const stakedLand = await this.landService.getStakedLand();
       console.log(stakedLand);
       if (stakedLand) {
         this.store.dispatch(new SetLandSelected(stakedLand));
+        this.store.dispatch(new SetBuildings(await this.landService.getBuildings()));
       }
+    });
+    this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
+      this.selectedLand = state.selectedLand;
+      this.buildings = state.buildings;
+      console.log(this.buildings);
     });
     await this.loadData();
   }
 
   async loadData(): Promise<void> {
-    this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
-      this.selectedLand = state.selectedLand;
-      this.buildings = await this.landService.getBuildings();
-      console.log(this.buildings);
-    });
+    console.log('loadData');
+
     const stakeCompleteTimestamp = await this.kingService.getStakeCompleteTimestamp();
     if (stakeCompleteTimestamp > Date.now() / 1000) {
       this.stakeCompleteTimestamp = stakeCompleteTimestamp;
@@ -129,16 +123,6 @@ export class AppComponent implements OnInit {
     } catch (err) {
       console.error('Unstake fail:', err);
     }
-  }
-
-  openBuildingDialog(buildingType: BuildingType) {
-    const dialogRef = this.dialog.open(BuildingDialogComponent, {
-      data: {buildingType},
-      panelClass: 'building-dialog',
-    });
-    dialogRef.afterClosed().subscribe(async () => {
-      await this.loadData();
-    });
   }
 
   openKingVaultDialog() {

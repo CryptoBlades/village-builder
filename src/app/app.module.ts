@@ -35,6 +35,7 @@ import { NextTierUnlocksComponent } from './components/next-tier-unlocks/next-ti
 import { TimestampCountdownDirective } from './directives/timestamp-countdown.directive';
 import { SimpleConfirmationDialogComponent } from './components/simple-confirmation-dialog/simple-confirmation-dialog.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { ClickableBuildingComponent } from './components/clickable-building/clickable-building.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     KingVaultDialogComponent,
     NextTierUnlocksComponent,
     TimestampCountdownDirective,
-    SimpleConfirmationDialogComponent
+    SimpleConfirmationDialogComponent,
+    ClickableBuildingComponent
   ],
   imports: [
     BrowserModule,

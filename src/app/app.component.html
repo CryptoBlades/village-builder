@@ -45,22 +45,8 @@
       <h1>{{ 'King' }}</h1>
       <h2>King needed to upgrade: {{ king }}</h2>
       <div class="flex flex-wrap">
-        <button *ngFor="let building of buildings" mat-raised-button class="btn btn-primary w-100"
-                (click)="openBuildingDialog(building.type)">
-          <ng-container class="w-full"
-                        [ngTemplateOutlet]="(building.upgrading && !stakeCompleteTimestamp) ? complete : building.upgrading ? inProgress : notInProgress"></ng-container>
-          <ng-template #complete>
-            <span>{{ getBuildingTypeName(building.type) }} (COMPLETE)</span>
-          </ng-template>
-          <ng-template #inProgress>
-            <span>{{ getBuildingTypeName(building.type) }} (<span appTimestampCountdown
-                                                                  [timestamp]="stakeCompleteTimestamp || 0"
-                                                                  (isFinished)="loadData()"></span>)</span>
-          </ng-template>
-          <ng-template #notInProgress>
-            <span>{{ getBuildingTypeName(building.type) }}</span>
-          </ng-template>
-        </button>
+        <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
+                                [stakeCompleteTimestamp]="stakeCompleteTimestamp"></app-clickable-building>
       </div>
     </div>
     <!--    <img src="assets/Village/village_background.png" alt="village" class="village-view">-->
