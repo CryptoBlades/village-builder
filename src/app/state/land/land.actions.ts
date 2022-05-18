@@ -15,13 +15,6 @@ export class SetBuildings {
   }
 }
 
-export class SetBuilding {
-  static readonly type = '[Land] Set Building';
-
-  constructor(public payload: Building) {
-  }
-}
-
 export class ClearLandState {
   static readonly type = '[Land] Clear State';
 

@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     from(this.detectMetamask()).pipe(take(1)).subscribe();
-    this.wallet$.pipe(untilDestroyed(this)).subscribe(async (state: WalletStateModel) => {
+    this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.isInstalled = state.isInstalled;
       this.isConnected = state.isConnected;
       this.currentAccount = state.publicAddress;
@@ -77,6 +77,7 @@ export class AppComponent implements OnInit {
       this.selectedLand = state.selectedLand;
       this.buildings = state.buildings;
       console.log(this.buildings);
+      await this.loadData();
     });
     await this.loadData();
   }

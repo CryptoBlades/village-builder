@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Action, State, StateContext} from '@ngxs/store';
-import {ClearLandState, SetBuilding, SetBuildings, SetLandSelected} from './land.actions';
+import {ClearLandState, SetBuildings, SetLandSelected} from './land.actions';
 import {Land} from "../../interfaces/land";
 import {Building} from "../../app.component";
 
@@ -33,14 +33,6 @@ export class LandState {
   @Action(SetBuildings)
   setBuildings({patchState}: StateContext<LandStateModel>, {payload}: SetBuildings) {
     patchState({buildings: payload});
-  }
-
-  @Action(SetBuilding)
-  setBuilding({patchState, getState}: StateContext<LandStateModel>, {payload}: SetBuilding) {
-    const buildings: Building[] = [...getState().buildings];
-    buildings[payload.type] = payload;
-
-    patchState({buildings});
   }
 
   @Action(ClearLandState)

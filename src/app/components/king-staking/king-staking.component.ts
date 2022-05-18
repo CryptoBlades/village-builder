@@ -10,6 +10,7 @@ import kingStakingTiers from '../../../assets/staking-tiers/king.json';
 import {Store} from "@ngxs/store";
 import {SetKingBalance} from "../../state/wallet/wallet.actions";
 import {BuildingType} from "../../enums/building-type";
+import {SetBuildings} from "../../state/land/land.actions";
 
 @Component({
   selector: 'app-king-staking',
@@ -107,6 +108,7 @@ export class KingStakingComponent implements OnInit {
       this.isLoading = true;
       await this.kingService.stake(this.building?.type);
       this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
+      this.store.dispatch(new SetBuildings(await this.landService.getBuildings()));
       console.log('Staked');
     } finally {
       this.isLoading = false;
