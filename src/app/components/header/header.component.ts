@@ -27,7 +27,7 @@ import {
   SetWeaponsWoodBalance
 } from "../../state/wallet/wallet.actions";
 import {extractResourcesFromUnlockedTiers, extractUnitsFromUnlockedTiers} from "../../common/common";
-import {SetLandSelected} from "../../state/land/land.actions";
+import {SetBuildings, SetLandSelected} from "../../state/land/land.actions";
 import {Web3Service} from "../../services/web3.service";
 import {LandService} from "../../solidity/land.service";
 import {CharactersService} from "../../solidity/characters.service";
@@ -171,6 +171,7 @@ export class HeaderComponent implements OnInit {
         console.log(stakedLand);
         if (stakedLand) {
           this.store.dispatch(new SetLandSelected(stakedLand));
+          this.store.dispatch(new SetBuildings(await this.landService.getBuildings()));
         }
       });
     } catch (err) {

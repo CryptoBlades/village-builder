@@ -1,10 +1,38 @@
 import {Injectable} from '@angular/core';
-import {SolidityService} from "./solidity.service";
+import {Observable} from "rxjs";
+import {WalletState, WalletStateModel} from "../state/wallet/wallet.state";
+import {Contract} from "web3-eth-contract";
+import {Store} from "@ngxs/store";
+import {Web3Service} from "../services/web3.service";
+import SkillStaking from "../../../build/contracts/SkillStaking.json";
+import SkillToken from "../../../build/contracts/SkillInterface.json";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SkillService extends SolidityService {
+@UntilDestroy()
+export class SkillService {
+
+  wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
+  skillContract!: Promise<Contract>;
+  skillStakingContract!: Contract;
+
+  currentAccount: string = '';
+
+  constructor(
+    private store: Store,
+    public web3: Web3Service,
+  ) {
+    this.skillStakingContract = new this.web3.eth.Contract(SkillStaking.abi as any, SkillStaking.networks["5777"]!.address);
+    this.skillContract = this.skillStakingContract.methods.currency().call().then((address: string) => {
+      return new this.web3.eth.Contract(SkillToken.abi as any, address);
+    });
+    this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
+      this.currentAccount = state.publicAddress;
+
+    });
+  }
 
   async getOwnedAmount(): Promise<number> {
     const amount = await (await this.skillContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});

@@ -1,20 +1,57 @@
 import {Injectable} from '@angular/core';
 import {Land} from "../interfaces/land";
-import {UntilDestroy} from "@ngneat/until-destroy";
-import {SolidityService} from "./solidity.service";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Building} from "../app.component";
 import {BuildingType} from "../enums/building-type";
+import {Observable} from "rxjs";
+import {WalletState, WalletStateModel} from "../state/wallet/wallet.state";
+import {Contract} from "web3-eth-contract";
+import {Store} from "@ngxs/store";
+import {Web3Service} from "../services/web3.service";
+import Village from "../../../build/contracts/Village.json";
+import CBKLand from "../../../build/contracts/CBKLandInterface.json";
+import CharacterStaking from "../../../build/contracts/CharacterStaking.json";
+import WeaponStaking from "../../../build/contracts/WeaponStaking.json";
+import KingStaking from "../../../build/contracts/KingStaking.json";
+import SkillStaking from "../../../build/contracts/SkillStaking.json";
 
 export interface BuildingRequirements {
   building: BuildingType;
   level: number;
 }
 
-@UntilDestroy()
 @Injectable({
   providedIn: 'root'
 })
-export class LandService extends SolidityService {
+@UntilDestroy()
+export class LandService {
+
+  wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
+  landContract!: Promise<Contract>;
+  villageContract!: Contract;
+  characterStakingContract!: Contract;
+  weaponStakingContract!: Contract;
+  kingStakingContract!: Contract;
+  skillStakingContract!: Contract;
+
+  currentAccount: string = '';
+
+  constructor(
+    private store: Store,
+    public web3: Web3Service,
+  ) {
+    this.villageContract = new this.web3.eth.Contract(Village.abi as any, Village.networks["5777"]!.address);
+    this.landContract = this.villageContract.methods.cbkLand().call().then((address: string) => {
+      return new this.web3.eth.Contract(CBKLand.abi as any, address);
+    });
+    this.characterStakingContract = new this.web3.eth.Contract(CharacterStaking.abi as any, CharacterStaking.networks["5777"]!.address);
+    this.weaponStakingContract = new this.web3.eth.Contract(WeaponStaking.abi as any, WeaponStaking.networks["5777"]!.address);
+    this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, KingStaking.networks["5777"]!.address);
+    this.skillStakingContract = new this.web3.eth.Contract(SkillStaking.abi as any, SkillStaking.networks["5777"]!.address);
+    this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
+      this.currentAccount = state.publicAddress;
+    });
+  }
 
   async getOwnedLands(address: string): Promise<Land[]> {
     const landsIds = await (await this.landContract).methods.getOwned(address).call();

@@ -9,7 +9,7 @@ import {Web3Service} from "./services/web3.service";
 import {LandService} from "./solidity/land.service";
 import {Land} from "./interfaces/land";
 import {LandState, LandStateModel} from "./state/land/land.state";
-import {SetBuildings, SetLandSelected} from "./state/land/land.actions";
+import {SetLandSelected} from "./state/land/land.actions";
 import {CharactersService} from "./solidity/characters.service";
 import {WeaponsService} from "./solidity/weapons.service";
 import {KingService} from "./solidity/king.service";
@@ -72,12 +72,6 @@ export class AppComponent implements OnInit {
       this.isConnected = state.isConnected;
       this.currentAccount = state.publicAddress;
       this.lands = await this.landService.getOwnedLands(this.currentAccount)
-      const stakedLand = await this.landService.getStakedLand();
-      console.log(stakedLand);
-      if (stakedLand) {
-        this.store.dispatch(new SetLandSelected(stakedLand));
-        this.store.dispatch(new SetBuildings(await this.landService.getBuildings()));
-      }
     });
     this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
       this.selectedLand = state.selectedLand;

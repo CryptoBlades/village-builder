@@ -1,11 +1,37 @@
 import {Injectable} from '@angular/core';
-import {SolidityService} from "./solidity.service";
 import {BuildingType} from "../enums/building-type";
+import {Contract} from "web3-eth-contract";
+import {Store} from "@ngxs/store";
+import {Web3Service} from "../services/web3.service";
+import KingStaking from "../../../build/contracts/KingStaking.json";
+import KingToken from "../../../build/contracts/KingToken.json";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {WalletState, WalletStateModel} from "../state/wallet/wallet.state";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class KingService extends SolidityService {
+@UntilDestroy()
+export class KingService {
+  wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
+  kingContract!: Promise<Contract>;
+  kingStakingContract!: Contract;
+
+  currentAccount: string = '';
+
+  constructor(
+    private store: Store,
+    public web3: Web3Service,
+  ) {
+    this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, KingStaking.networks["5777"]!.address);
+    this.kingContract = this.kingStakingContract.methods.currency().call().then((address: string) => {
+      return new this.web3.eth.Contract(KingToken.abi as any, address);
+    });
+    this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
+      this.currentAccount = state.publicAddress;
+    });
+  }
 
   async getOwnedAmount(): Promise<number> {
     const amount = await (await this.kingContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});

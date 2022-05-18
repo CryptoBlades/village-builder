@@ -1,10 +1,37 @@
 import {Injectable} from '@angular/core';
-import {SolidityService} from "./solidity.service";
+import {Observable} from "rxjs";
+import {WalletState, WalletStateModel} from "../state/wallet/wallet.state";
+import {Contract} from "web3-eth-contract";
+import {Store} from "@ngxs/store";
+import {Web3Service} from "../services/web3.service";
+import WeaponStaking from "../../../build/contracts/WeaponStaking.json";
+import Weapons from "../../../build/contracts/WeaponsInterface.json";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @Injectable({
   providedIn: 'root'
 })
-export class WeaponsService extends SolidityService {
+@UntilDestroy()
+export class WeaponsService {
+
+  wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
+  weaponsContract!: Promise<Contract>;
+  weaponStakingContract!: Contract;
+
+  currentAccount: string = '';
+
+  constructor(
+    private store: Store,
+    public web3: Web3Service,
+  ) {
+    this.weaponStakingContract = new this.web3.eth.Contract(WeaponStaking.abi as any, WeaponStaking.networks["5777"]!.address);
+    this.weaponsContract = this.weaponStakingContract.methods.nft().call().then((address: string) => {
+      return new this.web3.eth.Contract(Weapons.abi as any, address);
+    });
+    this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
+      this.currentAccount = state.publicAddress;
+    });
+  }
 
   async getOwnedWeapons(): Promise<number[]> {
     const amount = await this.getOwnedAmount();
