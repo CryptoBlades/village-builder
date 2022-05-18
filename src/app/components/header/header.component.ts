@@ -12,6 +12,7 @@ import {
   SetBruiserBalance,
   SetCharactersBalance,
   SetKingBalance,
+  SetLands,
   SetMageBalance,
   SetMercenaryBalance,
   SetMetamaskConnected,
@@ -166,6 +167,7 @@ export class HeaderComponent implements OnInit {
             new SetPaladinBalance(paladin),
           ]);
         }
+        this.store.dispatch(new SetLands(await this.landService.getOwnedLands()));
         this.store.dispatch(new SetMetamaskConnected(true));
         const stakedLand = await this.landService.getStakedLand();
         console.log(stakedLand);

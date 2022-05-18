@@ -53,8 +53,8 @@ export class LandService {
     });
   }
 
-  async getOwnedLands(address: string): Promise<Land[]> {
-    const landsIds = await (await this.landContract).methods.getOwned(address).call();
+  async getOwnedLands(): Promise<Land[]> {
+    const landsIds = await (await this.landContract).methods.getOwned(this.currentAccount).call();
     return await Promise.all(landsIds.map(async (landId: number) => {
       console.log(landId);
       return this.getLandInfo(+landId);

@@ -1,7 +1,16 @@
+import {Land} from "../../interfaces/land";
+
 export class SetWalletAddress {
   static readonly type = '[Wallet] Set Walletaddress';
 
   constructor(public payload: string) {
+  }
+}
+
+export class SetLands {
+  static readonly type = '[Wallet] Set Lands';
+
+  constructor(public payload: Land[]) {
   }
 }
 

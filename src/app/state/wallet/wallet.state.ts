@@ -15,13 +15,15 @@ import {
   SetWeaponsWoodBalance,
   SetWeaponsStoneBalance,
   SetPaladinBalance,
-  SetArcherBalance, SetMageBalance, SetBruiserBalance, SetMercenaryBalance
+  SetArcherBalance, SetMageBalance, SetBruiserBalance, SetMercenaryBalance, SetLands
 } from './wallet.actions';
+import {Land} from "../../interfaces/land";
 
 
 function createInitialData(): WalletStateModel {
   return {
     publicAddress: '',
+    lands: [],
     kingBalance: 0,
     skillBalance: 0,
     weaponsBalance: 0,
@@ -44,6 +46,7 @@ function createInitialData(): WalletStateModel {
 
 export interface WalletStateModel {
   publicAddress: string;
+  lands: Land[];
   kingBalance: number;
   skillBalance: number;
   weaponsBalance: number;
@@ -84,6 +87,11 @@ export class WalletState {
   @Action(SetWalletAddress)
   setWalletAddress({patchState}: StateContext<WalletStateModel>, {payload}: SetWalletAddress) {
     patchState({publicAddress: payload, isConnected: true});
+  }
+
+  @Action(SetLands)
+  setLands({patchState}: StateContext<WalletStateModel>, {payload}: SetLands) {
+    patchState({lands: payload});
   }
 
   @Action(SetKingBalance)

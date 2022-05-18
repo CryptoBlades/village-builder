@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
       this.isInstalled = state.isInstalled;
       this.isConnected = state.isConnected;
       this.currentAccount = state.publicAddress;
-      this.lands = await this.landService.getOwnedLands(this.currentAccount)
+      this.lands = state.lands;
     });
     this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
       this.selectedLand = state.selectedLand;
@@ -112,7 +112,7 @@ export class AppComponent implements OnInit {
     if (!this.selectedLand?.id) return;
     try {
       await this.landService.unstake();
-      this.lands = await this.landService.getOwnedLands(this.currentAccount);
+      this.lands = await this.landService.getOwnedLands();
       this.selectedLand = undefined;
     } catch (err) {
       console.error('Unstake fail:', err);
