@@ -1,25 +1,39 @@
 <ng-template [ngIf]="!isInitializing" [ngIfElse]="initializing">
-  <div>
-    <p>Total available: {{totalKingInVault}}</p>
-    <p>Claimable by you: {{claimableKing}}</p>
-    <p>Already claimed by you: {{claimedKing}}</p>
-    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickClaim()"
-            [disabled]="isLoading || !claimableKing">
-      <ng-container
-        [ngTemplateOutlet]="isLoading ? loading : claimableKing ? claim : noKingToClaim"></ng-container>
-      <ng-template #loading>
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>KING Vault</mat-card-title>
+      <mat-card-subtitle>Claim your KING rewards</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        You can claim your KING rewards you got from completing certain stake paths.
+      </p>
+      <div>
+        <p>Total available: {{totalKingInVault}}</p>
+        <p>Claimable by you: {{claimableKing}}</p>
+        <p>Already claimed by you: {{claimedKing}}</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickClaim()"
+              [disabled]="isLoading || !claimableKing">
+        <ng-container
+          [ngTemplateOutlet]="isLoading ? loading : claimableKing ? claim : noKingToClaim"></ng-container>
+        <ng-template #loading>
           <span class="flex items-center justify-center">
             <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
           </span>
-      </ng-template>
-      <ng-template #claim>
-        {{ 'Claim KING' }}
-      </ng-template>
-      <ng-template #noKingToClaim>
-        {{ 'No KING to claim' }}
-      </ng-template>
-    </button>
-  </div>
+        </ng-template>
+        <ng-template #claim>
+          {{ 'Claim KING' }}
+        </ng-template>
+        <ng-template #noKingToClaim>
+          {{ 'No KING to claim' }}
+        </ng-template>
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </ng-template>
 <ng-template #initializing>
   <div class="flex items-center justify-center h-full">

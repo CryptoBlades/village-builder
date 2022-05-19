@@ -30,12 +30,15 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {SkillStakingComponent} from './components/skill-staking/skill-staking.component';
 import {WeaponStakingComponent} from './components/weapon-staking/weapon-staking.component';
 import {MatChipsModule} from "@angular/material/chips";
-import { KingVaultDialogComponent } from './components/king-vault-dialog/king-vault-dialog.component';
-import { NextTierUnlocksComponent } from './components/next-tier-unlocks/next-tier-unlocks.component';
-import { TimestampCountdownDirective } from './directives/timestamp-countdown.directive';
-import { SimpleConfirmationDialogComponent } from './components/simple-confirmation-dialog/simple-confirmation-dialog.component';
+import {KingVaultDialogComponent} from './components/king-vault-dialog/king-vault-dialog.component';
+import {NextTierUnlocksComponent} from './components/next-tier-unlocks/next-tier-unlocks.component';
+import {TimestampCountdownDirective} from './directives/timestamp-countdown.directive';
+import {
+  SimpleConfirmationDialogComponent
+} from './components/simple-confirmation-dialog/simple-confirmation-dialog.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { ClickableBuildingComponent } from './components/clickable-building/clickable-building.component';
+import {ClickableBuildingComponent} from './components/clickable-building/clickable-building.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -78,6 +81,7 @@ import { ClickableBuildingComponent } from './components/clickable-building/clic
     ReactiveFormsModule,
     MatChipsModule,
     MatProgressSpinnerModule,
+    MatCardModule,
   ],
   providers: [
     Web3Service,

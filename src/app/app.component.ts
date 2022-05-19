@@ -126,6 +126,8 @@ export class AppComponent implements OnInit {
   }
 
   openKingVaultDialog() {
-    this.dialog.open(KingVaultDialogComponent);
+    this.dialog.open(KingVaultDialogComponent, {
+      panelClass: 'king-vault-dialog',
+    });
   }
 }
