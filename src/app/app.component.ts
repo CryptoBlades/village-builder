@@ -50,6 +50,7 @@ export class AppComponent implements OnInit {
   king: number = 0;
 
   stakeCompleteTimestamp?: number;
+  isLoading = false;
 
   lands: Land[] = [];
   buildings: Building[] = [];
@@ -78,20 +79,24 @@ export class AppComponent implements OnInit {
       this.buildings = state.buildings;
       console.log(this.buildings);
       await this.loadData();
+
     });
     await this.loadData();
   }
 
   async loadData(): Promise<void> {
-    console.log('loadData');
-
-    const stakeCompleteTimestamp = await this.kingService.getStakeCompleteTimestamp();
-    if (stakeCompleteTimestamp > Date.now() / 1000) {
-      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
-    } else {
-      this.stakeCompleteTimestamp = undefined;
+    try {
+      this.isLoading = true;
+      const stakeCompleteTimestamp = await this.kingService.getStakeCompleteTimestamp();
+      if (stakeCompleteTimestamp > Date.now() / 1000) {
+        this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+      } else {
+        this.stakeCompleteTimestamp = undefined;
+      }
+      this.king = await this.kingService.getRequiredStakeAmount();
+    } finally {
+      this.isLoading = false;
     }
-    this.king = await this.kingService.getRequiredStakeAmount();
   }
 
   onSelect(land: Land) {

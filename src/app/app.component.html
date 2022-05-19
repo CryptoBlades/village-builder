@@ -4,10 +4,17 @@
 </div>
 <ng-template #connectedBlock>
   You are connected!
-  <div *ngIf="selectedLand; else landNotSelectedBlock">
+  <ng-container
+    [ngTemplateOutlet]="isLoading ? loading : selectedLand ? villageView : lands.length ? landNotSelected : noLands"></ng-container>
+  <ng-template #loading>
+          <span class="flex items-center justify-center">
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+          </span>
+  </ng-template>
+  <ng-template #villageView>
     You selected:
     <div>
-      <ng-container [ngSwitch]="selectedLand.tier">
+      <ng-container [ngSwitch]="selectedLand!.tier">
         <div *ngSwitchCase="1">
           <img src="assets/Land/t1.png" class="w-64" alt="">
         </div>
@@ -24,13 +31,13 @@
       <div class="p-3">
         <ng-container>
           <div>
-            {{ 'Common.ID' }} : {{ selectedLand.id }}
+            {{ 'Common.ID' }} : {{ selectedLand!.id }}
           </div>
           <div>
-            {{ 'Common.Tier'}} : {{ selectedLand.tier }}
+            {{ 'Common.Tier'}} : {{ selectedLand!.tier }}
           </div>
           <div>
-            {{ 'Common.ChunkId'}} : {{ selectedLand.chunkID }}
+            {{ 'Common.ChunkId'}} : {{ selectedLand!.chunkID }}
           </div>
         </ng-container>
       </div>
@@ -50,15 +57,15 @@
       </div>
     </div>
     <!--    <img src="assets/Village/village_background.png" alt="village" class="village-view">-->
-  </div>
-  <ng-template #landNotSelectedBlock>
+  </ng-template>
+  <ng-template #landNotSelected>
     <div *ngIf="lands.length; else noLands" class="lands-display">
       <app-select-land *ngFor="let land of lands" [land]="land" (selectedLand)="onSelect($event)"></app-select-land>
     </div>
-    <ng-template #noLands>
-      <div>
-        You do not have lands available
-      </div>
-    </ng-template>
+  </ng-template>
+  <ng-template #noLands>
+    <div>
+      You do not have lands available
+    </div>
   </ng-template>
 </ng-template>
