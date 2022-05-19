@@ -81,22 +81,22 @@ export class AppComponent implements OnInit {
       await this.loadData();
 
     });
-    await this.loadData();
-  }
-
-  async loadData(): Promise<void> {
     try {
       this.isLoading = true;
-      const stakeCompleteTimestamp = await this.kingService.getStakeCompleteTimestamp();
-      if (stakeCompleteTimestamp > Date.now() / 1000) {
-        this.stakeCompleteTimestamp = stakeCompleteTimestamp;
-      } else {
-        this.stakeCompleteTimestamp = undefined;
-      }
-      this.king = await this.kingService.getRequiredStakeAmount();
+      await this.loadData();
     } finally {
       this.isLoading = false;
     }
+  }
+
+  async loadData(): Promise<void> {
+    const stakeCompleteTimestamp = await this.kingService.getStakeCompleteTimestamp();
+    if (stakeCompleteTimestamp > Date.now() / 1000) {
+      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+    } else {
+      this.stakeCompleteTimestamp = undefined;
+    }
+    this.king = await this.kingService.getRequiredStakeAmount();
   }
 
   onSelect(land: Land) {

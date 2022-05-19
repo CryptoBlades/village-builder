@@ -1,37 +1,25 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {WalletState, WalletStateModel} from "../state/wallet/wallet.state";
 import {Contract} from "web3-eth-contract";
 import {Store} from "@ngxs/store";
 import {Web3Service} from "../services/web3.service";
-import KingToken from "../../../build/contracts/KingToken.json";
 import KingVault from "../../../build/contracts/KingVault.json";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {UntilDestroy} from "@ngneat/until-destroy";
+import {KingService} from "./king.service";
 
 @Injectable({
   providedIn: 'root'
 })
 @UntilDestroy()
-export class KingVaultService {
+export class KingVaultService extends KingService {
 
-  wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
-  kingContract!: Promise<Contract>;
-  kingStakingContract!: Contract;
   kingVaultContract!: Contract;
 
-  currentAccount: string = '';
-
   constructor(
-    private store: Store,
-    public web3: Web3Service,
+    public override store: Store,
+    public override web3: Web3Service,
   ) {
-    this.kingContract = this.kingStakingContract.methods.currency().call().then((address: string) => {
-      return new this.web3.eth.Contract(KingToken.abi as any, address);
-    });
+    super(store, web3);
     this.kingVaultContract = new this.web3.eth.Contract(KingVault.abi as any, KingVault.networks["5777"]!.address);
-    this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
-      this.currentAccount = state.publicAddress;
-    });
   }
 
   async getTotalInVault(): Promise<number> {

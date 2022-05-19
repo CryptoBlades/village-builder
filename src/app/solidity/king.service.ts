@@ -21,7 +21,7 @@ export class KingService {
   currentAccount: string = '';
 
   constructor(
-    private store: Store,
+    public store: Store,
     public web3: Web3Service,
   ) {
     this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, KingStaking.networks["5777"]!.address);
