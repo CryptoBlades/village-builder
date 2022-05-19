@@ -7,9 +7,9 @@
   <ng-container
     [ngTemplateOutlet]="isLoading ? loading : selectedLand ? villageView : lands.length ? landNotSelected : noLands"></ng-container>
   <ng-template #loading>
-          <span class="flex items-center justify-center">
-            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
-          </span>
+      <span class="flex items-center justify-center">
+        <mat-progress-spinner [diameter]="15" mode="indeterminate"></mat-progress-spinner> Loading...
+      </span>
   </ng-template>
   <ng-template #villageView>
     You selected:

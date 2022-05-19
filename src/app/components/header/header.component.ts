@@ -51,18 +51,18 @@ export class HeaderComponent implements OnInit {
   land$: Observable<LandStateModel> = this.store.select(LandState);
 
   walletAddress: string = '';
-  kingBalance: number = 0;
-  skillBalance: number = 0;
-  weaponsBalance: number = 0;
-  charactersBalance: number = 0;
-  clayBalance: number = 0;
-  woodBalance: number = 0;
-  stoneBalance: number = 0;
-  mercenaryBalance: number = 0;
-  bruiserBalance: number = 0;
-  mageBalance: number = 0;
-  archerBalance: number = 0;
-  paladinBalance: number = 0;
+  kingBalance?: number;
+  skillBalance?: number;
+  weaponsBalance?: number;
+  charactersBalance?: number;
+  clayBalance?: number;
+  woodBalance?: number;
+  stoneBalance?: number;
+  mercenaryBalance?: number;
+  bruiserBalance?: number;
+  mageBalance?: number;
+  archerBalance?: number;
+  paladinBalance?: number;
   land?: Land;
   isConnected = false;
   isLoading = false;
@@ -90,9 +90,15 @@ export class HeaderComponent implements OnInit {
       this.skillBalance = state.skillBalance;
       this.weaponsBalance = state.weaponsBalance;
       this.charactersBalance = state.charactersBalance;
-      this.clayBalance = state.claySkillBalance + state.clayWeaponsBalance;
-      this.woodBalance = state.woodSkillBalance + state.woodWeaponsBalance;
-      this.stoneBalance = state.stoneSkillBalance + state.stoneWeaponsBalance;
+      if (state.claySkillBalance !== undefined && state.clayWeaponsBalance !== undefined) {
+        this.clayBalance = state.claySkillBalance + state.clayWeaponsBalance;
+      }
+      if (state.woodSkillBalance !== undefined && state.woodWeaponsBalance !== undefined) {
+        this.woodBalance = state.woodSkillBalance + state.woodWeaponsBalance;
+      }
+      if (state.stoneSkillBalance !== undefined && state.stoneWeaponsBalance !== undefined) {
+        this.stoneBalance = state.stoneSkillBalance + state.stoneWeaponsBalance;
+      }
       this.mercenaryBalance = state.mercenaryBalance;
       this.bruiserBalance = state.bruiserBalance;
       this.mageBalance = state.mageBalance;

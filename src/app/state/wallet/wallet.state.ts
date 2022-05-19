@@ -24,21 +24,6 @@ function createInitialData(): WalletStateModel {
   return {
     publicAddress: '',
     lands: [],
-    kingBalance: 0,
-    skillBalance: 0,
-    weaponsBalance: 0,
-    charactersBalance: 0,
-    claySkillBalance: 0,
-    woodSkillBalance: 0,
-    stoneSkillBalance: 0,
-    clayWeaponsBalance: 0,
-    woodWeaponsBalance: 0,
-    stoneWeaponsBalance: 0,
-    mercenaryBalance: 0,
-    bruiserBalance: 0,
-    mageBalance: 0,
-    archerBalance: 0,
-    paladinBalance: 0,
     isConnected: false,
     isInstalled: false,
   };
@@ -47,21 +32,21 @@ function createInitialData(): WalletStateModel {
 export interface WalletStateModel {
   publicAddress: string;
   lands: Land[];
-  kingBalance: number;
-  skillBalance: number;
-  weaponsBalance: number;
-  charactersBalance: number;
-  claySkillBalance: number;
-  woodSkillBalance: number;
-  stoneSkillBalance: number;
-  clayWeaponsBalance: number;
-  woodWeaponsBalance: number;
-  stoneWeaponsBalance: number;
-  mercenaryBalance: number;
-  bruiserBalance: number;
-  mageBalance: number;
-  archerBalance: number;
-  paladinBalance: number;
+  kingBalance?: number;
+  skillBalance?: number;
+  weaponsBalance?: number;
+  charactersBalance?: number;
+  claySkillBalance?: number;
+  woodSkillBalance?: number;
+  stoneSkillBalance?: number;
+  clayWeaponsBalance?: number;
+  woodWeaponsBalance?: number;
+  stoneWeaponsBalance?: number;
+  mercenaryBalance?: number;
+  bruiserBalance?: number;
+  mageBalance?: number;
+  archerBalance?: number;
+  paladinBalance?: number;
   isConnected: boolean;
   isInstalled: boolean;
 }
@@ -178,21 +163,6 @@ export class WalletState {
   clearState({patchState}: StateContext<WalletStateModel>) {
     patchState({
       publicAddress: '',
-      kingBalance: 0,
-      skillBalance: 0,
-      weaponsBalance: 0,
-      charactersBalance: 0,
-      claySkillBalance: 0,
-      clayWeaponsBalance: 0,
-      woodSkillBalance: 0,
-      woodWeaponsBalance: 0,
-      stoneSkillBalance: 0,
-      stoneWeaponsBalance: 0,
-      mercenaryBalance: 0,
-      bruiserBalance: 0,
-      mageBalance: 0,
-      archerBalance: 0,
-      paladinBalance: 0,
       isInstalled: false,
       isConnected: false
     });

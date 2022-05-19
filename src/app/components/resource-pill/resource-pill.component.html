@@ -1,7 +1,12 @@
 <div class="resource-container">
   <div class="flex items-center">
     <img [src]="image" class="px-1 w-8" alt="King" [matTooltip]="tooltip"/>
-    {{balance.toLocaleString()}}
+    <span *ngIf="balance !== undefined; else loading">{{balance.toLocaleString()}}</span>
+    <ng-template #loading>
+      <span class="flex items-center justify-center">
+        <mat-progress-spinner [diameter]="15" mode="indeterminate"></mat-progress-spinner>
+      </span>
+    </ng-template>
   </div>
   <div>
     <img src="../../../assets/Placeholder/plus.svg" class="w-5" alt="King"/>
