@@ -33,6 +33,7 @@ export class CharacterStakingComponent implements OnInit {
   selectedCharacter = new FormControl();
   charactersRequired?: number;
   currentStake: number = 0;
+  isPathFinished = false;
   canClaim = false;
   barracksRequired?: number;
   unlockedTiers?: number;
@@ -107,6 +108,7 @@ export class CharacterStakingComponent implements OnInit {
         this.stakeCompleteTimestamp = stakeCompleteTimestamp;
       } else {
         this.stakeCompleteTimestamp = undefined;
+        this.isPathFinished = !charactersRequired;
       }
       this.store.dispatch(new SetCharactersBalance(this.characters.length));
       const unlockedCharactersTiers = await this.charactersService.getUnlockedTiers();

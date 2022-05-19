@@ -24,6 +24,15 @@ contract KingVault is Initializable, AccessControlUpgradeable {
     kingToken = KingToken(kingAddress);
   }
 
+  modifier restricted() {
+    _restricted();
+    _;
+  }
+
+  function _restricted() internal view {
+    require(hasRole(GAME_ADMIN, msg.sender) || hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "NA");
+  }
+
   function claimVault() public {
     require(vaults[msg.sender] > 0, "You don't have any king in the vault to claim");
     kingToken.transfer(msg.sender, vaults[msg.sender]);
@@ -31,7 +40,7 @@ contract KingVault is Initializable, AccessControlUpgradeable {
     vaults[msg.sender] = 0;
   }
 
-  function addToVault(address receiver, uint amount) public {
+  function addToVault(address receiver, uint amount) restricted public {
     vaults[receiver] += amount;
   }
 

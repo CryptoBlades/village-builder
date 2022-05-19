@@ -28,7 +28,8 @@
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
-      <button [disabled]="isLoading || !selectedCharacter.value || !isBarracksRequirementMet || isStakeInProgress" mat-raised-button
+      <button *ngIf="!isPathFinished" [disabled]="isLoading || !selectedCharacter.value || !isBarracksRequirementMet || isStakeInProgress"
+              mat-raised-button
               class="btn button-stake"
               (click)="onStake()">
         <ng-container
@@ -54,7 +55,8 @@
       <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
     </div>
     <app-staking-tiers-stepper class="flex-1" [stakingTiers]="charactersStakingTiers" [unlockedTiers]="unlockedTiers!"
-                               [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
+                               [currentStake]="currentStake" [isPathFinished]="isPathFinished"
+                               (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
 </ng-template>
 <ng-template #initializing>

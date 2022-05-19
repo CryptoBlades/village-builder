@@ -20,7 +20,7 @@ contract CurrencyStaking is Staking {
     currency = IERC20Upgradeable(currencyAddress);
   }
 
-  function stake(uint amount) virtual public returns (uint finishTimestamp) {
+  function stake(uint amount) virtual assertStakesLand(tx.origin) public returns (uint finishTimestamp) {
     uint256 currentStakeId = currentStake[tx.origin];
     if (stakes[currentStakeId + 1].amount != 0) {
       require(stakedCurrencies[tx.origin] + amount == stakes[currentStakeId + 1].amount, 'You need to stake required currency amount');
@@ -40,7 +40,7 @@ contract CurrencyStaking is Staking {
     return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }
 
-  function unstake() virtual public returns (bool stakeCompleted) {
+  function unstake() virtual assertStakesLand(tx.origin) public returns (bool stakeCompleted) {
     require(currentStake[tx.origin] != 0, 'You have no stakes to unstake');
     if (canCompleteStake()) {
       completeStake();
@@ -58,7 +58,11 @@ contract CurrencyStaking is Staking {
   // VIEWS
 
   function getRequiredStakeAmount() public view returns (uint256) {
-    return stakes[currentStake[tx.origin] + 1].amount - stakedCurrencies[tx.origin];
+    if(stakes[currentStake[tx.origin] + 1].amount != 0) {
+      return stakes[currentStake[tx.origin] + 1].amount - stakedCurrencies[tx.origin];
+    } else {
+      return 0;
+    }
   }
 
 }

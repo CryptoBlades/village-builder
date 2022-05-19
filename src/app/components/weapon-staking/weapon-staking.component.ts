@@ -39,6 +39,7 @@ export class WeaponStakingComponent implements OnInit {
   selectedWeapons: string[] = [];
   stakeCompleteTimestamp?: number;
   currentStake: number = 0;
+  isPathFinished = false;
   isInitializing = true;
   isLoading = false;
 
@@ -116,6 +117,7 @@ export class WeaponStakingComponent implements OnInit {
         this.stakeCompleteTimestamp = stakeCompleteTimestamp;
       } else {
         this.stakeCompleteTimestamp = undefined;
+        this.isPathFinished = !weaponsRequired;
       }
       if (unlockedTiers) {
         const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.weaponStakingTiers, unlockedTiers);

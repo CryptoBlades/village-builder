@@ -12,7 +12,10 @@ module.exports = async function (deployer, network) {
   const weaponStaking = await upgradeProxy(WeaponStaking.address, WeaponStaking, {deployer});
   const kingStaking = await upgradeProxy(KingStaking.address, KingStaking, {deployer});
   const skillStaking = await upgradeProxy(SkillStaking.address, SkillStaking, {deployer});
-  await upgradeProxy(KingVault.address, KingVault, {deployer});
+  const kingVault = await upgradeProxy(KingVault.address, KingVault, {deployer});
+
+  await kingVault.grantRole(await kingVault.GAME_ADMIN(), skillStaking.address);
+  await kingVault.grantRole(await kingVault.GAME_ADMIN(), weaponStaking.address);
 
   await Promise.all([
     characterStaking.addStake(1, 30, 1, 1),

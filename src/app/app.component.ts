@@ -79,7 +79,6 @@ export class AppComponent implements OnInit {
       this.buildings = state.buildings;
       console.log(this.buildings);
       await this.loadData();
-
     });
     try {
       this.isLoading = true;

@@ -31,6 +31,7 @@ export class KingStakingComponent implements OnInit {
   nextStakingTier?: StakingTier;
   stakeCompleteTimestamp?: number;
   currentStake: number = 0;
+  isPathFinished = false;
   isInitializing = true;
   isLoading = false;
 
@@ -83,6 +84,7 @@ export class KingStakingComponent implements OnInit {
         this.stakeCompleteTimestamp = stakeCompleteTimestamp;
       } else {
         this.stakeCompleteTimestamp = undefined;
+        this.isPathFinished = !kingRequired;
       }
       this.canClaim = await this.kingService.canCompleteStake();
       this.onLoadData.emit();
@@ -94,7 +96,8 @@ export class KingStakingComponent implements OnInit {
   async onClaim() {
     try {
       this.isLoading = true;
-      await this.kingService.claimStakeReward();
+      await this.kingService.claimStakeReward()
+      this.store.dispatch(new SetBuildings(await this.landService.getBuildings()));
       console.log('Claimed');
     } finally {
       this.isLoading = false;
@@ -121,6 +124,7 @@ export class KingStakingComponent implements OnInit {
       this.isLoading = true;
       await this.kingService.unstake();
       this.store.dispatch(new SetKingBalance(await this.kingService.getOwnedAmount()));
+      this.store.dispatch(new SetBuildings(await this.landService.getBuildings()));
       console.log('Unstaked');
     } finally {
       this.isLoading = false;

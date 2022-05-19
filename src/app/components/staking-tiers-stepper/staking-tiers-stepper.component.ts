@@ -13,6 +13,7 @@ export class StakingTiersStepperComponent implements OnInit {
   @Input() stakingTiers!: StakingTier[];
   @Input() currentStake!: number;
   @Input() unlockedTiers!: number;
+  @Input() isPathFinished!: boolean;
   @Output() onUnstake: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -48,5 +49,9 @@ export class StakingTiersStepperComponent implements OnInit {
       }
       console.log('The dialog was closed', confirmed);
     });
+  }
+
+  unstakeWithoutConfirmation() {
+    this.onUnstake.emit();
   }
 }

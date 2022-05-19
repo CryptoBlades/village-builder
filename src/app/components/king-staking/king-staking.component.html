@@ -21,7 +21,8 @@
         <p class="building-requirements">Total staked:</p>
         <p class="secondary-text">{{totalKingStaked}} KING</p>
       </div>
-      <button [disabled]="isLoading || isMaxLevel || isStakeInProgress || !building.canUpgrade" mat-raised-button
+      <button *ngIf="!isPathFinished" [disabled]="isLoading || isMaxLevel || isStakeInProgress || !building.canUpgrade"
+              mat-raised-button
               class="btn button-stake"
               (click)="onStake()">
         <ng-container
@@ -50,7 +51,8 @@
       <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
     </div>
     <app-staking-tiers-stepper class="flex-1" [stakingTiers]="kingStakingTiers" [unlockedTiers]="unlockedTiers!"
-                               [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
+                               [currentStake]="currentStake" [isPathFinished]="isPathFinished"
+                               (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
 </ng-template>
 <ng-template #initializing>

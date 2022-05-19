@@ -34,7 +34,25 @@ contract Staking is Initializable, AccessControlUpgradeable {
     village = _village;
   }
 
-  function firstStake() public {
+  modifier assertStakesLand(address user) {
+    _assertStakesLand(user);
+    _;
+  }
+
+  function _assertStakesLand(address user) internal view {
+    require(village.stakedLand(user) != 0, "User must stake land before staking NFTs");
+  }
+
+  modifier restricted() {
+    _restricted();
+    _;
+  }
+
+  function _restricted() internal view {
+    require(hasRole(GAME_ADMIN, msg.sender) || hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "NA");
+  }
+
+  function firstStake() assertStakesLand(tx.origin) public {
     require(getUnlockedTiers() == 0, 'You have already staked');
     currentStake[tx.origin] = 1;
     emit FirstStake(tx.origin);
@@ -49,17 +67,13 @@ contract Staking is Initializable, AccessControlUpgradeable {
     emit StakeComplete(tx.origin, currentStake[tx.origin]);
   }
 
-  function assignNextStake(uint currentStakeId) public {
+  function assignNextStake(uint currentStakeId) internal {
     if (stakes[currentStakeId + 1].duration == 0) {
       currentStake[tx.origin] = 0;
     } else {
       currentStake[tx.origin] += 1;
     }
     currentStakeRewardClaimed[tx.origin] = false;
-  }
-
-  function addStake(uint id, uint duration, uint requirement, uint amount) public {
-    stakes[id] = Stake({duration : duration, requirement : requirement, amount : amount});
   }
 
   // VIEWS
@@ -81,5 +95,11 @@ contract Staking is Initializable, AccessControlUpgradeable {
 
   function getNextRequirement() public view returns (uint256) {
     return stakes[currentStake[msg.sender] + 1].requirement;
+  }
+
+  // ADMIN
+
+  function addStake(uint id, uint duration, uint requirement, uint amount) restricted external {
+    stakes[id] = Stake({duration : duration, requirement : requirement, amount : amount});
   }
 }

@@ -24,7 +24,7 @@ contract NftStaking is Staking, IERC721ReceiverUpgradeable {
     return IERC721ReceiverUpgradeable.onERC721Received.selector;
   }
 
-  function stake(uint[] memory ids) virtual public returns (uint finishTimestamp) {
+  function stake(uint[] memory ids) virtual assertStakesLand(tx.origin) public returns (uint finishTimestamp) {
     uint256 currentStakeId = currentStake[tx.origin];
     if (stakes[currentStakeId + 1].amount != 0) {
       require(stakedNfts[tx.origin].length + ids.length == stakes[currentStakeId + 1].amount, 'You need to stake all the required NFTs');
@@ -47,7 +47,7 @@ contract NftStaking is Staking, IERC721ReceiverUpgradeable {
     return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }
 
-  function unstake() virtual public returns (bool stakeCompleted) {
+  function unstake() virtual assertStakesLand(tx.origin) public returns (bool stakeCompleted) {
     uint256 currentStakeId = currentStake[tx.origin];
     require(currentStakeId != 0, 'You have no stakes to unstake');
     if (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStakeId].duration) {

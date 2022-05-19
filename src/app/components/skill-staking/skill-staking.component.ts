@@ -36,6 +36,7 @@ export class SkillStakingComponent implements OnInit {
   nextStakingTier?: StakingTier;
   stakeCompleteTimestamp?: number;
   currentStake: number = 0;
+  isPathFinished = false;
   isInitializing = true;
   isLoading = false;
 
@@ -99,6 +100,7 @@ export class SkillStakingComponent implements OnInit {
         this.stakeCompleteTimestamp = stakeCompleteTimestamp;
       } else {
         this.stakeCompleteTimestamp = undefined;
+        this.isPathFinished = !skillRequired;
       }
       if (skillUnlockedTiers) {
         const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.skillStakingTiers, skillUnlockedTiers);

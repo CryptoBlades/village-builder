@@ -39,7 +39,8 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <button [disabled]="isLoading || !selectedWeapons.length || !meetsStakeRequirements" mat-raised-button
+      <button *ngIf="!isPathFinished" [disabled]="isLoading || !selectedWeapons.length || !meetsStakeRequirements"
+              mat-raised-button
               class="btn button-stake"
               (click)="onStake()">
         <ng-container
@@ -65,7 +66,8 @@
       <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
     </div>
     <app-staking-tiers-stepper class="flex-1" [stakingTiers]="weaponStakingTiers" [unlockedTiers]="unlockedTiers!"
-                               [currentStake]="currentStake" (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
+                               [currentStake]="currentStake" [isPathFinished]="isPathFinished"
+                               (onUnstake)="onUnstake()"></app-staking-tiers-stepper>
   </div>
 </ng-template>
 <ng-template #initializing>
