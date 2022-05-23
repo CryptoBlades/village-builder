@@ -17,6 +17,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {getBuildingTypeName} from './common/common';
 import {BuildingType} from "./enums/building-type";
 import {KingVaultDialogComponent} from "./components/king-vault-dialog/king-vault-dialog.component";
+import {
+  SimpleConfirmationDialogComponent
+} from "./components/simple-confirmation-dialog/simple-confirmation-dialog.component";
 
 export interface Building {
   level: number;
@@ -49,6 +52,7 @@ export class AppComponent implements OnInit {
   selectedLand?: Land = undefined;
   characters: number[] = [];
   king: number = 0;
+  isPathFinished = false;
 
   stakeCompleteTimestamp?: number;
   isLoading = false;
@@ -128,6 +132,24 @@ export class AppComponent implements OnInit {
   openKingVaultDialog() {
     this.dialog.open(KingVaultDialogComponent, {
       panelClass: 'king-vault-dialog',
+    });
+  }
+
+  openUnstakeConfirmationDialog() {
+    const dialogRef = this.dialog.open(SimpleConfirmationDialogComponent, {
+      data: {
+        dialogs: [
+          {title: 'Unstake?', content: 'Are you sure you know what you\'re doing?'},
+          {title: 'Unstake is permanent', content: 'You won\t be able to stake anymore, are you sure?'},
+          {title: 'No coming back', content: 'You won\t be able to come back from this, are you sure?'},
+        ]
+      }
+    });
+    dialogRef.afterClosed().subscribe(async confirmed => {
+      if (confirmed) {
+        await this.onClickUnstake();
+      }
+      console.log('The dialog was closed', confirmed);
     });
   }
 }

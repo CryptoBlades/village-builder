@@ -3,7 +3,6 @@
   Connect wallet to access the app
 </div>
 <ng-template #connectedBlock>
-  You are connected!
   <ng-container
     [ngTemplateOutlet]="isLoading ? loading : selectedLand ? villageView : lands.length ? landNotSelected : noLands"></ng-container>
   <ng-template #loading>
@@ -12,47 +11,31 @@
       </span>
   </ng-template>
   <ng-template #villageView>
-    You selected:
-    <div>
-      <ng-container [ngSwitch]="selectedLand!.tier">
-        <div *ngSwitchCase="1">
-          <img src="assets/Land/t1.png" class="w-64" alt="">
-        </div>
-        <div *ngSwitchCase="2">
-          <img src="assets/Land/t2.png" class="w-64" alt="">
-        </div>
-        <div *ngSwitchCase="3">
-          <img src="assets/Land/t3.png" class="w-64" alt="">
-        </div>
-        <div *ngSwitchDefault>
-          <img src="assets/Land/t1.png" class="w-64" alt="">
-        </div>
-      </ng-container>
-      <div class="p-3">
-        <ng-container>
-          <div>
-            {{ 'Common.ID' }} : {{ selectedLand!.id }}
-          </div>
-          <div>
-            {{ 'Common.Tier'}} : {{ selectedLand!.tier }}
-          </div>
-          <div>
-            {{ 'Common.ChunkId'}} : {{ selectedLand!.chunkID }}
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickUnstake()">
-      {{ 'Common.Unstake' }}
-    </button>
-    <button mat-raised-button class="btn btn-primary w-100" (click)="openKingVaultDialog()">
-      King rewards vault
-    </button>
-    <h1>{{ 'King' }}</h1>
-    <h2>King needed to upgrade: {{ king }}</h2>
     <div class="flex flex-wrap village-view-container">
       <img src="assets/Village/village_background.png" alt="Village view">
       <div class="buildings-container">
+        <div class="flex pt-2">
+          <div class="relative w-64">
+            <img src="assets/Land/t{{selectedLand!.tier}}.png" class="w-64" alt="Tier {{selectedLand!.tier}} land">
+            <div class="absolute top-5 right-5 text-white flex flex-col">
+              <span>ID: {{selectedLand!.id}}</span>
+              <span>ChunkID: {{selectedLand!.chunkID}}</span>
+              <span>Tier: {{selectedLand!.tier}}</span>
+            </div>
+            <div class="absolute left-5 bottom-5">
+              <button mat-raised-button
+                      (click)="isPathFinished ? onClickUnstake() : openUnstakeConfirmationDialog()"
+                      [color]="isPathFinished ? 'primary' : 'warn'">Unstake
+              </button>
+            </div>
+          </div>
+          <h2 class="text-white p-2">King needed to upgrade a building: {{ king }}</h2>
+        </div>
+        <div class="pl-2">
+          <button mat-raised-button class="btn btn-primary w-100" (click)="openKingVaultDialog()">
+            King rewards vault
+          </button>
+        </div>
         <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
                                 [stakeCompleteTimestamp]="stakeCompleteTimestamp"></app-clickable-building>
       </div>
