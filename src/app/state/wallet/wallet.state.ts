@@ -164,7 +164,22 @@ export class WalletState {
     patchState({
       publicAddress: '',
       isInstalled: false,
-      isConnected: false
+      isConnected: false,
+      kingBalance: undefined,
+      skillBalance: undefined,
+      weaponsBalance: undefined,
+      charactersBalance: undefined,
+      claySkillBalance: undefined,
+      woodSkillBalance: undefined,
+      stoneSkillBalance: undefined,
+      clayWeaponsBalance: undefined,
+      woodWeaponsBalance: undefined,
+      stoneWeaponsBalance: undefined,
+      mercenaryBalance: undefined,
+      bruiserBalance: undefined,
+      mageBalance: undefined,
+      archerBalance: undefined,
+      paladinBalance: undefined,
     });
   }
 }

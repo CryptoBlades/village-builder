@@ -4,7 +4,7 @@ import {Building} from "../../app.component";
 export class SetLandSelected {
   static readonly type = '[Land] Set Land selected';
 
-  constructor(public payload: Land) {
+  constructor(public payload?: Land) {
   }
 }
 

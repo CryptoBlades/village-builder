@@ -125,67 +125,72 @@ export class HeaderComponent implements OnInit {
     try {
       this.isLoading = true;
       const provider = await detectEthereumProvider() as any;
-      provider?.request({method: 'eth_requestAccounts'}).then(async (accounts: any) => {
-        this.store.dispatch(new SetWalletAddress(this.web3.utils.toChecksumAddress(accounts[0])));
-        this.store.dispatch([
-          new SetKingBalance(await this.kingService.getOwnedAmount()),
-          new SetSkillBalance(await this.skillService.getOwnedAmount()),
-          new SetWeaponsBalance(await this.weaponsService.getOwnedAmount()),
-          new SetCharactersBalance(await this.charactersService.getOwnedAmount()),
-        ]);
-        const unlockedSkillTiers = await this.skillService.getUnlockedTiers();
-        const unlockedWeaponsTiers = await this.weaponsService.getUnlockedTiers();
-        if (unlockedSkillTiers || unlockedWeaponsTiers) {
-          console.log(unlockedSkillTiers, unlockedWeaponsTiers);
-          const {
-            clay: skillClay,
-            wood: skillWood,
-            stone: skillStone
-          } = extractResourcesFromUnlockedTiers(this.skillStakingTiers, unlockedSkillTiers);
-          const {
-            clay: weaponClay,
-            wood: weaponWood,
-            stone: weaponStone
-          } = extractResourcesFromUnlockedTiers(this.weaponsStakingTiers, unlockedWeaponsTiers);
-          this.store.dispatch([
-            new SetSkillClayBalance(skillClay),
-            new SetSkillWoodBalance(skillWood),
-            new SetSkillStoneBalance(skillStone),
-            new SetWeaponsClayBalance(weaponClay),
-            new SetWeaponsWoodBalance(weaponWood),
-            new SetWeaponsStoneBalance(weaponStone),
-          ]);
-        }
-        const unlockedCharactersTiers = await this.charactersService.getUnlockedTiers();
-        if (unlockedCharactersTiers) {
-          const {
-            mercenary,
-            bruiser,
-            mage,
-            archer,
-            paladin
-          } = extractUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
-          this.store.dispatch([
-            new SetMercenaryBalance(mercenary),
-            new SetBruiserBalance(bruiser),
-            new SetMageBalance(mage),
-            new SetArcherBalance(archer),
-            new SetPaladinBalance(paladin),
-          ]);
-        }
-        this.store.dispatch(new SetLands(await this.landService.getOwnedLands()));
-        this.store.dispatch(new SetMetamaskConnected(true));
-        const stakedLand = await this.landService.getStakedLand();
-        console.log(stakedLand);
-        if (stakedLand) {
-          this.store.dispatch(new SetLandSelected(stakedLand));
-          this.store.dispatch(new SetBuildings(await this.landService.getBuildings()));
-        }
+      provider?.request({method: 'eth_requestAccounts'}).then(async (accounts: string[]) => {
+        await this.setWalletBalances(accounts);
+      });
+      (window.ethereum as any).on('accountsChanged', async (accounts: string[]) => {
+        this.store.dispatch(new ClearWalletState());
+        await this.setWalletBalances(accounts);
       });
     } catch (err) {
       console.error('Connect metamask fail:', err);
     } finally {
       this.isLoading = false;
     }
+  }
+
+  async setWalletBalances(accounts: string[]) {
+    this.store.dispatch(new SetWalletAddress(this.web3.utils.toChecksumAddress(accounts[0])));
+    this.store.dispatch([
+      new SetKingBalance(await this.kingService.getOwnedAmount()),
+      new SetSkillBalance(await this.skillService.getOwnedAmount()),
+      new SetWeaponsBalance(await this.weaponsService.getOwnedAmount()),
+      new SetCharactersBalance(await this.charactersService.getOwnedAmount()),
+    ]);
+    const unlockedSkillTiers = await this.skillService.getUnlockedTiers();
+    const unlockedWeaponsTiers = await this.weaponsService.getUnlockedTiers();
+    if (unlockedSkillTiers !== undefined || unlockedWeaponsTiers !== undefined) {
+      console.log(unlockedSkillTiers, unlockedWeaponsTiers);
+      const {
+        clay: skillClay,
+        wood: skillWood,
+        stone: skillStone
+      } = extractResourcesFromUnlockedTiers(this.skillStakingTiers, unlockedSkillTiers);
+      const {
+        clay: weaponClay,
+        wood: weaponWood,
+        stone: weaponStone
+      } = extractResourcesFromUnlockedTiers(this.weaponsStakingTiers, unlockedWeaponsTiers);
+      this.store.dispatch([
+        new SetSkillClayBalance(skillClay),
+        new SetSkillWoodBalance(skillWood),
+        new SetSkillStoneBalance(skillStone),
+        new SetWeaponsClayBalance(weaponClay),
+        new SetWeaponsWoodBalance(weaponWood),
+        new SetWeaponsStoneBalance(weaponStone),
+      ]);
+    }
+    const unlockedCharactersTiers = await this.charactersService.getUnlockedTiers();
+    if (unlockedCharactersTiers !== undefined) {
+      const {
+        mercenary,
+        bruiser,
+        mage,
+        archer,
+        paladin
+      } = extractUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
+      this.store.dispatch([
+        new SetMercenaryBalance(mercenary),
+        new SetBruiserBalance(bruiser),
+        new SetMageBalance(mage),
+        new SetArcherBalance(archer),
+        new SetPaladinBalance(paladin),
+      ]);
+    }
+    this.store.dispatch(new SetLands(await this.landService.getOwnedLands()));
+    this.store.dispatch(new SetMetamaskConnected(true));
+    const stakedLand = await this.landService.getStakedLand();
+    this.store.dispatch(new SetLandSelected(stakedLand));
+    this.store.dispatch(new SetBuildings(await this.landService.getBuildings()));
   }
 }
