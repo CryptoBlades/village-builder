@@ -48,15 +48,15 @@
     <button mat-raised-button class="btn btn-primary w-100" (click)="openKingVaultDialog()">
       King rewards vault
     </button>
-    <div>
-      <h1>{{ 'King' }}</h1>
-      <h2>King needed to upgrade: {{ king }}</h2>
-      <div class="flex flex-wrap">
+    <h1>{{ 'King' }}</h1>
+    <h2>King needed to upgrade: {{ king }}</h2>
+    <div class="flex flex-wrap village-view-container">
+      <img src="assets/Village/village_background.png" alt="Village view">
+      <div class="buildings-container">
         <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
                                 [stakeCompleteTimestamp]="stakeCompleteTimestamp"></app-clickable-building>
       </div>
     </div>
-    <!--    <img src="assets/Village/village_background.png" alt="village" class="village-view">-->
   </ng-template>
   <ng-template #landNotSelected>
     <div *ngIf="lands.length; else noLands" class="lands-display">

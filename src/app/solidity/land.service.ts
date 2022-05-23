@@ -14,10 +14,17 @@ import CharacterStaking from "../../../build/contracts/CharacterStaking.json";
 import WeaponStaking from "../../../build/contracts/WeaponStaking.json";
 import KingStaking from "../../../build/contracts/KingStaking.json";
 import SkillStaking from "../../../build/contracts/SkillStaking.json";
+import buildingsPlacements from '../../assets/placements/buildings.json';
 
 export interface BuildingRequirements {
   building: BuildingType;
   level: number;
+}
+
+export interface Placement {
+  x: number;
+  y: number;
+  width?: number;
 }
 
 @Injectable({
@@ -33,6 +40,7 @@ export class LandService {
   weaponStakingContract!: Contract;
   kingStakingContract!: Contract;
   skillStakingContract!: Contract;
+  buildingsPlacements: Placement[] = buildingsPlacements;
 
   currentAccount: string = '';
 
@@ -140,6 +148,7 @@ export class LandService {
         upgrading: currentlyUpgrading.building == +buildingType,
         canUpgrade: canUpgrade,
         image: `assets/Village/Buildings/${BuildingType[buildingType]}.png`,
+        placement: this.buildingsPlacements[buildingType],
       });
     }
     return buildings;
@@ -160,6 +169,7 @@ export class LandService {
       upgrading: currentlyUpgrading.building == +buildingType,
       canUpgrade: canUpgrade,
       image: `assets/Village/Buildings/${BuildingType[buildingType]}.png`,
+      placement: this.buildingsPlacements[buildingType],
     }
     console.log(building)
     return building;

@@ -6,7 +6,7 @@ import {Store} from '@ngxs/store';
 import {from, Observable, take} from "rxjs";
 import {SetMetamaskInstalled} from "./state/wallet/wallet.actions";
 import {Web3Service} from "./services/web3.service";
-import {LandService} from "./solidity/land.service";
+import {LandService, Placement} from "./solidity/land.service";
 import {Land} from "./interfaces/land";
 import {LandState, LandStateModel} from "./state/land/land.state";
 import {SetLandSelected} from "./state/land/land.actions";
@@ -25,6 +25,7 @@ export interface Building {
   upgrading: boolean;
   canUpgrade: boolean;
   image: string;
+  placement: Placement;
 }
 
 @Component({
