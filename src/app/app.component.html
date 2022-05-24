@@ -36,6 +36,20 @@
             King rewards vault
           </button>
         </div>
+        <div class="text-white">
+          <p *ngIf="kingStakeCompleteTimestamp">KING staking:
+            <span appTimestampCountdown (isFinished)="loadData()"
+                  [timestamp]="kingStakeCompleteTimestamp || 0"></span></p>
+          <p *ngIf="skillStakeCompleteTimestamp">SKILL staking:
+            <span appTimestampCountdown (isFinished)="loadData()"
+                  [timestamp]="skillStakeCompleteTimestamp || 0"></span></p>
+          <p *ngIf="weaponsStakeCompleteTimestamp">Weapons staking:
+            <span appTimestampCountdown (isFinished)="loadData()"
+                  [timestamp]="weaponsStakeCompleteTimestamp || 0"></span></p>
+          <p *ngIf="charactersStakeCompleteTimestamp">Characters staking:
+            <span appTimestampCountdown (isFinished)="loadData()"
+                  [timestamp]="charactersStakeCompleteTimestamp || 0"></span></p>
+        </div>
         <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
                                 [stakeCompleteTimestamp]="kingStakeCompleteTimestamp"></app-clickable-building>
       </div>
