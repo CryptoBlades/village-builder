@@ -5,4 +5,5 @@ import "@openzeppelin/contracts-upgradeable/interfaces/IERC721EnumerableUpgradea
 
 interface CharactersInterface is IERC721EnumerableUpgradeable {
   function get(uint256 id) external view returns (uint256, uint256, uint256, uint256, address);
+  function getReadyCharacters(address wallet) external view returns(uint256[] memory chars);
 }

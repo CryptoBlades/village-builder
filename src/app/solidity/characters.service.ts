@@ -6,6 +6,7 @@ import {Store} from "@ngxs/store";
 import {Web3Service} from "../services/web3.service";
 import CharacterStaking from "../../../build/contracts/CharacterStaking.json";
 import Characters from "../../../build/contracts/CharactersInterface.json";
+import Garrison from "../../../build/contracts/GarrisonInterface.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @Injectable({
@@ -17,6 +18,7 @@ export class CharactersService {
   wallet$: Observable<WalletStateModel> = this.store.select(WalletState);
   charactersContract!: Promise<Contract>;
   characterStakingContract!: Contract;
+  garrisonContract!: Contract;
   currentAccount: string = '';
 
   constructor(
@@ -27,23 +29,22 @@ export class CharactersService {
     this.charactersContract = this.characterStakingContract.methods.nft().call().then((address: string) => {
       return new this.web3.eth.Contract(Characters.abi as any, address);
     });
+    this.garrisonContract = new this.web3.eth.Contract(Garrison.abi as any, '0xbeB25D0A45F5a0AcC8029B7D1f119d9B37601969');
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.currentAccount = state.publicAddress;
     });
   }
 
   async getOwnedCharacters(): Promise<number[]> {
-    const numberOfCharacters = await this.getOwnedAmount();
-    const characters = [];
-    for (let i = 0; i < numberOfCharacters; i++) {
-      const character = +await (await this.charactersContract).methods.tokenOfOwnerByIndex(this.currentAccount, i).call({from: this.currentAccount});
-      characters.push(character);
-    }
-    return characters;
+    const accountCharacters = (await (await this.charactersContract).methods.getReadyCharacters(this.currentAccount).call()).map((character: string) => +character);
+    const garrisonCharacters = (await this.garrisonContract.methods.getUserCharacters().call()).map((character: string) => +character);
+    return accountCharacters.concat(garrisonCharacters);
   }
 
   async getOwnedAmount(): Promise<number> {
-    return +await (await this.charactersContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});
+    const accountCharactersAmount = +await (await this.charactersContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});
+    const garrisonCharactersAmount = (await this.garrisonContract.methods.getUserCharacters().call()).length;
+    return accountCharactersAmount + garrisonCharactersAmount;
   }
 
   async stake(ids: number[]): Promise<void> {
