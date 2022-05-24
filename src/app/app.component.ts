@@ -20,6 +20,7 @@ import {KingVaultDialogComponent} from "./components/king-vault-dialog/king-vaul
 import {
   SimpleConfirmationDialogComponent
 } from "./components/simple-confirmation-dialog/simple-confirmation-dialog.component";
+import {SkillService} from "./solidity/skill.service";
 
 export interface Building {
   level: number;
@@ -52,9 +53,16 @@ export class AppComponent implements OnInit {
   selectedLand?: Land = undefined;
   characters: number[] = [];
   king: number = 0;
-  isPathFinished = false;
 
-  stakeCompleteTimestamp?: number;
+  kingStakeCompleteTimestamp?: number;
+  skillStakeCompleteTimestamp?: number;
+  weaponsStakeCompleteTimestamp?: number;
+  charactersStakeCompleteTimestamp?: number;
+  kingStakePathFinished = false;
+  skillStakePathFinished = false;
+  weaponsStakePathFinished = false;
+  charactersStakePathFinished = false;
+  allStakePathsFinished = false;
   isLoading = false;
 
   lands: Land[] = [];
@@ -68,6 +76,7 @@ export class AppComponent implements OnInit {
     private charactersService: CharactersService,
     private weaponsService: WeaponsService,
     private kingService: KingService,
+    private skillService: SkillService
   ) {
   }
 
@@ -94,12 +103,51 @@ export class AppComponent implements OnInit {
   }
 
   async loadData(): Promise<void> {
-    const stakeCompleteTimestamp = await this.kingService.getStakeCompleteTimestamp();
-    if (stakeCompleteTimestamp > Date.now() / 1000) {
-      this.stakeCompleteTimestamp = stakeCompleteTimestamp;
+    const [
+      kingStakeCompleteTimestamp,
+      skillStakeCompleteTimestamp,
+      weaponsStakeCompleteTimestamp,
+      charactersStakeCompleteTimestamp,
+      kingRequiredStakeAmount,
+      skillRequiredStakeAmount,
+      weaponsRequiredStakeAmount,
+      charactersRequiredStakeAmount,
+    ] = await Promise.all([
+        this.kingService.getStakeCompleteTimestamp(),
+        this.skillService.getStakeCompleteTimestamp(),
+        this.weaponsService.getStakeCompleteTimestamp(),
+        this.charactersService.getStakeCompleteTimestamp(),
+        this.kingService.getRequiredStakeAmount(),
+        this.skillService.getRequiredStakeAmount(),
+        this.weaponsService.getRequiredStakeAmount(),
+        this.charactersService.getRequiredStakeAmount()
+      ]
+    );
+    if (kingStakeCompleteTimestamp > Date.now() / 1000) {
+      this.kingStakeCompleteTimestamp = kingStakeCompleteTimestamp;
     } else {
-      this.stakeCompleteTimestamp = undefined;
+      this.kingStakeCompleteTimestamp = undefined;
+      this.kingStakePathFinished = !kingRequiredStakeAmount;
     }
+    if (skillStakeCompleteTimestamp > Date.now() / 1000) {
+      this.skillStakeCompleteTimestamp = skillStakeCompleteTimestamp;
+    } else {
+      this.skillStakeCompleteTimestamp = undefined;
+      this.skillStakePathFinished = !skillRequiredStakeAmount;
+    }
+    if (weaponsStakeCompleteTimestamp > Date.now() / 1000) {
+      this.weaponsStakeCompleteTimestamp = weaponsStakeCompleteTimestamp;
+    } else {
+      this.weaponsStakeCompleteTimestamp = undefined;
+      this.weaponsStakePathFinished = !weaponsRequiredStakeAmount;
+    }
+    if (charactersStakeCompleteTimestamp > Date.now() / 1000) {
+      this.charactersStakeCompleteTimestamp = charactersStakeCompleteTimestamp;
+    } else {
+      this.charactersStakeCompleteTimestamp = undefined;
+      this.charactersStakePathFinished = !charactersRequiredStakeAmount;
+    }
+    this.allStakePathsFinished = this.kingStakePathFinished && this.skillStakePathFinished && this.weaponsStakePathFinished && this.charactersStakePathFinished;
     this.king = await this.kingService.getRequiredStakeAmount();
   }
 

@@ -24,8 +24,8 @@
             </div>
             <div class="absolute left-5 bottom-5">
               <button mat-raised-button
-                      (click)="isPathFinished ? onClickUnstake() : openUnstakeConfirmationDialog()"
-                      [color]="isPathFinished ? 'primary' : 'warn'">Unstake
+                      (click)="allStakePathsFinished ? onClickUnstake() : openUnstakeConfirmationDialog()"
+                      [color]="allStakePathsFinished ? 'primary' : 'warn'">Unstake
               </button>
             </div>
           </div>
@@ -37,7 +37,7 @@
           </button>
         </div>
         <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
-                                [stakeCompleteTimestamp]="stakeCompleteTimestamp"></app-clickable-building>
+                                [stakeCompleteTimestamp]="kingStakeCompleteTimestamp"></app-clickable-building>
       </div>
     </div>
   </ng-template>
