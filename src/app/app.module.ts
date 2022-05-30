@@ -39,6 +39,7 @@ import {
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ClickableBuildingComponent} from './components/clickable-building/clickable-building.component';
 import {MatCardModule} from "@angular/material/card";
+import {DragScrollModule} from "ngx-drag-scroll";
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import {MatCardModule} from "@angular/material/card";
     MatChipsModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    DragScrollModule,
   ],
   providers: [
     Web3Service,

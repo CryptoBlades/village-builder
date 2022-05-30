@@ -11,9 +11,8 @@
       </span>
   </ng-template>
   <ng-template #villageView>
-    <div class="flex flex-wrap village-view-container">
-      <img src="assets/Village/village_background.png" alt="Village view">
-      <div class="buildings-container">
+    <drag-scroll style="width: 100%; height: 100%">
+      <div class="flex-col items-start top-20 left-0 absolute z-10">
         <div class="flex pt-2">
           <div class="relative w-64">
             <img src="assets/Land/t{{selectedLand!.tier}}.png" class="w-64" alt="Tier {{selectedLand!.tier}} land">
@@ -29,31 +28,36 @@
               </button>
             </div>
           </div>
-          <h2 class="text-white p-2">King needed to upgrade a building: {{ king }}</h2>
         </div>
+        <h2 class="text-white p-2">King needed to upgrade a building: {{ king }}</h2>
         <div class="pl-2">
           <button mat-raised-button class="btn btn-primary w-100" (click)="openKingVaultDialog()">
             King rewards vault
           </button>
         </div>
-        <div class="text-white">
-          <p *ngIf="kingStakeCompleteTimestamp">KING staking:
-            <span appTimestampCountdown (isFinished)="loadData()"
-                  [timestamp]="kingStakeCompleteTimestamp || 0"></span></p>
-          <p *ngIf="skillStakeCompleteTimestamp">SKILL staking:
-            <span appTimestampCountdown (isFinished)="loadData()"
-                  [timestamp]="skillStakeCompleteTimestamp || 0"></span></p>
-          <p *ngIf="weaponsStakeCompleteTimestamp">Weapons staking:
-            <span appTimestampCountdown (isFinished)="loadData()"
-                  [timestamp]="weaponsStakeCompleteTimestamp || 0"></span></p>
-          <p *ngIf="charactersStakeCompleteTimestamp">Characters staking:
-            <span appTimestampCountdown (isFinished)="loadData()"
-                  [timestamp]="charactersStakeCompleteTimestamp || 0"></span></p>
-        </div>
-        <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
-                                [stakeCompleteTimestamp]="kingStakeCompleteTimestamp"></app-clickable-building>
       </div>
-    </div>
+      <div class="flex flex-wrap village-view-container">
+        <img src="assets/Village/village_background.png" alt="Village view">
+        <div class="buildings-container">
+          <div class="text-white">
+            <p *ngIf="kingStakeCompleteTimestamp">KING staking:
+              <span appTimestampCountdown (isFinished)="loadData()"
+                    [timestamp]="kingStakeCompleteTimestamp || 0"></span></p>
+            <p *ngIf="skillStakeCompleteTimestamp">SKILL staking:
+              <span appTimestampCountdown (isFinished)="loadData()"
+                    [timestamp]="skillStakeCompleteTimestamp || 0"></span></p>
+            <p *ngIf="weaponsStakeCompleteTimestamp">Weapons staking:
+              <span appTimestampCountdown (isFinished)="loadData()"
+                    [timestamp]="weaponsStakeCompleteTimestamp || 0"></span></p>
+            <p *ngIf="charactersStakeCompleteTimestamp">Characters staking:
+              <span appTimestampCountdown (isFinished)="loadData()"
+                    [timestamp]="charactersStakeCompleteTimestamp || 0"></span></p>
+          </div>
+          <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
+                                  [stakeCompleteTimestamp]="kingStakeCompleteTimestamp"></app-clickable-building>
+        </div>
+      </div>
+    </drag-scroll>
   </ng-template>
   <ng-template #landNotSelected>
     <div *ngIf="lands.length; else noLands" class="lands-display">
