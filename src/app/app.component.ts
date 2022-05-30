@@ -64,6 +64,18 @@ export class AppComponent implements OnInit {
   charactersStakePathFinished = false;
   allStakePathsFinished = false;
   isLoading = false;
+  kingBalance?: number;
+  skillBalance?: number;
+  weaponsBalance?: number;
+  charactersBalance?: number;
+  clayBalance?: number;
+  woodBalance?: number;
+  stoneBalance?: number;
+  mercenaryBalance?: number;
+  bruiserBalance?: number;
+  mageBalance?: number;
+  archerBalance?: number;
+  paladinBalance?: number;
 
   lands: Land[] = [];
   buildings: Building[] = [];
@@ -87,6 +99,24 @@ export class AppComponent implements OnInit {
       this.isConnected = state.isConnected;
       this.currentAccount = state.publicAddress;
       this.lands = state.lands;
+      this.kingBalance = state.kingBalance;
+      this.skillBalance = state.skillBalance;
+      this.weaponsBalance = state.weaponsBalance;
+      this.charactersBalance = state.charactersBalance;
+      if (state.claySkillBalance !== undefined && state.clayWeaponsBalance !== undefined) {
+        this.clayBalance = state.claySkillBalance + state.clayWeaponsBalance;
+      }
+      if (state.woodSkillBalance !== undefined && state.woodWeaponsBalance !== undefined) {
+        this.woodBalance = state.woodSkillBalance + state.woodWeaponsBalance;
+      }
+      if (state.stoneSkillBalance !== undefined && state.stoneWeaponsBalance !== undefined) {
+        this.stoneBalance = state.stoneSkillBalance + state.stoneWeaponsBalance;
+      }
+      this.mercenaryBalance = state.mercenaryBalance;
+      this.bruiserBalance = state.bruiserBalance;
+      this.mageBalance = state.mageBalance;
+      this.archerBalance = state.archerBalance;
+      this.paladinBalance = state.paladinBalance;
     });
     this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
       this.selectedLand = state.selectedLand;
