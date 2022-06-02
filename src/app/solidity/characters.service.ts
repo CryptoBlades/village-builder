@@ -29,7 +29,8 @@ export class CharactersService {
     this.charactersContract = this.characterStakingContract.methods.nft().call().then((address: string) => {
       return new this.web3.eth.Contract(Characters.abi as any, address);
     });
-    this.garrisonContract = new this.web3.eth.Contract(Garrison.abi as any, '0xbeB25D0A45F5a0AcC8029B7D1f119d9B37601969');
+    const garrisonAddress = '';
+    this.garrisonContract = new this.web3.eth.Contract(Garrison.abi as any, garrisonAddress);
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.currentAccount = state.publicAddress;
     });
