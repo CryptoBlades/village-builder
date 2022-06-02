@@ -65,24 +65,24 @@
           <button mat-raised-button (click)="drawer.toggle()">
             Resources & Army
           </button>
+          <div class="text-white">
+            <p *ngIf="kingStakeCompleteTimestamp">KING staking:
+              <span appTimestampCountdown (isFinished)="loadData()"
+                    [timestamp]="kingStakeCompleteTimestamp || 0"></span></p>
+            <p *ngIf="skillStakeCompleteTimestamp">SKILL staking:
+              <span appTimestampCountdown (isFinished)="loadData()"
+                    [timestamp]="skillStakeCompleteTimestamp || 0"></span></p>
+            <p *ngIf="weaponsStakeCompleteTimestamp">Weapons staking:
+              <span appTimestampCountdown (isFinished)="loadData()"
+                    [timestamp]="weaponsStakeCompleteTimestamp || 0"></span></p>
+            <p *ngIf="charactersStakeCompleteTimestamp">Characters staking:
+              <span appTimestampCountdown (isFinished)="loadData()"
+                    [timestamp]="charactersStakeCompleteTimestamp || 0"></span></p>
+          </div>
         </div>
         <div class="flex flex-wrap village-view-container">
           <img src="assets/Village/village_background.png" alt="Village view">
           <div class="buildings-container">
-            <div class="text-white">
-              <p *ngIf="kingStakeCompleteTimestamp">KING staking:
-                <span appTimestampCountdown (isFinished)="loadData()"
-                      [timestamp]="kingStakeCompleteTimestamp || 0"></span></p>
-              <p *ngIf="skillStakeCompleteTimestamp">SKILL staking:
-                <span appTimestampCountdown (isFinished)="loadData()"
-                      [timestamp]="skillStakeCompleteTimestamp || 0"></span></p>
-              <p *ngIf="weaponsStakeCompleteTimestamp">Weapons staking:
-                <span appTimestampCountdown (isFinished)="loadData()"
-                      [timestamp]="weaponsStakeCompleteTimestamp || 0"></span></p>
-              <p *ngIf="charactersStakeCompleteTimestamp">Characters staking:
-                <span appTimestampCountdown (isFinished)="loadData()"
-                      [timestamp]="charactersStakeCompleteTimestamp || 0"></span></p>
-            </div>
             <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
                                     [stakeCompleteTimestamp]="kingStakeCompleteTimestamp"></app-clickable-building>
           </div>

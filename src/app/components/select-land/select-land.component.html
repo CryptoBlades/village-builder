@@ -12,18 +12,16 @@
     <img src="assets/Land/t1.png" class="w-64" alt="">
   </div>
 </ng-container>
-<div class="p-3">
-  <ng-container>
-    <div>
-      {{ 'Common.ID' }} : {{ land.id }}
-    </div>
-    <div>
-      {{ 'Common.Tier'}} : {{ land.tier }}
-    </div>
-    <div>
-      {{ 'Common.ChunkId'}} : {{ land.chunkID }}
-    </div>
-  </ng-container>
+<div class="p-3 text-white">
+  <div>
+    {{ 'Common.ID' }} : {{ land.id }}
+  </div>
+  <div>
+    {{ 'Common.Tier'}} : {{ land.tier }}
+  </div>
+  <div>
+    {{ 'Common.ChunkId'}} : {{ land.chunkID }}
+  </div>
 </div>
 <button mat-raised-button class="btn btn-secondary w-100" (click)="onClickSelect()">
   {{ 'Common.Stake' }}
