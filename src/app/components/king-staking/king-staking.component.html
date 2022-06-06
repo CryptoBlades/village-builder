@@ -1,25 +1,26 @@
 <ng-template [ngIf]="!isInitializing" [ngIfElse]="initializing">
   <div class="stake-tab">
     <div class="building-image-container">
-      <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
+      <img class="w-full" [src]="building.image"
+           [alt]="'BuildingTypes.' + getBuildingTypeName(building.type) | translate">
     </div>
     <div class="staking-container">
-      <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
+      <p class="building-name">{{ 'BuildingTypes.' + getBuildingTypeName(building.type) | translate }}</p>
       <div class="level-container">
-        <span class="building-level">Level: {{ building.level }} </span>
+        <span class="building-level">{{'Common.Level' | translate}}: {{ building.level }} </span>
         <mat-icon class="arrow-icon" *ngIf="!isMaxLevel">keyboard_arrow_right</mat-icon>
         <span class="building-level" *ngIf="!isMaxLevel"> {{ building.level + 1 }} </span>
       </div>
-      <p class="building-level">Max level: {{building.maxLevel}}</p>
+      <p class="building-level">{{'Common.MaxLevel' | translate}}: {{building.maxLevel}}</p>
       <div *ngIf="buildingRequirements">
-        <p class="building-requirements">Requirements: </p>
+        <p class="building-requirements">{{'Staking.Requirements' | translate}}: </p>
         <p class="secondary-text"
-           *ngIf="buildingRequirements.building">{{getBuildingTypeName(buildingRequirements.building)}}
-          (Level: {{buildingRequirements.level}})</p>
+           *ngIf="buildingRequirements.building">{{'BuildingTypes.' + getBuildingTypeName(buildingRequirements.building) | translate}}
+          ({{'Common.Level' | translate}}: {{buildingRequirements.level}})</p>
       </div>
       <div *ngIf="totalKingStaked">
-        <p class="building-requirements">Total staked:</p>
-        <p class="secondary-text">{{totalKingStaked}} KING</p>
+        <p class="building-requirements">{{'Staking.TotalStaked' | translate}}:</p>
+        <p class="secondary-text">{{totalKingStaked}} {{'Resources.King' | translate | uppercase}}</p>
       </div>
       <button *ngIf="!isPathFinished" [disabled]="isLoading || isMaxLevel || isStakeInProgress || !building.canUpgrade"
               mat-raised-button
@@ -29,24 +30,27 @@
           [ngTemplateOutlet]="isLoading ? loading : isMaxLevel ? maxLevel : isStakeInProgress ? stakeInProgress : isBuilt ? upgrade : build"></ng-container>
         <ng-template #loading>
           <span class="flex items-center justify-center">
-            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner>
+            {{'Common.Loading' | translate}}
           </span>
         </ng-template>
         <ng-template #maxLevel>
-          {{ 'Max level reached' }}
+          {{'Staking.MaxLevelReached' | translate}}
         </ng-template>
         <ng-template #stakeInProgress>
           <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
         </ng-template>
         <ng-template #upgrade>
-          Upgrade<span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
+          {{'Staking.Upgrade' | translate}} <span
+          *ngIf="kingRequired"> ({{ kingRequired }} {{'Resources.King' | translate | uppercase}})</span>
         </ng-template>
         <ng-template #build>
-          Build <span *ngIf="kingRequired"> ({{ kingRequired }} KING)</span>
+          {{'Staking.Build' | translate}} <span
+          *ngIf="kingRequired"> ({{ kingRequired }} {{'Resources.King' | translate | uppercase}})</span>
         </ng-template>
       </button>
       <button *ngIf="canClaim" [disabled]="isLoading" mat-raised-button class="btn button-stake" (click)="onClaim()">
-        {{ 'Claim' }}
+        {{'Staking.Claim' | translate}}
       </button>
       <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
     </div>

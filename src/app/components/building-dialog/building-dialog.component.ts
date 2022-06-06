@@ -11,6 +11,7 @@ import {getBuildingTypeName} from "../../common/common";
   styleUrls: ['./building-dialog.component.scss']
 })
 export class BuildingDialogComponent implements OnInit {
+  getBuildingTypeName = getBuildingTypeName;
   building?: Building;
   isLoading = true;
 

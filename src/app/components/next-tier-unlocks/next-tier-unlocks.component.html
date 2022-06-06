@@ -1,15 +1,19 @@
 <div *ngIf="nextStakingTier.unlocks.length || nextStakingTier.rewards.length">
-  <p class="building-requirements">Next rewards/unlocks: </p>
-  <p class="secondary-text" *ngIf="nextStakingTier.rewards.length">Rewards:
+  <p class="building-requirements">{{'Staking.NextRewardsUnlocks' | translate}}: </p>
+  <p class="secondary-text" *ngIf="nextStakingTier.rewards.length">{{'Staking.Rewards' | translate}}:
     <span *ngFor="let reward of nextStakingTier.rewards" class="reward-entry">
-              - {{reward.amount.toLocaleString()}} <img src="./assets/Placeholder/{{reward.type.toLowerCase()}}.png" class="px-1 w-8"
-                                       [alt]="reward.type" [matTooltip]="reward.type"/>
+              - {{reward.amount.toLocaleString()}} <img src="./assets/Placeholder/{{reward.type.toLowerCase()}}.png"
+                                                        class="px-1 w-8"
+                                                        [alt]="'Resources.' + reward.type | translate"
+                                                        [matTooltip]="'Resources.' + reward.type | translate"/>
         </span>
   </p>
-  <p class="secondary-text" *ngIf="nextStakingTier.unlocks.length">Unlocks:
+  <p class="secondary-text" *ngIf="nextStakingTier.unlocks.length">{{'Staking.Unlocks' | translate}}:
     <span *ngFor="let unlock of nextStakingTier.unlocks" class="reward-entry">
-          - {{unlock.amount.toLocaleString()}} <img src="./assets/Placeholder/{{unlock.type.toLowerCase()}}.png" class="px-1 w-8"
-                                   [alt]="unlock.type" [matTooltip]="unlock.type"/>
+          - {{unlock.amount.toLocaleString()}} <img src="./assets/Placeholder/{{unlock.type.toLowerCase()}}.png"
+                                                    class="px-1 w-8"
+                                                    [alt]="'Resources.' + unlock.type | translate"
+                                                    [matTooltip]="'Resources.' + unlock.type | translate"/>
         </span>
   </p>
 </div>

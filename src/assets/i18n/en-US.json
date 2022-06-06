@@ -1,5 +1,103 @@
 {
   "Common": {
-    "Level": "Level"
+    "Level": "Level",
+    "MaxLevel": "Max Level",
+    "Loading": "Loading...",
+    "Id": "ID",
+    "ChunkId": "Chunk ID",
+    "Tier": "Tier",
+    "Complete": "Complete",
+    "Ok": "Ok",
+    "Cancel": "Cancel",
+    "Plus": "Plus"
+  },
+  "Actions": {
+    "Unstake": "Unstake",
+    "Stake": "Stake"
+  },
+  "ConfirmationDialog": {
+    "AreYouSureYouKnowWhatYouAreDoing": "Are you sure you know what you are doing?",
+    "YouWontBeAbleToStakeAnymore": "You won't be able to stake any more",
+    "YouWontBeAbleToComeBackFromThis": "You won't be able to come back from this",
+    "NoComingBackFromThis": "No coming back from this",
+    "AreYouSure": "Are you sure?",
+    "DoYouWantToUnstake": "Do you want to unstake?",
+    "UnstakeIsPermanent": "Unstake is permanent"
+  },
+  "Resources": {
+    "King": "King",
+    "Skill": "Skill",
+    "Weapon": "Weapon",
+    "Weapons": "Weapons",
+    "Character": "Character",
+    "Characters": "Characters",
+    "Clay": "Clay",
+    "Wood": "Wood",
+    "Stone": "Stone",
+    "Mercenary": "Mercenary",
+    "Bruiser": "Bruiser",
+    "Mage": "Mage",
+    "Archer": "Archer",
+    "Paladin": "Paladin"
+  },
+  "BuildingTypes": {
+    "TOWN_HALL": "Town Hall",
+    "HEADQUARTERS": "Headquarters",
+    "BARRACKS": "Barracks",
+    "CLAY_PIT": "Clay Pit",
+    "FOREST_CAMP": "Forest Camp",
+    "STONE_MINE": "Stone Mine",
+    "STOREHOUSE": "Storehouse",
+    "SMITHY": "Smithy",
+    "FARM": "Farm",
+    "HIDDEN_STASH": "Hidden Stash",
+    "WALL": "Wall",
+    "MARKET": "Market"
+  },
+  "App": {
+    "ConnectWalletToAccessTheApp": "Connect your wallet to access the app",
+    "NoLands": "You do not have lands available",
+    "LandTier": "Tier {{tier}} land",
+    "KingRewardsVault": "King rewards vault",
+    "ResourcesAndArmy": "Resources and army",
+    "KingStaking": "KING staking",
+    "SkillStaking": "SKILL staking",
+    "WeaponsStaking": "Weapons staking",
+    "CharactersStaking": "Characters staking",
+    "CbkLogo": "CBK Logo",
+    "ConnectWallet": "Connect Wallet"
+  },
+  "Staking": {
+    "Stake": "Stake",
+    "Claim": "Claim",
+    "Requirements": "Requirements",
+    "Requires": "Requires",
+    "TotalStaked": "Total staked",
+    "ChooseCharacter": "Choose character",
+    "NeedToUpgradeBarracks": "You need to upgrade your barracks first",
+    "MaxLevelReached": "Max level reached",
+    "Upgrade": "Upgrade",
+    "Build": "Build",
+    "NextRewardsUnlocks": "Next rewards/unlocks",
+    "Rewards": "Rewards",
+    "Unlocks": "Unlocks",
+    "CBKUnlocks": "CBK unlocks",
+    "YouNeedToBuild": "You need to build {{building}} first",
+    "StakingTierUnlocked": "Staking tier unlocked",
+    "NeedToUnlockAtLeastStakingTiers": "You need to unlock at least {{stakingTiersRequired}} {{stakingType}} staking tiers",
+    "NeedToStakeMoreCharacters": "You need to stake more characters",
+    "StakePathFinished": "Stake path finished, you can now unstake your assets",
+    "ChooseWeapon": "Choose weapon",
+    "SelectWeapon": "Select weapon..."
+  },
+  "Vault": {
+    "KingVault": "KING vault",
+    "ClaimYourKingRewards": "Claim your king rewards",
+    "Description": "You can claim your KING rewards you got from completing certain stake paths",
+    "TotalAvailable": "Total available",
+    "Claimable": "Claimable by you",
+    "AlreadyClaimed": "Already claimed by you",
+    "ClaimKing": "Claim KING",
+    "NoKingToClaim": "No KING to claim"
   }
 }

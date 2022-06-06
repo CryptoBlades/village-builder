@@ -221,9 +221,9 @@ export class AppComponent implements OnInit {
     const dialogRef = this.dialog.open(SimpleConfirmationDialogComponent, {
       data: {
         dialogs: [
-          {title: 'Unstake?', content: 'Are you sure you know what you\'re doing?'},
-          {title: 'Unstake is permanent', content: 'You won\t be able to stake anymore, are you sure?'},
-          {title: 'No coming back', content: 'You won\t be able to come back from this, are you sure?'},
+          {title: 'ConfirmationDialog.DoYouWantToUnstake', content: 'ConfirmationDialog.AreYouSureYouKnowWhatYouAreDoing'},
+          {title: 'ConfirmationDialog.UnstakeIsPermanent', content: 'ConfirmationDialog.YouWontBeAbleToStakeAnymore'},
+          {title: 'ConfirmationDialog.NoComingBackFromThis', content: 'ConfirmationDialog.YouWontBeAbleToComeBackFromThis'},
         ]
       }
     });

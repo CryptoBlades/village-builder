@@ -1,13 +1,14 @@
 <app-header></app-header>
 <div *ngIf="!isConnected; else connectedBlock" class="buttons-container">
-  Connect wallet to access the app
+  {{'App.ConnectWalletToAccessTheApp' | translate}}
 </div>
 <ng-template #connectedBlock>
   <ng-container
     [ngTemplateOutlet]="isLoading ? loading : selectedLand ? villageView : lands.length ? landNotSelected : noLands"></ng-container>
   <ng-template #loading>
       <span class="flex items-center justify-center">
-        <mat-progress-spinner [diameter]="15" mode="indeterminate"></mat-progress-spinner> Loading...
+        <mat-progress-spinner [diameter]="15" mode="indeterminate"></mat-progress-spinner>
+        {{'Common.Loading' | translate}}
       </span>
   </ng-template>
   <ng-template #villageView>
@@ -15,67 +16,68 @@
       <mat-drawer #drawer class="resources-sidenav" mode="over">
         <div class="flex flex-col gap-5">
           <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/king.png"
-                             [tooltip]="'King'"></app-resource-pill>
+                             [tooltip]="'Resources.King' | translate"></app-resource-pill>
           <app-resource-pill [balance]="skillBalance" image="./assets/Placeholder/skill.png"
-                             [tooltip]="'Skill'"></app-resource-pill>
+                             [tooltip]="'Resources.Skill' | translate"></app-resource-pill>
           <app-resource-pill [balance]="weaponsBalance" image="./assets/Placeholder/weapon.png"
-                             [tooltip]="'Weapons'"></app-resource-pill>
+                             [tooltip]="'Resources.Weapons' | translate"></app-resource-pill>
           <app-resource-pill [balance]="charactersBalance" image="./assets/Placeholder/character.png"
-                             [tooltip]="'Characters'"></app-resource-pill>
+                             [tooltip]="'Resources.Characters' | translate"></app-resource-pill>
           <app-resource-pill [balance]="clayBalance" image="./assets/Placeholder/clay.png"
-                             [tooltip]="'Clay'"></app-resource-pill>
+                             [tooltip]="'Resources.Clay' | translate"></app-resource-pill>
           <app-resource-pill [balance]="woodBalance" image="./assets/Placeholder/wood.png"
-                             [tooltip]="'Wood'"></app-resource-pill>
+                             [tooltip]="'Resources.Wood' | translate"></app-resource-pill>
           <app-resource-pill [balance]="stoneBalance" image="./assets/Placeholder/stone.png"
-                             [tooltip]="'Stone'"></app-resource-pill>
+                             [tooltip]="'Resources.Stone' | translate"></app-resource-pill>
           <app-resource-pill [balance]="mercenaryBalance" image="./assets/Placeholder/mercenary.png"
-                             [tooltip]="'Mercenary'"></app-resource-pill>
+                             [tooltip]="'Resources.Mercenary' | translate"></app-resource-pill>
           <app-resource-pill [balance]="bruiserBalance" image="./assets/Placeholder/bruiser.png"
-                             [tooltip]="'Bruiser'"></app-resource-pill>
+                             [tooltip]="'Resources.Bruiser' | translate"></app-resource-pill>
           <app-resource-pill [balance]="mageBalance" image="./assets/Placeholder/mage.png"
-                             [tooltip]="'Mage'"></app-resource-pill>
+                             [tooltip]="'Resources.Mage' | translate"></app-resource-pill>
           <app-resource-pill [balance]="archerBalance" image="./assets/Placeholder/archer.png"
-                             [tooltip]="'Archer'"></app-resource-pill>
+                             [tooltip]="'Resources.Archer' | translate"></app-resource-pill>
           <app-resource-pill [balance]="paladinBalance" image="./assets/Placeholder/paladin.png"
-                             [tooltip]="'Paladin'"></app-resource-pill>
+                             [tooltip]="'Resources.Paladin' | translate"></app-resource-pill>
         </div>
       </mat-drawer>
       <drag-scroll style="width: 100%; height: 100%">
         <div class="flex flex-col items-start top-0 left-0 absolute z-10 w-40 md:w-64 p-2 gap-1">
           <div class="flex pt-10 md:pt-2">
             <div class="relative">
-              <img src="assets/Land/t{{selectedLand!.tier}}.png" alt="Tier {{selectedLand!.tier}} land">
+              <img src="assets/Land/t{{selectedLand!.tier}}.png"
+                   [alt]="'App.LandTier' | translate:{tier: selectedLand!.tier}">
               <div class="absolute top-5 right-5 text-white flex flex-col">
-                <span>ID: {{selectedLand!.id}}</span>
-                <span>ChunkID: {{selectedLand!.chunkID}}</span>
-                <span>Tier: {{selectedLand!.tier}}</span>
+                <span>{{'Common.Id' | translate}}: {{selectedLand!.id}}</span>
+                <span>{{'Common.ChunkId' | translate}}: {{selectedLand!.chunkID}}</span>
+                <span>{{'Common.Tier' | translate}}: {{selectedLand!.tier}}</span>
               </div>
               <div class="absolute left-5 bottom-5">
                 <button mat-raised-button
                         (click)="allStakePathsFinished ? onClickUnstake() : openUnstakeConfirmationDialog()"
-                        [color]="allStakePathsFinished ? 'primary' : 'warn'">Unstake
+                        [color]="allStakePathsFinished ? 'primary' : 'warn'">{{'Actions.Unstake' | translate}}
                 </button>
               </div>
             </div>
           </div>
           <!--        <span class="text-white whitespace-normal">King needed to upgrade a building: {{ king }}</span>-->
           <button mat-raised-button class="btn btn-primary w-100" (click)="openKingVaultDialog()">
-            King rewards vault
+            {{'App.KingRewardsVault' | translate}}
           </button>
           <button mat-raised-button (click)="drawer.toggle()">
-            Resources & Army
+            {{'App.ResourcesAndArmy' | translate}}
           </button>
           <div class="text-white">
-            <p *ngIf="kingStakeCompleteTimestamp">KING staking:
+            <p *ngIf="kingStakeCompleteTimestamp">{{'App.KingStaking' | translate}}:
               <span appTimestampCountdown (isFinished)="loadData()"
                     [timestamp]="kingStakeCompleteTimestamp || 0"></span></p>
-            <p *ngIf="skillStakeCompleteTimestamp">SKILL staking:
+            <p *ngIf="skillStakeCompleteTimestamp">{{'App.SkillStaking' | translate}}:
               <span appTimestampCountdown (isFinished)="loadData()"
                     [timestamp]="skillStakeCompleteTimestamp || 0"></span></p>
-            <p *ngIf="weaponsStakeCompleteTimestamp">Weapons staking:
+            <p *ngIf="weaponsStakeCompleteTimestamp">{{'App.WeaponsStaking' | translate}}:
               <span appTimestampCountdown (isFinished)="loadData()"
                     [timestamp]="weaponsStakeCompleteTimestamp || 0"></span></p>
-            <p *ngIf="charactersStakeCompleteTimestamp">Characters staking:
+            <p *ngIf="charactersStakeCompleteTimestamp">{{'App.CharactersStaking' | translate}}:
               <span appTimestampCountdown (isFinished)="loadData()"
                     [timestamp]="charactersStakeCompleteTimestamp || 0"></span></p>
           </div>
@@ -96,8 +98,7 @@
     </div>
   </ng-template>
   <ng-template #noLands>
-    <div>
-      You do not have lands available
-    </div>
+    <!--    TODO: Add a link to buy a land somewhere?-->
+    <div> {{'App.NoLands' | translate}}</div>
   </ng-template>
 </ng-template>

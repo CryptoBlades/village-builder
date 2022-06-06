@@ -1,22 +1,24 @@
 <ng-template [ngIf]="!isInitializing" [ngIfElse]="initializing">
   <div class="stake-tab">
     <div class="building-image-container">
-      <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
+      <img class="w-full" [src]="building.image"
+           [alt]="'BuildingTypes.' + getBuildingTypeName(building.type) | translate">
     </div>
     <div class="staking-container">
-      <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
-      <span class="building-level">Level: {{ building.level }}</span>
-      <p class="building-level">Max level: {{building.maxLevel}}</p>
+      <p class="building-name">{{ 'BuildingTypes.' + getBuildingTypeName(building.type) | translate }}</p>
+      <span class="building-level">{{'Common.Level' | translate}}: {{ building.level }}</span>
+      <p class="building-level">{{'Common.MaxLevel' | translate}}: {{building.maxLevel}}</p>
       <div *ngIf="charactersStakedRequired">
-        <p class="building-requirements">Requirements: </p>
-        <p class="secondary-text">Staking tier unlocked: (Characters: {{ charactersStakedRequired}})</p>
+        <p class="building-requirements">{{'Staking.Requirements' | translate}}: </p>
+        <p class="secondary-text">{{'Staking.StakingTierUnlocked' | translate}}: ({{'Resources.Characters' | translate}}
+          : {{ charactersStakedRequired}})</p>
       </div>
       <div *ngIf="totalWeaponsStaked">
-        <p class="building-requirements">Total staked:</p>
-        <p class="secondary-text">{{totalWeaponsStaked}} Weapons</p>
+        <p class="building-requirements">{{'Staking.TotalStaked' | translate}}:</p>
+        <p class="secondary-text">{{totalWeaponsStaked}} {{'Resources.Weapons' | translate}}</p>
       </div>
       <mat-form-field class="example-chip-list" appearance="fill">
-        <mat-label>Choose weapon</mat-label>
+        <mat-label>{{'Staking.ChooseWeapon' | translate}}</mat-label>
         <mat-chip-list #chipList aria-label="Weapon selection">
           <mat-chip
             *ngFor="let weapon of selectedWeapons"
@@ -27,7 +29,7 @@
             </button>
           </mat-chip>
           <input
-            placeholder="Select weapon..."
+            [placeholder]="'Staking.SelectWeapon' | translate"
             #weaponInput
             [formControl]="weaponControl"
             [matAutocomplete]="auto"
@@ -47,21 +49,23 @@
           [ngTemplateOutlet]="isLoading ? loading : isStakeInProgress ? stakeInProgress : meetsStakeRequirements ? stake : stakeMoreCharacters"></ng-container>
         <ng-template #loading>
           <span class="flex items-center justify-center">
-            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner>
+            {{'Common.Loading' | translate}}
           </span>
         </ng-template>
         <ng-template #stakeInProgress>
           <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
         </ng-template>
         <ng-template #stake>
-          Stake <span *ngIf="weaponsRequired"> ({{ weaponsRequired }} Weapon)</span>
+          {{'Staking.Stake' | translate}} <span
+          *ngIf="weaponsRequired"> ({{ weaponsRequired }} {{'Resources.Weapon' | translate}})</span>
         </ng-template>
         <ng-template #stakeMoreCharacters>
-          You need to stake more characters
+          {{'Staking.NeedToStakeMoreCharacters' | translate}}
         </ng-template>
       </button>
       <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
-        {{ 'Claim' }}
+        {{'Staking.Claim' | translate}}
       </button>
       <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
     </div>

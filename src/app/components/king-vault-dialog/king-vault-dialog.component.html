@@ -2,17 +2,15 @@
   <mat-card>
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>KING Vault</mat-card-title>
-      <mat-card-subtitle>Claim your KING rewards</mat-card-subtitle>
+      <mat-card-title>{{'Vault.KingVault' | translate}}</mat-card-title>
+      <mat-card-subtitle>{{'Vault.ClaimYourKingRewards' | translate}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>
-        You can claim your KING rewards you got from completing certain stake paths.
-      </p>
+      <p>{{'Vault.Description' | translate}}</p>
       <div>
-        <p>Total available: {{totalKingInVault}}</p>
-        <p>Claimable by you: {{claimableKing}}</p>
-        <p>Already claimed by you: {{claimedKing}}</p>
+        <p>{{'Vault.TotalAvailable' | translate}}: {{totalKingInVault}}</p>
+        <p>{{'Vault.Claimable' | translate}}: {{claimableKing}}</p>
+        <p>{{'Vault.AlreadyClaimed' | translate}}: {{claimedKing}}</p>
       </div>
     </mat-card-content>
     <mat-card-actions>
@@ -22,14 +20,15 @@
           [ngTemplateOutlet]="isLoading ? loading : claimableKing ? claim : noKingToClaim"></ng-container>
         <ng-template #loading>
           <span class="flex items-center justify-center">
-            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner>
+            {{'Common.Loading' | translate}}
           </span>
         </ng-template>
         <ng-template #claim>
-          {{ 'Claim KING' }}
+          {{'Vault.ClaimKing' | translate}}
         </ng-template>
         <ng-template #noKingToClaim>
-          {{ 'No KING to claim' }}
+          {{'Vault.NoKingToClaim' | translate}}
         </ng-template>
       </button>
     </mat-card-actions>

@@ -2,29 +2,36 @@
   <mat-tab-group color="accent" mat-align-tabs="center" class="h-full" selectedIndex="0">
     <mat-tab>
       <ng-template mat-tab-label>
-        <img src="./assets/Placeholder/king.png" class="px-1 w-8" alt="King"/>
-        <span class="building-name">KING</span>
+        <img src="./assets/Placeholder/king.png" class="px-1 w-8"
+             [alt]="'Resources.King' | translate | uppercase"/>
+        <span class="building-name">{{'Resources.King' | translate | uppercase}}</span>
       </ng-template>
       <app-king-staking [building]="building" (onLoadData)="loadData()"></app-king-staking>
     </mat-tab>
     <mat-tab *ngIf="isResourcesGenerator" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
-        <img src="./assets/Placeholder/skill.png" class="px-1 w-8" alt="Skill"/>
-        <span class="building-name" [matTooltip]="getTabTooltip()">SKILL</span>
+        <img src="./assets/Placeholder/skill.png" class="px-1 w-8"
+             [alt]="'Resources.Skill' | translate | uppercase"/>
+        <span class="building-name"
+              [matTooltip]="building && building.level === 0 ? ('Staking.YouNeedToBuild' | translate:{building: 'BuildingTypes.' + getBuildingTypeName(this.building.type) | translate}) : ''">{{'Resources.Skill' | translate | uppercase}}</span>
       </ng-template>
       <app-skill-staking [building]="building"></app-skill-staking>
     </mat-tab>
     <mat-tab *ngIf="isBarracks" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
-        <img src="./assets/Placeholder/character.png" class="px-1 w-8" alt="Character"/>
-        <span class="building-name" [matTooltip]="getTabTooltip()">CHARACTERS</span>
+        <img src="./assets/Placeholder/character.png" class="px-1 w-8"
+             [alt]="'Resources.Characters' | translate | uppercase"/>
+        <span class="building-name"
+              [matTooltip]="building && building.level === 0 ? ('Staking.YouNeedToBuild' | translate:{building: 'BuildingTypes.' + getBuildingTypeName(this.building.type) | translate}) : ''">{{'Resources.Characters' | translate | uppercase}}</span>
       </ng-template>
       <app-character-staking [building]="building"></app-character-staking>
     </mat-tab>
     <mat-tab *ngIf="isSmithy" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
-        <img src="./assets/Placeholder/weapon.png" class="px-1 w-8" alt="Weapon"/>
-        <span class="building-name" [matTooltip]="getTabTooltip()">WEAPONS</span>
+        <img src="./assets/Placeholder/weapon.png" class="px-1 w-8"
+             [alt]="'Resources.Weapons' | translate | uppercase"/>
+        <span class="building-name"
+              [matTooltip]="building && building.level === 0 ? ('Staking.YouNeedToBuild' | translate:{building: 'BuildingTypes.' + getBuildingTypeName(this.building.type) | translate}) : ''">{{'Resources.Weapons' | translate | uppercase}}</span>
       </ng-template>
       <app-weapon-staking [building]="building"></app-weapon-staking>
     </mat-tab>

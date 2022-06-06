@@ -1,34 +1,34 @@
 <div class="cbk-header">
   <div class="cbk-logo-container">
     <div>
-      <img src="./assets/CBK Logo.png" class="cbk-logo" alt="CBK Logo"/>
+      <img src="./assets/CBK Logo.png" class="cbk-logo" [alt]="'App.CbkLogo' | translate"/>
     </div>
   </div>
   <div class="hidden md:flex flex-wrap items-center w-full justify-around">
     <app-resource-pill [balance]="kingBalance" image="./assets/Placeholder/king.png"
-                       [tooltip]="'King'"></app-resource-pill>
+                       [tooltip]="'Resources.King' | translate"></app-resource-pill>
     <app-resource-pill [balance]="skillBalance" image="./assets/Placeholder/skill.png"
-                       [tooltip]="'Skill'"></app-resource-pill>
+                       [tooltip]="'Resources.Skill' | translate"></app-resource-pill>
     <app-resource-pill [balance]="weaponsBalance" image="./assets/Placeholder/weapon.png"
-                       [tooltip]="'Weapons'"></app-resource-pill>
+                       [tooltip]="'Resources.Weapons' | translate"></app-resource-pill>
     <app-resource-pill [balance]="charactersBalance" image="./assets/Placeholder/character.png"
-                       [tooltip]="'Characters'"></app-resource-pill>
+                       [tooltip]="'Resources.Characters' | translate"></app-resource-pill>
     <app-resource-pill [balance]="clayBalance" image="./assets/Placeholder/clay.png"
-                       [tooltip]="'Clay'"></app-resource-pill>
+                       [tooltip]="'Resources.Clay' | translate"></app-resource-pill>
     <app-resource-pill [balance]="woodBalance" image="./assets/Placeholder/wood.png"
-                       [tooltip]="'Wood'"></app-resource-pill>
+                       [tooltip]="'Resources.Wood' | translate"></app-resource-pill>
     <app-resource-pill [balance]="stoneBalance" image="./assets/Placeholder/stone.png"
-                       [tooltip]="'Stone'"></app-resource-pill>
+                       [tooltip]="'Resources.Stone' | translate"></app-resource-pill>
     <app-resource-pill [balance]="mercenaryBalance" image="./assets/Placeholder/mercenary.png"
-                       [tooltip]="'Mercenary'"></app-resource-pill>
+                       [tooltip]="'Resources.Mercenary' | translate"></app-resource-pill>
     <app-resource-pill [balance]="bruiserBalance" image="./assets/Placeholder/bruiser.png"
-                       [tooltip]="'Bruiser'"></app-resource-pill>
+                       [tooltip]="'Resources.Bruiser' | translate"></app-resource-pill>
     <app-resource-pill [balance]="mageBalance" image="./assets/Placeholder/mage.png"
-                       [tooltip]="'Mage'"></app-resource-pill>
+                       [tooltip]="'Resources.Mage' | translate"></app-resource-pill>
     <app-resource-pill [balance]="archerBalance" image="./assets/Placeholder/archer.png"
-                       [tooltip]="'Archer'"></app-resource-pill>
+                       [tooltip]="'Resources.Archer' | translate"></app-resource-pill>
     <app-resource-pill [balance]="paladinBalance" image="./assets/Placeholder/paladin.png"
-                       [tooltip]="'Paladin'"></app-resource-pill>
+                       [tooltip]="'Resources.Paladin' | translate"></app-resource-pill>
   </div>
   <div class="text-white flex items-center">
     <button mat-raised-button class="btn button-stake" (click)="isConnected ? disconnectMetamask() : connectMetamask()">
@@ -36,7 +36,8 @@
         [ngTemplateOutlet]="isLoading ? loading : isConnected ? connected : connectWallet"></ng-container>
       <ng-template #loading>
           <span class="flex items-center justify-center">
-            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner>
+            {{'Common.Loading' | translate}}
           </span>
       </ng-template>
       <ng-template #connected>
@@ -44,7 +45,7 @@
         {{formattedWalletAddress}}
       </ng-template>
       <ng-template #connectWallet>
-        {{'Connect Wallet'}}
+        {{'App.ConnectWallet' | translate}}
       </ng-template>
     </button>
   </div>

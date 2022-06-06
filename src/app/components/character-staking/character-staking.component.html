@@ -1,19 +1,21 @@
 <ng-template [ngIf]="!isInitializing" [ngIfElse]="initializing">
   <div class="stake-tab">
     <div class="building-image-container">
-      <img class="w-full" [src]="building.image" [alt]="getBuildingTypeName(building.type)">
+      <img class="w-full" [src]="building.image"
+           [alt]="'BuildingTypes.' + getBuildingTypeName(building.type) | translate">
     </div>
     <div class="staking-container">
-      <p class="building-name">{{ getBuildingTypeName(building.type) }}</p>
-      <span class="building-level">Level: {{ building.level }}</span>
-      <p class="building-level">Max level: {{building.maxLevel}}</p>
+      <p class="building-name">{{ 'BuildingTypes.' + getBuildingTypeName(building.type) | translate }}</p>
+      <span class="building-level">{{'Common.Level' | translate}}: {{ building.level }}</span>
+      <p class="building-level">{{'Common.MaxLevel' | translate}}: {{building.maxLevel}}</p>
       <div *ngIf="barracksRequired">
-        <p class="building-requirements">Requirements: </p>
-        <p class="secondary-text">{{getBuildingTypeName(getBarracksType)}} (Level: {{barracksRequired}})</p>
+        <p class="building-requirements">{{'Staking.Requirements' | translate}}: </p>
+        <p class="secondary-text">{{'BuildingTypes.' + getBuildingTypeName(getBarracksType) | translate}}
+          ({{'Common.Level' | translate}}: {{barracksRequired}})</p>
       </div>
       <div *ngIf="totalCharactersStaked">
-        <p class="building-requirements">Total staked:</p>
-        <p class="secondary-text">{{totalCharactersStaked}} Characters</p>
+        <p class="building-requirements">{{'Staking.TotalStaked' | translate}}:</p>
+        <p class="secondary-text">{{totalCharactersStaked}} {{'Resources.Characters' | translate}}</p>
       </div>
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let character of filteredOptions | async" [value]="character">
@@ -21,14 +23,15 @@
         </mat-option>
       </mat-autocomplete>
       <mat-form-field appearance="fill">
-        <mat-label>Choose character</mat-label>
+        <mat-label>{{'Staking.ChooseCharacter' | translate}}</mat-label>
         <input matInput type="text" [formControl]="selectedCharacter" [matAutocomplete]="auto">
         <button *ngIf="selectedCharacter.value" matSuffix mat-icon-button aria-label="Clear"
                 (click)="selectedCharacter.setValue(undefined)">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
-      <button *ngIf="!isPathFinished" [disabled]="isLoading || !selectedCharacter.value || !isBarracksRequirementMet || isStakeInProgress"
+      <button *ngIf="!isPathFinished"
+              [disabled]="isLoading || !selectedCharacter.value || !isBarracksRequirementMet || isStakeInProgress"
               mat-raised-button
               class="btn button-stake"
               (click)="onStake()">
@@ -36,21 +39,22 @@
           [ngTemplateOutlet]="isLoading ? loading : isStakeInProgress ? stakeInProgress : isBarracksRequirementMet ? stake : upgradeBarracks"></ng-container>
         <ng-template #loading>
           <span class="flex items-center justify-center">
-            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner> Loading...
+            <mat-progress-spinner mode="indeterminate" [diameter]="15"></mat-progress-spinner>
+            {{'Common.Loading' | translate}}
           </span>
         </ng-template>
         <ng-template #stakeInProgress>
           <span appTimestampCountdown (isFinished)="loadData()" [timestamp]="stakeCompleteTimestamp || 0"></span>
         </ng-template>
         <ng-template #stake>
-          Stake <span *ngIf="charactersRequired"> ({{ charactersRequired }} Character)</span>
+          {{'Staking.Stake' | translate}} <span *ngIf="charactersRequired"> ({{ charactersRequired }} {{'Resources.Character' | translate}})</span>
         </ng-template>
         <ng-template #upgradeBarracks>
-          You need to upgrade Barracks first
+          {{'Staking.NeedToUpgradeBarracks' | translate}}
         </ng-template>
       </button>
       <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
-        {{ 'Claim' }}
+        {{'Staking.Claim' | translate}}
       </button>
       <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>
     </div>
