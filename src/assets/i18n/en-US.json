@@ -69,6 +69,7 @@
   },
   "Staking": {
     "Stake": "Stake",
+    "Unstake": "Unstake",
     "Claim": "Claim",
     "Requirements": "Requirements",
     "Requires": "Requires",
