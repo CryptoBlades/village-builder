@@ -23,6 +23,7 @@
     "@angular/service-worker": "~13.2.0",
     "@metamask/detect-provider": "^1.2.0",
     "@ngneat/until-destroy": "^9.0.0",
+    "@ngx-translate/core": "^14.0.0",
     "@ngxs/store": "^3.7.3",
     "@openzeppelin/contracts": "^4.2.0",
     "@openzeppelin/contracts-upgradeable": "^4.2.0",

@@ -41,7 +41,20 @@ import {ClickableBuildingComponent} from './components/clickable-building/clicka
 import {MatCardModule} from "@angular/material/card";
 import {DragScrollModule} from "ngx-drag-scroll";
 import {MatSidenavModule} from "@angular/material/sidenav";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {Observable, of} from "rxjs";
+import * as enUS from '../assets/i18n/en-US.json';
+import {UserOptionState} from "./state/user-option/user-option.state";
 
+const languages: any = {
+  'en-US': (enUS as any).default || enUS,
+};
+
+export class JSONLoader implements TranslateLoader {
+  getTranslation(lang: string): Observable<any> {
+    return of(languages[lang] || enUS);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -68,8 +81,14 @@ import {MatSidenavModule} from "@angular/material/sidenav";
       registrationStrategy: 'registerWhenStable:30000'
     }),
     BrowserAnimationsModule,
-    NgxsModule.forRoot([WalletState, LandState], {
+    NgxsModule.forRoot([WalletState, LandState, UserOptionState], {
       developmentMode: !environment.production
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useClass: JSONLoader,
+      },
     }),
     FormsModule,
     MatButtonModule,

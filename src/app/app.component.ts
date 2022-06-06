@@ -21,6 +21,8 @@ import {
   SimpleConfirmationDialogComponent
 } from "./components/simple-confirmation-dialog/simple-confirmation-dialog.component";
 import {SkillService} from "./solidity/skill.service";
+import {TranslateService} from '@ngx-translate/core';
+import {UserOptionStateModel} from "./state/user-option/user-option.state";
 
 export interface Building {
   level: number;
@@ -82,6 +84,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private store: Store,
+    private translateService: TranslateService,
     public dialog: MatDialog,
     private web3: Web3Service,
     private landService: LandService,
@@ -93,6 +96,7 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.updateTranslation();
     from(this.detectMetamask()).pipe(take(1)).subscribe();
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.isInstalled = state.isInstalled;
@@ -229,5 +233,10 @@ export class AppComponent implements OnInit {
       }
       console.log('The dialog was closed', confirmed);
     });
+  }
+
+  private updateTranslation() {
+    const userOption: UserOptionStateModel = this.store.selectSnapshot(state => state.userOption);
+    this.translateService.use(userOption.language);
   }
 }

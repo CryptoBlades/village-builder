@@ -29,6 +29,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "i18nMissingTranslation": "error",
+            "localize": false,
             "outputPath": "dist/village-builder",
             "index": "src/index.html",
             "main": "src/main.ts",
