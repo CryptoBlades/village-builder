@@ -2,20 +2,20 @@
   <mat-stepper orientation="vertical"
                [selectedIndex]="isPathFinished ? stakingTiers.length - 1 : unlockedTiers!">
     <mat-step *ngFor="let stakingTier of stakingTiers; index as i"
-              [label]="stakingTier.amount + ' ' + ('Resources.' + stakingTier.type | translate) + ' (' + getDurationString(stakingTier.duration) + ')'"
+              [label]="stakingTier.amount + ' ' + ('Resources.' + (stakingTier.type | titlecase) | translate) + ' (' + getDurationString(stakingTier.duration) + ')'"
               [completed]="unlockedTiers! - 1 >= i">
       <div class="flex flex-col">
         <div *ngIf="stakingTier.requirement" class="flex flex-col">
           <span>{{'Staking.Requires' | translate}}: </span>
-          <span>- {{stakingTier.requirement.type + ': ' + stakingTier.requirement.amount.toLocaleString()}}</span>
+          <span>- {{('Resources.' + stakingTier.requirement.type | translate) + ': ' + stakingTier.requirement.amount.toLocaleString()}}</span>
         </div>
         <div *ngIf="stakingTier.rewards.length" class="flex flex-col">
           <span>{{'Staking.Rewards' | translate}}: </span>
           <span *ngFor="let reward of stakingTier.rewards" class="flex items-center h-8">
               - {{reward.amount.toLocaleString()}} <img src="./assets/Placeholder/{{reward.type.toLowerCase()}}.png"
                                                         class="px-1 w-8"
-                                                        [alt]="'Resources.' + reward.type | translate"
-                                                        [matTooltip]="'Resources.' +reward.type  | translate"/>
+                                                        [alt]="'Resources.' + (reward.type | titlecase) | translate"
+                                                        [matTooltip]="'Resources.' + (reward.type | titlecase)  | translate"/>
         </span>
         </div>
         <div *ngIf="stakingTier.unlocks.length" class="flex flex-col">
@@ -23,8 +23,8 @@
           <span *ngFor="let unlock of stakingTier.unlocks" class="flex items-center h-8">
           - {{unlock.amount.toLocaleString()}} <img src="./assets/Placeholder/{{unlock.type.toLowerCase()}}.png"
                                                     class="px-1 w-8"
-                                                    [alt]="'Resources.' + unlock.type | translate"
-                                                    [matTooltip]="'Resources.' +  unlock.type | translate"/>
+                                                    [alt]="'Resources.' + (unlock.type | titlecase) | translate"
+                                                    [matTooltip]="'Resources.' +  (unlock.type | titlecase) | translate"/>
         </span>
         </div>
       </div>
