@@ -102,7 +102,7 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     emit Unstaked(msg.sender, landId);
   }
 
-  function setCurrentlyUpgrading(uint id, Building building, uint finishTimestamp) public assertStakesLand(tx.origin) {
+  function setCurrentlyUpgrading(uint id, Building building, uint finishTimestamp) external restricted assertStakesLand(tx.origin) {
     BuildingUpgrade memory buildingUpgrade = currentlyUpgrading[id];
     if (buildingUpgrade.building != Building.NONE) {
       finishBuildingUpgrade(id);
