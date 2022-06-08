@@ -4,7 +4,7 @@
     "amount": 0.01,
     "type": "SKILL",
     "requirement": {
-      "type": "KING Staked",
+      "type": "KingStaked",
       "amount": 4
     },
     "rewards": [

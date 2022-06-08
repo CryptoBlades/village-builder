@@ -4,7 +4,7 @@
     "amount": 1,
     "type": "Characters",
     "requirement": {
-      "type": "Barracks Level",
+      "type": "BarracksLevel",
       "amount": 1
     },
     "rewards": [
@@ -110,7 +110,7 @@
     "amount": 7,
     "type": "Characters",
     "requirement": {
-      "type": "Barracks Level",
+      "type": "BarracksLevel",
       "amount": 2
     },
     "rewards": [
@@ -260,7 +260,7 @@
     "amount": 13,
     "type": "Characters",
     "requirement": {
-      "type": "Barracks Level",
+      "type": "BarracksLevel",
       "amount": 3
     },
     "rewards": [
@@ -367,7 +367,7 @@
     "amount": 19,
     "type": "Characters",
     "requirement": {
-      "type": "Barracks Level",
+      "type": "BarracksLevel",
       "amount": 4
     },
     "rewards": [
@@ -491,8 +491,8 @@
     "amount": 25,
     "type": "Characters",
     "requirement": {
-      "type": "Barracks Level",
-      "amount": 4
+      "type": "BarracksLevel",
+      "amount": 5
     },
     "rewards": [
       {

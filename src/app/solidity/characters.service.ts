@@ -8,6 +8,11 @@ import CharacterStaking from "../../../build/contracts/CharacterStaking.json";
 import Characters from "../../../build/contracts/CharactersInterface.json";
 import Garrison from "../../../build/contracts/GarrisonInterface.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {environment} from 'src/environments/environment';
+
+const development = require("src/assets/addresses/development");
+const test = require("src/assets/addresses/test");
+const production = require("src/assets/addresses/production");
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +34,13 @@ export class CharactersService {
     this.charactersContract = this.characterStakingContract.methods.nft().call().then((address: string) => {
       return new this.web3.eth.Contract(Characters.abi as any, address);
     });
-    const garrisonAddress = '';
-    this.garrisonContract = new this.web3.eth.Contract(Garrison.abi as any, garrisonAddress);
+    if (environment.environment === "TEST") {
+      this.garrisonContract = new this.web3.eth.Contract(Garrison.abi as any, test.garrisonAddress);
+    } else if (environment.environment === "PRODUCTION") {
+      this.garrisonContract = new this.web3.eth.Contract(Garrison.abi as any, production.garrisonAddress);
+    } else {
+      this.garrisonContract = new this.web3.eth.Contract(Garrison.abi as any, development.garrisonAddress);
+    }
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.currentAccount = state.publicAddress;
     });

@@ -4,7 +4,7 @@
     "amount": 1,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 1
     },
     "rewards": [
@@ -20,7 +20,7 @@
     "amount": 2,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 2
     },
     "rewards": [
@@ -49,7 +49,7 @@
     "amount": 3,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 3
     },
     "rewards": [
@@ -65,7 +65,7 @@
     "amount": 4,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 4
     },
     "rewards": [
@@ -102,7 +102,7 @@
     "amount": 5,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 5
     },
     "rewards": [
@@ -118,7 +118,7 @@
     "amount": 6,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 6
     },
     "rewards": [
@@ -134,7 +134,7 @@
     "amount": 7,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 7
     },
     "rewards": [
@@ -163,7 +163,7 @@
     "amount": 8,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 8
     },
     "rewards": [
@@ -179,7 +179,7 @@
     "amount": 9,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 9
     },
     "rewards": [
@@ -216,7 +216,7 @@
     "amount": 10,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 10
     },
     "rewards": [
@@ -232,7 +232,7 @@
     "amount": 12,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 11
     },
     "rewards": [
@@ -248,7 +248,7 @@
     "amount": 14,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 11
     },
     "rewards": [
@@ -277,7 +277,7 @@
     "amount": 16,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 11
     },
     "rewards": [
@@ -293,7 +293,7 @@
     "amount": 18,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 12
     },
     "rewards": [
@@ -330,7 +330,7 @@
     "amount": 20,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 12
     },
     "rewards": [
@@ -346,7 +346,7 @@
     "amount": 22,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 12
     },
     "rewards": [
@@ -362,7 +362,7 @@
     "amount": 24,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 13
     },
     "rewards": [
@@ -391,7 +391,7 @@
     "amount": 26,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 13
     },
     "rewards": [
@@ -407,7 +407,7 @@
     "amount": 28,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 13
     },
     "rewards": [
@@ -444,7 +444,7 @@
     "amount": 30,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 14
     },
     "rewards": [
@@ -460,7 +460,7 @@
     "amount": 33,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 14
     },
     "rewards": [
@@ -476,7 +476,7 @@
     "amount": 36,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 14
     },
     "rewards": [
@@ -505,7 +505,7 @@
     "amount": 39,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 15
     },
     "rewards": [
@@ -521,7 +521,7 @@
     "amount": 42,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 15
     },
     "rewards": [
@@ -558,7 +558,7 @@
     "amount": 45,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 15
     },
     "rewards": [
@@ -574,7 +574,7 @@
     "amount": 48,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 16
     },
     "rewards": [
@@ -590,7 +590,7 @@
     "amount": 51,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 16
     },
     "rewards": [
@@ -619,7 +619,7 @@
     "amount": 54,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 17
     },
     "rewards": [
@@ -635,7 +635,7 @@
     "amount": 57,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 17
     },
     "rewards": [
@@ -672,7 +672,7 @@
     "amount": 60,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 18
     },
     "rewards": [
@@ -688,7 +688,7 @@
     "amount": 64,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 18
     },
     "rewards": [
@@ -704,7 +704,7 @@
     "amount": 68,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 19
     },
     "rewards": [
@@ -733,7 +733,7 @@
     "amount": 72,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 19
     },
     "rewards": [
@@ -749,7 +749,7 @@
     "amount": 76,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 20
     },
     "rewards": [
@@ -786,7 +786,7 @@
     "amount": 80,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 20
     },
     "rewards": [
@@ -802,7 +802,7 @@
     "amount": 85,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 21
     },
     "rewards": [
@@ -831,7 +831,7 @@
     "amount": 90,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 22
     },
     "rewards": [
@@ -847,7 +847,7 @@
     "amount": 95,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 23
     },
     "rewards": [
@@ -876,7 +876,7 @@
     "amount": 100,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 24
     },
     "rewards": [
@@ -900,7 +900,7 @@
     "amount": 110,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 25
     },
     "rewards": [
@@ -929,7 +929,7 @@
     "amount": 120,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 26
     },
     "rewards": [
@@ -945,7 +945,7 @@
     "amount": 130,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 27
     },
     "rewards": [
@@ -974,7 +974,7 @@
     "amount": 140,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 28
     },
     "rewards": [
@@ -1003,7 +1003,7 @@
     "amount": 150,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 29
     },
     "rewards": [
@@ -1040,7 +1040,7 @@
     "amount": 175,
     "type": "Weapons",
     "requirement": {
-      "type": "Characters Staked",
+      "type": "CharactersStaked",
       "amount": 30
     },
     "rewards": [

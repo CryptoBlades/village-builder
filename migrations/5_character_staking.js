@@ -1,8 +1,16 @@
+const production = require('../src/assets/addresses/production.ts')
+const test = require('../src/assets/addresses/test.ts')
+const development = require('../src/assets/addresses/development.ts')
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const Village = artifacts.require('Village');
 const CharacterStaking = artifacts.require('CharacterStaking');
-module.exports = async function (deployer) {
+module.exports = async function (deployer, network) {
   const village = await Village.deployed();
-  const charactersAddress = '0x1F495Fd1aF9437E45Da7107A2DADe998bBC4B2B3';
-  await deployProxy(CharacterStaking, [village.address, charactersAddress], {deployer});
+  if (network === "development") {
+    await deployProxy(CharacterStaking, [village.address, development.charactersAddress], {deployer});
+  } else if (network === 'bsctestnet' || network === 'bsctestnet-fork') {
+    await deployProxy(CharacterStaking, [village.address, test.charactersAddress], {deployer});
+  } else if (network === 'bscmainnet' || network === 'bscmainnet-fork') {
+    await deployProxy(CharacterStaking, [village.address, production.charactersAddress], {deployer});
+  }
 };

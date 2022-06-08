@@ -40,6 +40,11 @@
     "Archer": "Archer",
     "Paladin": "Paladin"
   },
+  "Requirements": {
+    "CharactersStaked": "Characters Staked",
+    "BarracksLevel": "Barracks Level",
+    "KingStaked": "KING Staked"
+  },
   "BuildingTypes": {
     "TOWN_HALL": "Town Hall",
     "HEADQUARTERS": "Headquarters",

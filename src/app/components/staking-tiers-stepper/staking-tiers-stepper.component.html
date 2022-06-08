@@ -7,7 +7,7 @@
       <div class="flex flex-col">
         <div *ngIf="stakingTier.requirement" class="flex flex-col">
           <span>{{'Staking.Requires' | translate}}: </span>
-          <span>- {{('Resources.' + stakingTier.requirement.type | translate) + ': ' + stakingTier.requirement.amount.toLocaleString()}}</span>
+          <span>- {{('Requirements.' + stakingTier.requirement.type | translate) + ': ' + stakingTier.requirement.amount.toLocaleString()}}</span>
         </div>
         <div *ngIf="stakingTier.rewards.length" class="flex flex-col">
           <span>{{'Staking.Rewards' | translate}}: </span>
