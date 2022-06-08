@@ -42,7 +42,9 @@ contract SkillStaking is CurrencyStaking {
     kingVault.addToVault(msg.sender, kingRewards[unlockedTiers[msg.sender]]);
   }
 
-  function addStake(uint id, uint duration, uint requirement, uint amount, uint kingReward) public {
+  // ADMIN
+
+  function addStake(uint id, uint duration, uint requirement, uint amount, uint kingReward) restricted external {
     stakes[id] = Stake({duration : duration, requirement : requirement, amount : amount});
     kingRewards[id] = kingReward;
   }
