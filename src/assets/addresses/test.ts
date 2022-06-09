@@ -1,8 +1,8 @@
 module.exports = {
-  cbkLandAddress: '',
-  charactersAddress: '',
-  weaponsAddress: '',
-  kingAddress: '',
-  skillAddress: '',
-  garrisonAddress: '',
+  cbkLandAddress: '0xE986e14afe3744a986F1A4Bcaa174C84ae1C4B91',
+  charactersAddress: '0x149529De3BDA6F95FbF027275DC5d7ccc270D5Bd',
+  weaponsAddress: '0x672E4CddA311b3BfAd1e09313241C62B4eFF5782',
+  kingAddress: '0x61F5197b43493a332A0E7D55B7ACa7c277e0BC4b',
+  skillAddress: '0xcAF53066e36EeF55eD0663419ADfF6E503bd134F',
+  garrisonAddress: '0x9A9Dc83e88B48BFC8a2De359e433a8Ed3F38574b',
 }
