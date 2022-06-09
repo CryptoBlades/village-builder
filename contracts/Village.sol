@@ -63,6 +63,15 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     buildingRequirement[Building.MARKET] = BuildingRequirement(Building.TOWN_HALL, 5);
   }
 
+  modifier restricted() {
+    _restricted();
+    _;
+  }
+
+  function _restricted() internal view {
+    require(hasRole(GAME_ADMIN, msg.sender) || hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "NA");
+  }
+
   modifier assertOwnsLand(address user, uint id) {
     _assertOwnsLand(user, id);
     _;
