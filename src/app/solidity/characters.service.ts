@@ -9,6 +9,7 @@ import Characters from "../../../build/contracts/CharactersInterface.json";
 import Garrison from "../../../build/contracts/GarrisonInterface.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {environment} from 'src/environments/environment';
+import {Networks} from "../interfaces/networks";
 
 const development = require("src/assets/addresses/development");
 const test = require("src/assets/addresses/test");
@@ -30,7 +31,7 @@ export class CharactersService {
     private store: Store,
     public web3: Web3Service,
   ) {
-    this.characterStakingContract = new this.web3.eth.Contract(CharacterStaking.abi as any, CharacterStaking.networks["5777"]!.address);
+    this.characterStakingContract = new this.web3.eth.Contract(CharacterStaking.abi as any, (CharacterStaking.networks as Networks)[environment.networkId]?.address);
     this.charactersContract = this.characterStakingContract.methods.nft().call().then((address: string) => {
       return new this.web3.eth.Contract(Characters.abi as any, address);
     });

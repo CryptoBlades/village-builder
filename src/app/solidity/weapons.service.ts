@@ -7,6 +7,8 @@ import {Web3Service} from "../services/web3.service";
 import WeaponStaking from "../../../build/contracts/WeaponStaking.json";
 import Weapons from "../../../build/contracts/WeaponsInterface.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {environment} from "../../environments/environment";
+import {Networks} from "../interfaces/networks";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,7 @@ export class WeaponsService {
     private store: Store,
     public web3: Web3Service,
   ) {
-    this.weaponStakingContract = new this.web3.eth.Contract(WeaponStaking.abi as any, WeaponStaking.networks["5777"]!.address);
+    this.weaponStakingContract = new this.web3.eth.Contract(WeaponStaking.abi as any, (WeaponStaking.networks as Networks)[environment.networkId]?.address);
     this.weaponsContract = this.weaponStakingContract.methods.nft().call().then((address: string) => {
       return new this.web3.eth.Contract(Weapons.abi as any, address);
     });

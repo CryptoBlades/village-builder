@@ -15,6 +15,8 @@ import WeaponStaking from "../../../build/contracts/WeaponStaking.json";
 import KingStaking from "../../../build/contracts/KingStaking.json";
 import SkillStaking from "../../../build/contracts/SkillStaking.json";
 import buildingsPlacements from '../../assets/placements/buildings.json';
+import {Networks} from "../interfaces/networks";
+import {environment} from "../../environments/environment";
 
 export interface BuildingRequirements {
   building: BuildingType;
@@ -48,14 +50,14 @@ export class LandService {
     private store: Store,
     public web3: Web3Service,
   ) {
-    this.villageContract = new this.web3.eth.Contract(Village.abi as any, Village.networks["5777"]!.address);
+    this.villageContract = new this.web3.eth.Contract(Village.abi as any, (Village.networks as Networks)[environment.networkId]?.address);
     this.landContract = this.villageContract.methods.cbkLand().call().then((address: string) => {
       return new this.web3.eth.Contract(CBKLand.abi as any, address);
     });
-    this.characterStakingContract = new this.web3.eth.Contract(CharacterStaking.abi as any, CharacterStaking.networks["5777"]!.address);
-    this.weaponStakingContract = new this.web3.eth.Contract(WeaponStaking.abi as any, WeaponStaking.networks["5777"]!.address);
-    this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, KingStaking.networks["5777"]!.address);
-    this.skillStakingContract = new this.web3.eth.Contract(SkillStaking.abi as any, SkillStaking.networks["5777"]!.address);
+    this.characterStakingContract = new this.web3.eth.Contract(CharacterStaking.abi as any, (CharacterStaking.networks as Networks)[environment.networkId]?.address);
+    this.weaponStakingContract = new this.web3.eth.Contract(WeaponStaking.abi as any, (WeaponStaking.networks as Networks)[environment.networkId]?.address);
+    this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, (KingStaking.networks as Networks)[environment.networkId]?.address);
+    this.skillStakingContract = new this.web3.eth.Contract(SkillStaking.abi as any, (SkillStaking.networks as Networks)[environment.networkId]?.address);
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.currentAccount = state.publicAddress;
     });

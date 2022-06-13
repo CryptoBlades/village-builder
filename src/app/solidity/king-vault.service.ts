@@ -5,6 +5,8 @@ import {Web3Service} from "../services/web3.service";
 import KingVault from "../../../build/contracts/KingVault.json";
 import {UntilDestroy} from "@ngneat/until-destroy";
 import {KingService} from "./king.service";
+import {Networks} from "../interfaces/networks";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class KingVaultService extends KingService {
     public override web3: Web3Service,
   ) {
     super(store, web3);
-    this.kingVaultContract = new this.web3.eth.Contract(KingVault.abi as any, KingVault.networks["5777"]!.address);
+    this.kingVaultContract = new this.web3.eth.Contract(KingVault.abi as any, (KingVault.networks as Networks)[environment.networkId]?.address);
   }
 
   async getTotalInVault(): Promise<number> {

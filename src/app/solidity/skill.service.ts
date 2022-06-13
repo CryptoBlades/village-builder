@@ -7,6 +7,8 @@ import {Web3Service} from "../services/web3.service";
 import SkillStaking from "../../../build/contracts/SkillStaking.json";
 import SkillToken from "../../../build/contracts/SkillInterface.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {Networks} from "../interfaces/networks";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,7 @@ export class SkillService {
     private store: Store,
     public web3: Web3Service,
   ) {
-    this.skillStakingContract = new this.web3.eth.Contract(SkillStaking.abi as any, SkillStaking.networks["5777"]!.address);
+    this.skillStakingContract = new this.web3.eth.Contract(SkillStaking.abi as any, (SkillStaking.networks as Networks)[environment.networkId]?.address);
     this.skillContract = this.skillStakingContract.methods.currency().call().then((address: string) => {
       return new this.web3.eth.Contract(SkillToken.abi as any, address);
     });

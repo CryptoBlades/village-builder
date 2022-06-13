@@ -8,6 +8,8 @@ import KingToken from "../../../build/contracts/KingToken.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {WalletState, WalletStateModel} from "../state/wallet/wallet.state";
 import {Observable} from "rxjs";
+import {Networks} from "../interfaces/networks";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,7 @@ export class KingService {
     public store: Store,
     public web3: Web3Service,
   ) {
-    this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, KingStaking.networks["5777"]!.address);
+    this.kingStakingContract = new this.web3.eth.Contract(KingStaking.abi as any, (KingStaking.networks as Networks)[environment.networkId]?.address);
     this.kingContract = this.kingStakingContract.methods.currency().call().then((address: string) => {
       return new this.web3.eth.Contract(KingToken.abi as any, address);
     });

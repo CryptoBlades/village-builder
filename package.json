@@ -10,7 +10,9 @@
     "test": "ng test",
     "deploy-testnet": "truffle migrate --network bsctestnet",
     "postdeploy-testnet": "run-s \"backup-networks 97\" \"verify-contracts -- --network bsctestnet\"",
-    "backup-networks": "node scripts/manage-networks.js backup"
+    "backup-networks": "node scripts/manage-networks.js backup",
+    "restore-networks": "node scripts/manage-networks.js restore",
+    "restore-all-networks": "run-s \"restore-networks 97\""
   },
   "private": true,
   "dependencies": {
@@ -39,6 +41,7 @@
     "https-browserify": "^1.0.0",
     "luxon": "^2.3.2",
     "ngx-drag-scroll": "^13.0.1",
+    "npm-run-all": "^4.1.5",
     "os-browserify": "^0.3.0",
     "rxjs": "~7.5.0",
     "shelljs": "^0.8.5",
