@@ -93,7 +93,7 @@
     </mat-drawer-container>
   </ng-template>
   <ng-template #landNotSelected>
-    <div *ngIf="lands.length; else noLands" class="lands-display">
+    <div *ngIf="lands.length; else noLands" class="flex justify-center flex-wrap">
       <app-select-land *ngFor="let land of lands" [land]="land" (selectedLand)="onSelect($event)"></app-select-land>
     </div>
   </ng-template>
