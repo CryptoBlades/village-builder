@@ -4,7 +4,7 @@ const KingStaking = artifacts.require('KingStaking');
 const KingVault = artifacts.require('KingVault');
 const CharacterStaking = artifacts.require('CharacterStaking');
 
-module.exports = async function () {
+module.exports = async function (deployer) {
   const kingStaking = await KingStaking.deployed();
   const skillStaking = await SkillStaking.deployed();
   const weaponStaking = await WeaponStaking.deployed();
