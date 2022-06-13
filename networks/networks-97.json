@@ -1,0 +1,126 @@
+{
+  "build/contracts/CharacterStaking.json": {
+    "events": {},
+    "links": {},
+    "address": "0x4C04662FAF1853bD7421f045879B0dbE1063C1b3",
+    "transactionHash": "0x26e1e581d1a79016f1bb1532375f66bd477b0e4ded4d4f971fd1f6e24b34797b"
+  },
+  "build/contracts/KingStaking.json": {
+    "events": {},
+    "links": {},
+    "address": "0x872226613cEfE51dA609D9478a81D4fffe02985e",
+    "transactionHash": "0x6ca18fd4be732c4ac77571831eeea40d2037af383a169e3cce4df7df854cc7c1"
+  },
+  "build/contracts/KingToken.json": {
+    "events": {},
+    "links": {},
+    "address": "0x174f58F0217DD0122A5ad003fb16B9216415dfA3",
+    "transactionHash": "0xd1d26054549fd0d43b7f2a675739d27defd78e52a87e357540a2829fed521868"
+  },
+  "build/contracts/KingVault.json": {
+    "events": {
+      "0xbd79b86ffe0ab8e8776151514217cd7cacd52c909f66475c3af44e129f0b00ff": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "previousAdminRole",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "newAdminRole",
+            "type": "bytes32"
+          }
+        ],
+        "name": "RoleAdminChanged",
+        "type": "event"
+      },
+      "0x2f8788117e7eff1d82e926ec794901d17c78024a50270940304540a733656f0d": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "RoleGranted",
+        "type": "event"
+      },
+      "0xf6391f5c32d9c69d2a47ea670b442974b53935d1edc7fd64eb21e047a839171b": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "RoleRevoked",
+        "type": "event"
+      }
+    },
+    "links": {},
+    "address": "0x30E00Dfde78F09d73fB2aB4E1f12Ead930aC6401",
+    "transactionHash": "0x682418c43f4f0d25159d2c096bb9fe265e8f3d6ea746b5cb9087a976c177fb79"
+  },
+  "build/contracts/Migrations.json": {
+    "events": {},
+    "links": {},
+    "address": "0x74D3C5CB81a80f1eAaf8bbea189471883390e848",
+    "transactionHash": "0x2d319014d1cd4c50e825ab543d26e751a9609f81c053ee7da2ef813f1c3e4533"
+  },
+  "build/contracts/SkillStaking.json": {
+    "events": {},
+    "links": {},
+    "address": "0x5C1Cd8b7baD53Cb4316202F16191833440243e54",
+    "transactionHash": "0xe1ad5ca0a952ca83dfffa9e66fa0a0f01530844294a469b9c3046238cb1580cb"
+  },
+  "build/contracts/Village.json": {
+    "events": {},
+    "links": {},
+    "address": "0x2f31F7bFbAd1e61035B64CB97190fCE3E15bb93F",
+    "transactionHash": "0xea65e9b26ed412c8c054df1305a969bc6e2a08b39c9a4fe5390b247836207f1c"
+  },
+  "build/contracts/WeaponStaking.json": {
+    "events": {},
+    "links": {},
+    "address": "0xFe57f79ab7f17F68c61d9B0213005CAAa5Bc2917",
+    "transactionHash": "0xcb452fd65d3b72a7cd3e1779088ffe05ac613659e3cb9cb6ea6eda3bbc24c56e"
+  }
+}
