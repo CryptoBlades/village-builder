@@ -7,7 +7,10 @@
     "build": "ng build",
     "build:prod": "truffle compile && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy-testnet": "truffle migrate --network bsctestnet",
+    "postdeploy-testnet": "run-s \"backup-networks 97\" \"verify-contracts -- --network bsctestnet\"",
+    "backup-networks": "node scripts/manage-networks.js backup"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +41,7 @@
     "ngx-drag-scroll": "^13.0.1",
     "os-browserify": "^0.3.0",
     "rxjs": "~7.5.0",
+    "shelljs": "^0.8.5",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "tslib": "^2.3.0",
