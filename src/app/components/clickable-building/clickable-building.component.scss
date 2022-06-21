@@ -1,3 +1,4 @@
 .centered-image-description {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   @apply w-full absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2;
 }
