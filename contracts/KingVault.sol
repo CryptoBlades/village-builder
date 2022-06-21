@@ -31,7 +31,7 @@ contract KingVault is Initializable, AccessControlUpgradeable {
     require(hasRole(GAME_ADMIN, msg.sender) || hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "NA");
   }
 
-  function claimVault() public {
+  function claimVault() external {
     require(vaults[msg.sender] > 0, "You don't have any king in the vault to claim");
     kingToken.transfer(msg.sender, vaults[msg.sender]);
     claimed[msg.sender] += vaults[msg.sender];

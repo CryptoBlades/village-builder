@@ -52,7 +52,7 @@ contract Staking is Initializable, AccessControlUpgradeable {
     require(hasRole(GAME_ADMIN, msg.sender) || hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "NA");
   }
 
-  function firstStake() assertStakesLand(tx.origin) public {
+  function firstStake() assertStakesLand(tx.origin) internal {
     require(getUnlockedTiers() == 0, 'You have already staked');
     currentStake[tx.origin] = 1;
     emit FirstStake(tx.origin);
@@ -78,7 +78,7 @@ contract Staking is Initializable, AccessControlUpgradeable {
 
   // VIEWS
 
-  function getStakeCompleteTimestamp() public view returns (uint256) {
+  function getStakeCompleteTimestamp() external view returns (uint256) {
     return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }
 

@@ -55,7 +55,7 @@ contract CurrencyStaking is Staking {
 
   // VIEWS
 
-  function getRequiredStakeAmount() public view returns (uint256) {
+  function getRequiredStakeAmount() external view returns (uint256) {
     if(stakes[currentStake[tx.origin] + 1].amount != 0) {
       return stakes[currentStake[tx.origin] + 1].amount - stakedCurrencies[tx.origin];
     } else {
