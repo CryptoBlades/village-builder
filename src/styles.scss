@@ -296,9 +296,13 @@ mat-tab-group {
 
 .button-stake {
   background-image: url('assets/Village/Button.png');
-  color: #43300D;
+  color: #43300D !important;
   width: fit-content;
   @apply bg-cover
+}
+
+.button-stake[disabled] {
+  @apply opacity-50
 }
 
 .stake-tab {
