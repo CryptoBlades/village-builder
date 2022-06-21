@@ -2,11 +2,9 @@
 pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./Staking.sol";
 
 contract CurrencyStaking is Staking {
-  using SafeMath for uint256;
 
   IERC20Upgradeable public currency;
 
@@ -35,7 +33,7 @@ contract CurrencyStaking is Staking {
     }
     currentStakeStart[tx.origin] = block.timestamp;
     currency.transferFrom(tx.origin, address(this), amount);
-    stakedCurrencies[tx.origin] = stakedCurrencies[tx.origin].add(amount);
+    stakedCurrencies[tx.origin] = stakedCurrencies[tx.origin] + amount;
     emit Staked(tx.origin, amount);
     return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }

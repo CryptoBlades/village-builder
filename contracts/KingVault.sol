@@ -3,11 +3,9 @@ pragma solidity ^0.8.10;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./KingToken.sol";
 
 contract KingVault is Initializable, AccessControlUpgradeable {
-  using SafeMath for uint256;
 
   bytes32 public constant GAME_ADMIN = keccak256("GAME_ADMIN");
 
