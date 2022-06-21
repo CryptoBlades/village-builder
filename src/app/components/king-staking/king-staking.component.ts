@@ -137,7 +137,7 @@ export class KingStakingComponent implements OnInit {
   }
 
   get isStakeInProgress() {
-    return this.building?.upgrading && !!this.stakeCompleteTimestamp;
+    return !!this.stakeCompleteTimestamp;
   }
 
   get isBuilt() {
