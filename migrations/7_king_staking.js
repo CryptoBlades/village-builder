@@ -8,10 +8,13 @@ module.exports = async function (deployer, network) {
   const village = await Village.deployed();
   if (network === "development") {
     const kingToken = await KingToken.deployed();
-    await deployProxy(KingStaking, [village.address, kingToken.address], {deployer});
+    let kingStaking = await deployProxy(KingStaking, [village.address, kingToken.address], {deployer});
+    await village.grantRole(await village.GAME_ADMIN(), kingStaking.address);
   } else if (network === 'bsctestnet' || network === 'bsctestnet-fork') {
-    await deployProxy(KingStaking, [village.address, test.kingAddress], {deployer});
+    let kingStaking = await deployProxy(KingStaking, [village.address, test.kingAddress], {deployer});
+    await village.grantRole(await village.GAME_ADMIN(), kingStaking.address);
   } else if (network === 'bscmainnet' || network === 'bscmainnet-fork') {
-    await deployProxy(KingStaking, [village.address, production.kingAddress], {deployer});
+    let kingStaking = await deployProxy(KingStaking, [village.address, production.kingAddress], {deployer});
+    await village.grantRole(await village.GAME_ADMIN(), kingStaking.address);
   }
 };
