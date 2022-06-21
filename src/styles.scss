@@ -263,6 +263,7 @@ $altTheme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
     padding-right: 0 !important;
     border: 1px solid #404857;
     border-radius: 10px;
+    @apply relative;
   }
 
   @apply max-h-full max-w-full h-full w-full md:h-4/5 md:w-4/5;

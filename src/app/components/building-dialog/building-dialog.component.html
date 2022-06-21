@@ -1,4 +1,7 @@
 <ng-template [ngIf]="!isLoading && building" [ngIfElse]="loading">
+  <button class="dialog-close" mat-icon-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
   <mat-tab-group color="accent" mat-align-tabs="center" class="h-full" selectedIndex="0">
     <mat-tab>
       <ng-template mat-tab-label>
