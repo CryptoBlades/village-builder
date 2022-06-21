@@ -25,8 +25,8 @@
     "UnstakeIsPermanent": "Unstake is permanent"
   },
   "Resources": {
-    "King": "King",
-    "Skill": "Skill",
+    "King": "KING",
+    "Skill": "SKILL",
     "Weapon": "Weapon",
     "Weapons": "Weapons",
     "Character": "Character",

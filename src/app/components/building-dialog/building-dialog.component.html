@@ -14,7 +14,7 @@
     <mat-tab *ngIf="isResourcesGenerator" [disabled]="building.level === 0">
       <ng-template mat-tab-label>
         <img src="./assets/Placeholder/skill.png" class="px-1 w-8"
-             [alt]="'Resources.Skill' | translate | uppercase"/>
+             [alt]="'Resources.Skill' | translate"/>
         <span class="building-name"
               [matTooltip]="building && building.level === 0 ? ('Staking.YouNeedToBuild' | translate:{building: 'BuildingTypes.' + getBuildingTypeName(this.building.type) | translate}) : ''">{{'Resources.Skill' | translate | uppercase}}</span>
       </ng-template>

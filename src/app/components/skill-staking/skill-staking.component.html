@@ -15,7 +15,7 @@
       </div>
       <div *ngIf="totalSkillStaked">
         <p class="building-requirements">{{'Staking.TotalStaked' | translate}}:</p>
-        <p class="secondary-text">{{totalSkillStaked}} {{'Resources.Skill' | translate | uppercase}}</p>
+        <p class="secondary-text">{{totalSkillStaked}} {{'Resources.Skill' | translate}}</p>
       </div>
       <button mat-raised-button
               class="btn button-stake"
@@ -34,7 +34,7 @@
         </ng-template>
         <ng-template #stake>
           {{'Staking.Stake' | translate}} <span
-          *ngIf="skillRequired"> ({{ skillRequired }} {{'Resources.Skill' | translate | uppercase}})</span>
+          *ngIf="skillRequired"> ({{ skillRequired }} {{'Resources.Skill' | translate}})</span>
         </ng-template>
         <ng-template #required>
           {{'Staking.NeedToUnlockAtLeastStakingTiers' | translate: {
