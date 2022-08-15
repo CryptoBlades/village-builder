@@ -59,8 +59,7 @@ contract Staking is Initializable, AccessControlUpgradeable {
   }
 
   function completeStake() public virtual {
-    uint256 currentStakeId = currentStake[tx.origin];
-    require(block.timestamp > currentStakeStart[tx.origin] + stakes[currentStakeId].duration, 'Stake not completed');
+    require(block.timestamp > getStakeCompleteTimestamp(), 'Stake not completed');
     require(!currentStakeRewardClaimed[tx.origin], 'Reward already claimed');
     unlockedTiers[tx.origin] += 1;
     currentStakeRewardClaimed[tx.origin] = true;
@@ -78,7 +77,7 @@ contract Staking is Initializable, AccessControlUpgradeable {
 
   // VIEWS
 
-  function getStakeCompleteTimestamp() external view returns (uint256) {
+  function getStakeCompleteTimestamp() public view returns (uint256) {
     return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }
 
@@ -90,7 +89,7 @@ contract Staking is Initializable, AccessControlUpgradeable {
   }
 
   function canCompleteStake() public view returns (bool) {
-    return currentStake[tx.origin] != 0 && !currentStakeRewardClaimed[tx.origin] && (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration);
+    return currentStake[tx.origin] != 0 && !currentStakeRewardClaimed[tx.origin] && (block.timestamp > getStakeCompleteTimestamp());
   }
 
   function getNextRequirement() public view returns (uint256) {

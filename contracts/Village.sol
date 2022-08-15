@@ -42,25 +42,6 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     _setupRole(GAME_ADMIN, msg.sender);
 
     cbkLand = CBKLandInterface(cbkLandAddress);
-
-    buildingMaxLevel[Building.TOWN_HALL] = 5;
-    buildingMaxLevel[Building.HEADQUARTERS] = 1;
-    buildingMaxLevel[Building.BARRACKS] = 5;
-    buildingMaxLevel[Building.CLAY_PIT] = 6;
-    buildingMaxLevel[Building.FOREST_CAMP] = 6;
-    buildingMaxLevel[Building.STONE_MINE] = 6;
-    buildingMaxLevel[Building.STOREHOUSE] = 10;
-    buildingMaxLevel[Building.SMITHY] = 6;
-    buildingMaxLevel[Building.FARM] = 10;
-    buildingMaxLevel[Building.HIDDEN_STASH] = 1;
-    buildingMaxLevel[Building.WALL] = 1;
-    buildingMaxLevel[Building.MARKET] = 1;
-
-    buildingRequirement[Building.HEADQUARTERS] = BuildingRequirement(Building.TOWN_HALL, 3);
-    buildingRequirement[Building.BARRACKS] = BuildingRequirement(Building.TOWN_HALL, 2);
-    buildingRequirement[Building.SMITHY] = BuildingRequirement(Building.BARRACKS, 3);
-    buildingRequirement[Building.WALL] = BuildingRequirement(Building.BARRACKS, 1);
-    buildingRequirement[Building.MARKET] = BuildingRequirement(Building.TOWN_HALL, 5);
   }
 
   modifier restricted() {
@@ -131,6 +112,16 @@ contract Village is Initializable, AccessControlUpgradeable, IERC721ReceiverUpgr
     buildings[id][buildingUpgrade.building] += 1;
     emit BuildingUpgraded(id, buildingUpgrade.building, buildings[id][buildingUpgrade.building]);
     currentlyUpgrading[id] = BuildingUpgrade(Building.NONE, 0);
+  }
+
+  // SETTERS
+
+  function setBuildingMaxLevel(Building building, uint level) external restricted {
+    buildingMaxLevel[building] = level;
+  }
+
+  function setBuildingRequirement(Building building, Building requirement, uint level) external restricted {
+    buildingRequirement[building] = BuildingRequirement(requirement, level);
   }
 
   // VIEWS

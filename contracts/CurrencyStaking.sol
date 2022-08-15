@@ -38,13 +38,11 @@ contract CurrencyStaking is Staking {
     return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }
 
-  function unstake() virtual assertStakesLand(tx.origin) public returns (bool stakeCompleted) {
+  function unstake() virtual public returns (bool stakeCompleted) {
     require(currentStake[tx.origin] != 0, 'You have no stakes to unstake');
     if (canCompleteStake()) {
       completeStake();
       stakeCompleted = true;
-    } else {
-      stakeCompleted = false;
     }
     currentStake[tx.origin] = 0;
     currentStakeStart[tx.origin] = 0;

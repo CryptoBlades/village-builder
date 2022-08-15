@@ -47,14 +47,12 @@ contract NftStaking is Staking, IERC721ReceiverUpgradeable {
     return currentStakeStart[tx.origin] + stakes[currentStake[tx.origin]].duration;
   }
 
-  function unstake() virtual assertStakesLand(tx.origin) public returns (bool stakeCompleted) {
+  function unstake() virtual public returns (bool stakeCompleted) {
     uint256 currentStakeId = currentStake[tx.origin];
     require(currentStakeId != 0, 'You have no stakes to unstake');
-    if (block.timestamp > currentStakeStart[tx.origin] + stakes[currentStakeId].duration) {
+    if (block.timestamp > getStakeCompleteTimestamp()) {
       completeStake();
       stakeCompleted = true;
-    } else {
-      stakeCompleted = false;
     }
     currentStake[tx.origin] = 0;
     currentStakeStart[tx.origin] = 0;
@@ -69,7 +67,7 @@ contract NftStaking is Staking, IERC721ReceiverUpgradeable {
   // VIEWS
 
   function getRequiredStakeAmount() external view returns (uint256) {
-    return stakes[currentStake[tx.origin] + 1].amount - stakedNfts[tx.origin].length;
+    return stakes[currentStake[tx.origin] + 1].amount - getStakedAmount(tx.origin);
   }
 
   function getStakedAmount(address user) public view returns (uint256) {

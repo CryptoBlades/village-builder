@@ -33,9 +33,10 @@ contract KingVault is Initializable, AccessControlUpgradeable {
 
   function claimVault() external {
     require(vaults[msg.sender] > 0, "You don't have any king in the vault to claim");
-    kingToken.transfer(msg.sender, vaults[msg.sender]);
-    claimed[msg.sender] += vaults[msg.sender];
+    uint claimAmount = vaults[msg.sender];
+    claimed[msg.sender] += claimAmount;
     vaults[msg.sender] = 0;
+    kingToken.transfer(msg.sender, claimAmount);
   }
 
   function addToVault(address receiver, uint amount) restricted public {
