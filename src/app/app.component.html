@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="village">
-          <div class="flooring">
+          <div *ngIf="isWallConstructed" class="flooring">
           </div>
           <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
                                   [stakeCompleteTimestamp]="kingStakeCompleteTimestamp"></app-clickable-building>

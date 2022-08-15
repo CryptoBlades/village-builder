@@ -239,4 +239,8 @@ export class AppComponent implements OnInit {
     const userOption: UserOptionStateModel = this.store.selectSnapshot(state => state.userOption);
     this.translateService.use(userOption.language);
   }
+
+  get isWallConstructed() {
+    return this.buildings.find(building => building.type === BuildingType.WALL)?.level || 0 > 0;
+  }
 }
