@@ -82,12 +82,11 @@
                     [timestamp]="charactersStakeCompleteTimestamp || 0"></span></p>
           </div>
         </div>
-        <div class="flex flex-wrap village-view-container">
-          <img src="assets/Village/village_background.png" alt="Village view">
-          <div class="buildings-container">
-            <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
-                                    [stakeCompleteTimestamp]="kingStakeCompleteTimestamp"></app-clickable-building>
+        <div class="village">
+          <div class="flooring">
           </div>
+          <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
+                                  [stakeCompleteTimestamp]="kingStakeCompleteTimestamp"></app-clickable-building>
         </div>
       </drag-scroll>
     </mat-drawer-container>

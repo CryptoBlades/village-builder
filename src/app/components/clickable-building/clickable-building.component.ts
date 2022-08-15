@@ -34,4 +34,8 @@ export class ClickableBuildingComponent implements OnInit {
       this.onLoadData.emit();
     });
   }
+
+  get isWall() {
+    return this.building.type === BuildingType.WALL;
+  }
 }

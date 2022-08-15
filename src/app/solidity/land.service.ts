@@ -27,6 +27,7 @@ export interface Placement {
   x: number;
   y: number;
   width?: number;
+  z_index?: number;
 }
 
 @Injectable({

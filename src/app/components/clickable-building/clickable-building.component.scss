@@ -1,4 +1,14 @@
-.centered-image-description {
+.centered-image-description,
+.wall-image-description {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  @apply w-full absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2;
+  @apply w-full absolute transform -translate-y-1/2 -translate-x-1/2;
+}
+
+.centered-image-description {
+  @apply top-1/2 left-1/2;
+}
+
+.wall-image-description {
+  top: 80%;
+  left: 25%;
 }

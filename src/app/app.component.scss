@@ -14,7 +14,24 @@
   position: relative;
 }
 
-//2560 1413
+.village {
+  object-fit: cover;
+  position: relative;
+  width: 2160px;
+  height: 95vh;
+  background-size: cover;
+  background-image: url('~src/assets/Village/city_blank.jpg');
+}
+
+.flooring {
+  top: 306px;
+  left: 560px;
+  width: 1200px;
+  height: 700px;
+  position: absolute;
+  background-size: cover;
+  background-image: url('~src/assets/Village/flooring.png');
+}
 
 .buildings-container {
   position: absolute;

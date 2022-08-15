@@ -1,16 +1,17 @@
 <div (click)="openBuildingDialog(building.type)" class="cursor-pointer absolute text-center"
      [style.left.%]="building.placement.x" [style.top.%]="building.placement.y"
-     [style.width.px]="building.placement.width">
+     [style.width.px]="building.placement.width" [style.z-index]="building.placement.z_index">
   <img [src]="building.image" [alt]="'BuildingTypes.' + getBuildingTypeName(building.type) | translate">
   <ng-container
     [ngTemplateOutlet]="(building.upgrading && !stakeCompleteTimestamp) ? complete : building.upgrading ? inProgress : notInProgress"></ng-container>
   <ng-template #complete>
-    <span class="centered-image-description">{{ 'BuildingTypes.' + getBuildingTypeName(building.type) | translate }}
+    <span
+      [class]="isWall ? 'wall-image-description' : 'centered-image-description'">{{ 'BuildingTypes.' + getBuildingTypeName(building.type) | translate }}
       ({{'Common.Complete' | translate}})</span>
   </ng-template>
   <ng-template #inProgress>
             <span
-              class="centered-image-description">{{ 'BuildingTypes.' + getBuildingTypeName(building.type) | translate }}
+              [class]="isWall ? 'wall-image-description' : 'centered-image-description'">{{ 'BuildingTypes.' + getBuildingTypeName(building.type) | translate }}
               (<span
                 appTimestampCountdown
                 [timestamp]="stakeCompleteTimestamp || 0"
@@ -18,6 +19,6 @@
   </ng-template>
   <ng-template #notInProgress>
     <span
-      class="centered-image-description">{{ 'BuildingTypes.' + getBuildingTypeName(building.type) | translate }}</span>
+      [class]="isWall ? 'wall-image-description' : 'centered-image-description'">{{ 'BuildingTypes.' + getBuildingTypeName(building.type) | translate }}</span>
   </ng-template>
 </div>
