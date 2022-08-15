@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="village">
-          <div *ngIf="isWallConstructed" class="flooring">
+          <div [style.opacity]="isWallConstructed ? 1 : 0.25" class="flooring">
           </div>
           <app-clickable-building *ngFor="let building of buildings" [building]="building" (onLoadData)="loadData()"
                                   [stakeCompleteTimestamp]="kingStakeCompleteTimestamp"></app-clickable-building>
