@@ -10,9 +10,12 @@
     "test": "ng test",
     "deploy-testnet": "truffle migrate --network bsctestnet",
     "postdeploy-testnet": "run-s \"backup-networks 97\" \"verify-contracts -- --network bsctestnet\"",
+    "deploy-mainnet": "truffle migrate --network bscmainnet",
+    "postdeploy-mainnet": "run-s \"backup-networks 56\" \"verify-contracts -- --network bscmainnet\"",
     "backup-networks": "node scripts/manage-networks.js backup",
     "restore-networks": "node scripts/manage-networks.js restore",
-    "restore-all-networks": "run-s \"restore-networks 97\""
+    "restore-all-networks": "run-s \"restore-networks 56\" \"restore-networks 97\"",
+    "verify-contracts": "node scripts/verify-contracts.js"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +41,7 @@
     "browser": "^0.2.6",
     "crypto-browserify": "^3.12.0",
     "dotenv": "^16.0.0",
+    "graph-data-structure": "^2.0.0",
     "https-browserify": "^1.0.0",
     "luxon": "^2.3.2",
     "ngx-drag-scroll": "^13.0.1",

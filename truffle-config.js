@@ -77,6 +77,21 @@ module.exports = {
       gas: 10000000,//8000000,
       skipDryRun: true
     },
+    bscmainnet: {
+      provider: () => new HDWalletProvider(hdWalletProviderOptions(
+        process.env.BINANCE_MAINNET_WALLET_PRIVATE_KEY,
+        process.env.BINANCE_MAINNET_WALLET_MNEMONIC,
+        {
+          providerOrUrl: process.env.BINANCE_MAINNET_RPC_URL || 'https://bsc-dataseed1.binance.org/'
+        }
+      )),
+      gasPrice: 5000000000,
+      network_id: 0x38,
+      confirmations: 0,
+      timeoutBlocks: 200,
+      gas: 5600000,
+      skipDryRun: true
+    },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -132,5 +147,12 @@ module.exports = {
 
   db: {
     enabled: false
-  }
+  },
+  
+  plugins: [
+    "truffle-plugin-verify"
+  ],
+  api_keys: {
+    bscscan: process.env.BSCSCAN_API_KEY,
+  },
 };

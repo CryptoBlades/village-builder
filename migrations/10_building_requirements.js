@@ -12,7 +12,7 @@ const HIDDEN_STASH = 10;
 const WALL = 11;
 const MARKET = 12;
 
-module.exports = async () => {
+module.exports = async (deployer) => {
   const village = await Village.deployed();
 
   await Promise.all([
