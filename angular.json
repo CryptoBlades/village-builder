@@ -97,6 +97,9 @@
             "production": {
               "browserTarget": "village-builder:build:production"
             },
+            "test": {
+              "browserTarget": "village-builder:build:test"
+            },
             "development": {
               "browserTarget": "village-builder:build:development"
             }
