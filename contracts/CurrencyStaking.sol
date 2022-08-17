@@ -61,4 +61,10 @@ contract CurrencyStaking is Staking {
     }
   }
 
+  // SETTERS
+
+  function setCurrency(address currencyAddress) external restricted {
+    currency = IERC20Upgradeable(currencyAddress);
+  }
+
 }

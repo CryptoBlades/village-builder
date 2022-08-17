@@ -73,4 +73,10 @@ contract NftStaking is Staking, IERC721ReceiverUpgradeable {
   function getStakedAmount(address user) public view returns (uint256) {
     return stakedNfts[user].length;
   }
+
+  // SETTERS
+
+  function setNft(address nftAddress) external restricted {
+    nft = IERC721EnumerableUpgradeable(nftAddress);
+  }
 }
