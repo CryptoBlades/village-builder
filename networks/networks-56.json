@@ -2,12 +2,14 @@
   "build/contracts/CharacterStaking.json": {
     "events": {},
     "links": {},
-    "address": "0xCdd727622832353EdB81AddfDc2b1aE09C3bF44f"
+    "address": "0xCdd727622832353EdB81AddfDc2b1aE09C3bF44f",
+    "transactionHash": "0x47a40514e848718fd026eb3da50fbf5eeee5332ab18fb7dd50979a411f979f36"
   },
   "build/contracts/KingStaking.json": {
     "events": {},
     "links": {},
-    "address": "0x2411a6A3Ce5cCfc649B1619EDf7105fa4BcE71eD"
+    "address": "0x2411a6A3Ce5cCfc649B1619EDf7105fa4BcE71eD",
+    "transactionHash": "0x393194e9d8214779d08a433f535e4ab4281750b8a331a279db5e88d511094d57"
   },
   "build/contracts/KingVault.json": {
     "events": {
@@ -101,7 +103,7 @@
     "events": {},
     "links": {},
     "address": "0xFACCb36359AC41661EE3135d55B190f4486c5b34",
-    "transactionHash": "0x939049b1b0e779445a793ded8405918d4d8a23a99a88808d6d49c1a385cd381c"
+    "transactionHash": "0x087b40075edd4e5e961727f130d740071c373d2b1e45ad9fe93fbb373c45342d"
   },
   "build/contracts/Village.json": {
     "events": {
@@ -250,6 +252,7 @@
   "build/contracts/WeaponStaking.json": {
     "events": {},
     "links": {},
-    "address": "0x928516345463816B76194E0D8e4b6EB0f2C9c10E"
+    "address": "0x928516345463816B76194E0D8e4b6EB0f2C9c10E",
+    "transactionHash": "0x96268a6eb2e6c3dc77d9638e7d4120db73e4538f960fac1118a639c3951e89cd"
   }
 }
