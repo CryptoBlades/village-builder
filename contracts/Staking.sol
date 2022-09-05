@@ -59,6 +59,7 @@ contract Staking is Initializable, AccessControlUpgradeable {
   }
 
   function completeStake() public virtual {
+    require(currentStake[tx.origin] != 0, 'You have not staked');
     require(block.timestamp > getStakeCompleteTimestamp(), 'Stake not completed');
     require(!currentStakeRewardClaimed[tx.origin], 'Reward already claimed');
     unlockedTiers[tx.origin] += 1;
