@@ -35,8 +35,6 @@ export class CharactersService {
     this.charactersContract = this.characterStakingContract.methods.nft().call().then((address: string) => {
       return new this.web3.eth.Contract(Characters.abi as any, address);
     });
-    console.log(environment.environment);
-    console.log(environment.environment === "PRODUCTION");
     if (environment.environment === "TEST") {
       this.garrisonContract = new this.web3.eth.Contract(Garrison.abi as any, test.garrisonAddress);
     } else if (environment.environment === "PRODUCTION") {
@@ -51,13 +49,13 @@ export class CharactersService {
 
   async getOwnedCharacters(): Promise<number[]> {
     const accountCharacters = (await (await this.charactersContract).methods.getReadyCharacters(this.currentAccount).call()).map((character: string) => +character);
-    const garrisonCharacters = (await this.garrisonContract.methods.getUserCharacters().call()).map((character: string) => +character);
+    const garrisonCharacters = (await this.garrisonContract.methods.getUserCharacters().call({from: this.currentAccount})).map((character: string) => +character);
     return accountCharacters.concat(garrisonCharacters);
   }
 
   async getOwnedAmount(): Promise<number> {
     const accountCharactersAmount = +await (await this.charactersContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});
-    const garrisonCharactersAmount = (await this.garrisonContract.methods.getUserCharacters().call()).length;
+    const garrisonCharactersAmount = (await this.garrisonContract.methods.getUserCharacters().call({from: this.currentAccount})).length;
     return accountCharactersAmount + garrisonCharactersAmount;
   }
 
