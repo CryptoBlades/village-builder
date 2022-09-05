@@ -35,6 +35,8 @@ export class CharactersService {
     this.charactersContract = this.characterStakingContract.methods.nft().call().then((address: string) => {
       return new this.web3.eth.Contract(Characters.abi as any, address);
     });
+    console.log(environment.environment);
+    console.log(environment.environment === "PRODUCTION");
     if (environment.environment === "TEST") {
       this.garrisonContract = new this.web3.eth.Contract(Garrison.abi as any, test.garrisonAddress);
     } else if (environment.environment === "PRODUCTION") {

@@ -97,6 +97,7 @@ export class CharacterStakingComponent implements OnInit {
         this.charactersService.getStakeCompleteTimestamp(),
       ]);
       this.characters = ownedCharacters;
+      console.log(ownedCharacters);
       this.currentStake = currentStake;
       this.totalCharactersStaked = totalCharactersStaked;
       this.charactersRequired = charactersRequired;
