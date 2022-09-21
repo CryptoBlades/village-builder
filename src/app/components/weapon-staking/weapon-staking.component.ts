@@ -1,16 +1,20 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {StakingTier} from "../../interfaces/staking-tier";
 import {Building} from "../../app.component";
-import {extractResourcesFromUnlockedTiers, getBuildingTypeName} from 'src/app/common/common';
+import {
+  extractRewardResourcesFromUnlockedTiers,
+  extractUnlocksResourcesFromUnlockedTiers,
+  getBuildingTypeName
+} from 'src/app/common/common';
 import weaponStakingTiers from '../../../assets/staking-tiers/weapons.json';
 import {CharactersService} from "../../solidity/characters.service";
 import {Store} from "@ngxs/store";
 import {WeaponsService} from "../../solidity/weapons.service";
 import {
   SetWeaponsBalance,
-  SetWeaponsClayBalance,
-  SetWeaponsStoneBalance,
-  SetWeaponsWoodBalance
+  SetWeaponsClayBalance, SetWeaponsClayUnlocksBalance,
+  SetWeaponsStoneBalance, SetWeaponsStoneUnlocksBalance,
+  SetWeaponsWoodBalance, SetWeaponsWoodUnlocksBalance
 } from "../../state/wallet/wallet.actions";
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
@@ -120,11 +124,15 @@ export class WeaponStakingComponent implements OnInit {
         this.isPathFinished = !weaponsRequired;
       }
       if (unlockedTiers) {
-        const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.weaponStakingTiers, unlockedTiers);
+        const {clay, wood, stone} = extractRewardResourcesFromUnlockedTiers(this.weaponStakingTiers, unlockedTiers);
+        const {clay: clayUnlocks, wood: woodUnlocks, stone: stoneUnlocks} = extractUnlocksResourcesFromUnlockedTiers(this.weaponStakingTiers, unlockedTiers);
         this.store.dispatch([
           this.store.dispatch(new SetWeaponsClayBalance(clay)),
           this.store.dispatch(new SetWeaponsWoodBalance(wood)),
           this.store.dispatch(new SetWeaponsStoneBalance(stone)),
+          this.store.dispatch(new SetWeaponsClayUnlocksBalance(clayUnlocks)),
+          this.store.dispatch(new SetWeaponsWoodUnlocksBalance(woodUnlocks)),
+          this.store.dispatch(new SetWeaponsStoneUnlocksBalance(stoneUnlocks)),
         ]);
       }
       this.store.dispatch(new SetWeaponsBalance(this.ownedWeapons.length));

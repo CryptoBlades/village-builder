@@ -1,17 +1,22 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {_filter, extractUnitsFromUnlockedTiers, getBuildingTypeName} from 'src/app/common/common';
+import {
+  _filter,
+  extractRewardUnitsFromUnlockedTiers,
+  extractUnlocksUnitsFromUnlockedTiers,
+  getBuildingTypeName
+} from 'src/app/common/common';
 import {Building} from "../../app.component";
 import {CharactersService} from "../../solidity/characters.service";
 import charactersStakingTiers from '../../../assets/staking-tiers/characters.json';
 import {StakingTier} from "../../interfaces/staking-tier";
 import {Store} from "@ngxs/store";
 import {
-  SetArcherBalance,
-  SetBruiserBalance,
+  SetArcherBalance, SetArcherUnlocksBalance,
+  SetBruiserBalance, SetBruiserUnlocksBalance,
   SetCharactersBalance,
-  SetMageBalance,
-  SetMercenaryBalance,
-  SetPaladinBalance
+  SetMageBalance, SetMageUnlocksBalance,
+  SetMercenaryBalance, SetMercenaryUnlocksBalance,
+  SetPaladinBalance, SetPaladinUnlocksBalance
 } from "../../state/wallet/wallet.actions";
 import {BuildingType} from "../../enums/building-type";
 import {map, Observable, startWith} from "rxjs";
@@ -120,13 +125,25 @@ export class CharacterStakingComponent implements OnInit {
           mage,
           archer,
           paladin
-        } = extractUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
+        } = extractRewardUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
+        const {
+          mercenary: mercenaryUnlocks,
+          bruiser: bruiserUnlocks,
+          mage: mageUnlocks,
+          archer: archerUnlocks,
+          paladin: paladinUnlocks
+        } = extractUnlocksUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
         this.store.dispatch([
           new SetMercenaryBalance(mercenary),
           new SetBruiserBalance(bruiser),
           new SetMageBalance(mage),
           new SetArcherBalance(archer),
           new SetPaladinBalance(paladin),
+          new SetMercenaryUnlocksBalance(mercenaryUnlocks),
+          new SetBruiserUnlocksBalance(bruiserUnlocks),
+          new SetMageUnlocksBalance(mageUnlocks),
+          new SetArcherUnlocksBalance(archerUnlocks),
+          new SetPaladinUnlocksBalance(paladinUnlocks),
         ]);
       }
     } finally {

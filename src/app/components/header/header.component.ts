@@ -8,26 +8,30 @@ import {Land} from "../../interfaces/land";
 import detectEthereumProvider from "@metamask/detect-provider";
 import {
   ClearWalletState,
-  SetArcherBalance,
-  SetBruiserBalance,
+  SetArcherBalance, SetArcherUnlocksBalance,
+  SetBruiserBalance, SetBruiserUnlocksBalance,
   SetCharactersBalance,
   SetKingBalance,
   SetLands,
-  SetMageBalance,
-  SetMercenaryBalance,
+  SetMageBalance, SetMageUnlocksBalance,
+  SetMercenaryBalance, SetMercenaryUnlocksBalance,
   SetMetamaskConnected,
-  SetPaladinBalance,
+  SetPaladinBalance, SetPaladinUnlocksBalance,
   SetSkillBalance,
-  SetSkillClayBalance,
-  SetSkillStoneBalance,
-  SetSkillWoodBalance,
+  SetSkillClayBalance, SetSkillClayUnlocksBalance,
+  SetSkillStoneBalance, SetSkillStoneUnlocksBalance,
+  SetSkillWoodBalance, SetSkillWoodUnlocksBalance,
   SetWalletAddress,
   SetWeaponsBalance,
-  SetWeaponsClayBalance,
-  SetWeaponsStoneBalance,
-  SetWeaponsWoodBalance
+  SetWeaponsClayBalance, SetWeaponsClayUnlocksBalance,
+  SetWeaponsStoneBalance, SetWeaponsStoneUnlocksBalance,
+  SetWeaponsWoodBalance, SetWeaponsWoodUnlocksBalance
 } from "../../state/wallet/wallet.actions";
-import {extractResourcesFromUnlockedTiers, extractUnitsFromUnlockedTiers} from "../../common/common";
+import {
+  extractRewardResourcesFromUnlockedTiers,
+  extractRewardUnitsFromUnlockedTiers,
+  extractUnlocksResourcesFromUnlockedTiers, extractUnlocksUnitsFromUnlockedTiers
+} from "../../common/common";
 import {SetBuildings, SetLandSelected} from "../../state/land/land.actions";
 import {Web3Service} from "../../services/web3.service";
 import {LandService} from "../../solidity/land.service";
@@ -155,19 +159,35 @@ export class HeaderComponent implements OnInit {
         clay: skillClay,
         wood: skillWood,
         stone: skillStone
-      } = extractResourcesFromUnlockedTiers(this.skillStakingTiers, unlockedSkillTiers);
+      } = extractRewardResourcesFromUnlockedTiers(this.skillStakingTiers, unlockedSkillTiers);
+      const {
+        clay: skillClayUnlocks,
+        wood: skillWoodUnlocks,
+        stone: skillStoneUnlocks
+      } = extractUnlocksResourcesFromUnlockedTiers(this.skillStakingTiers, unlockedSkillTiers);
       const {
         clay: weaponClay,
         wood: weaponWood,
         stone: weaponStone
-      } = extractResourcesFromUnlockedTiers(this.weaponsStakingTiers, unlockedWeaponsTiers);
+      } = extractRewardResourcesFromUnlockedTiers(this.weaponsStakingTiers, unlockedWeaponsTiers);
+      const {
+        clay: weaponClayUnlocks,
+        wood: weaponWoodUnlocks,
+        stone: weaponStoneUnlocks
+      } = extractUnlocksResourcesFromUnlockedTiers(this.weaponsStakingTiers, unlockedWeaponsTiers);
       this.store.dispatch([
         new SetSkillClayBalance(skillClay),
         new SetSkillWoodBalance(skillWood),
         new SetSkillStoneBalance(skillStone),
+        new SetSkillClayUnlocksBalance(skillClayUnlocks),
+        new SetSkillWoodUnlocksBalance(skillWoodUnlocks),
+        new SetSkillStoneUnlocksBalance(skillStoneUnlocks),
         new SetWeaponsClayBalance(weaponClay),
         new SetWeaponsWoodBalance(weaponWood),
         new SetWeaponsStoneBalance(weaponStone),
+        new SetWeaponsClayUnlocksBalance(weaponClayUnlocks),
+        new SetWeaponsWoodUnlocksBalance(weaponWoodUnlocks),
+        new SetWeaponsStoneUnlocksBalance(weaponStoneUnlocks),
       ]);
     }
     const unlockedCharactersTiers = await this.charactersService.getUnlockedTiers();
@@ -178,13 +198,25 @@ export class HeaderComponent implements OnInit {
         mage,
         archer,
         paladin
-      } = extractUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
+      } = extractRewardUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
+      const {
+        mercenary: mercenaryUnlocks,
+        bruiser: bruiserUnlocks,
+        mage: mageUnlocks,
+        archer: archerUnlocks,
+        paladin: paladinUnlocks
+      } = extractUnlocksUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
       this.store.dispatch([
         new SetMercenaryBalance(mercenary),
         new SetBruiserBalance(bruiser),
         new SetMageBalance(mage),
         new SetArcherBalance(archer),
         new SetPaladinBalance(paladin),
+        new SetMercenaryUnlocksBalance(mercenaryUnlocks),
+        new SetBruiserUnlocksBalance(bruiserUnlocks),
+        new SetMageUnlocksBalance(mageUnlocks),
+        new SetArcherUnlocksBalance(archerUnlocks),
+        new SetPaladinUnlocksBalance(paladinUnlocks),
       ]);
     }
     this.store.dispatch(new SetLands(await this.landService.getOwnedLands()));

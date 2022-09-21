@@ -49,8 +49,22 @@ export class SetSkillClayBalance {
   }
 }
 
+export class SetSkillClayUnlocksBalance {
+  static readonly type = '[Wallet] Set Skill Clay Unlocks Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
 export class SetWeaponsClayBalance {
   static readonly type = '[Wallet] Set Weapons Clay Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetWeaponsClayUnlocksBalance {
+  static readonly type = '[Wallet] Set Weapons Clay Unlocks Balance';
 
   constructor(public payload: number) {
   }
@@ -63,8 +77,22 @@ export class SetSkillWoodBalance {
   }
 }
 
+export class SetSkillWoodUnlocksBalance {
+  static readonly type = '[Wallet] Set Skill Wood Unlocks Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
 export class SetWeaponsWoodBalance {
   static readonly type = '[Wallet] Set Weapons Wood Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetWeaponsWoodUnlocksBalance {
+  static readonly type = '[Wallet] Set Weapons Wood Unlocks Balance';
 
   constructor(public payload: number) {
   }
@@ -77,8 +105,22 @@ export class SetSkillStoneBalance {
   }
 }
 
+export class SetSkillStoneUnlocksBalance {
+  static readonly type = '[Wallet] Set Skill Stone Unlocks Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
 export class SetWeaponsStoneBalance {
   static readonly type = '[Wallet] Set Weapons Stone Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetWeaponsStoneUnlocksBalance {
+  static readonly type = '[Wallet] Set Weapons Stone Unlocks Balance';
 
   constructor(public payload: number) {
   }
@@ -114,6 +156,41 @@ export class SetArcherBalance {
 
 export class SetPaladinBalance {
   static readonly type = '[Wallet] Set Paladin Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetMercenaryUnlocksBalance {
+  static readonly type = '[Wallet] Set Mercenary Unlocks Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetBruiserUnlocksBalance {
+  static readonly type = '[Wallet] Set Bruiser Unlocks Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetMageUnlocksBalance {
+  static readonly type = '[Wallet] Set Mage Unlocks Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetArcherUnlocksBalance {
+  static readonly type = '[Wallet] Set Archer Unlocks Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetPaladinUnlocksBalance {
+  static readonly type = '[Wallet] Set Paladin Unlocks Balance';
 
   constructor(public payload: number) {
   }

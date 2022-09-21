@@ -1,6 +1,10 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Building} from "../../app.component";
-import {extractResourcesFromUnlockedTiers, getBuildingTypeName} from 'src/app/common/common';
+import {
+  extractRewardResourcesFromUnlockedTiers,
+  extractUnlocksResourcesFromUnlockedTiers,
+  getBuildingTypeName
+} from 'src/app/common/common';
 import {StakingTier} from "../../interfaces/staking-tier";
 import skillStakingTiers from '../../../assets/staking-tiers/skill.json';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
@@ -11,9 +15,9 @@ import {Store} from "@ngxs/store";
 import {SkillService} from "../../solidity/skill.service";
 import {
   SetSkillBalance,
-  SetSkillClayBalance,
-  SetSkillStoneBalance,
-  SetSkillWoodBalance
+  SetSkillClayBalance, SetSkillClayUnlocksBalance,
+  SetSkillStoneBalance, SetSkillStoneUnlocksBalance,
+  SetSkillWoodBalance, SetSkillWoodUnlocksBalance
 } from "../../state/wallet/wallet.actions";
 import {KingService} from "../../solidity/king.service";
 
@@ -103,11 +107,15 @@ export class SkillStakingComponent implements OnInit {
         this.isPathFinished = !skillRequired;
       }
       if (skillUnlockedTiers) {
-        const {clay, wood, stone} = extractResourcesFromUnlockedTiers(this.skillStakingTiers, skillUnlockedTiers);
+        const {clay, wood, stone} = extractRewardResourcesFromUnlockedTiers(this.skillStakingTiers, skillUnlockedTiers);
+        const {clay: clayUnlocks, wood: woodUnlocks, stone: stoneUnlocks} = extractUnlocksResourcesFromUnlockedTiers(this.skillStakingTiers, skillUnlockedTiers);
         this.store.dispatch([
           this.store.dispatch(new SetSkillClayBalance(clay)),
           this.store.dispatch(new SetSkillWoodBalance(wood)),
           this.store.dispatch(new SetSkillStoneBalance(stone)),
+          this.store.dispatch(new SetSkillClayUnlocksBalance(clayUnlocks)),
+          this.store.dispatch(new SetSkillWoodUnlocksBalance(woodUnlocks)),
+          this.store.dispatch(new SetSkillStoneUnlocksBalance(stoneUnlocks)),
         ]);
       }
       this.store.dispatch(new SetSkillBalance(skillOwned));

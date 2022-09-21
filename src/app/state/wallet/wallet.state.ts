@@ -15,7 +15,21 @@ import {
   SetWeaponsWoodBalance,
   SetWeaponsStoneBalance,
   SetPaladinBalance,
-  SetArcherBalance, SetMageBalance, SetBruiserBalance, SetMercenaryBalance, SetLands
+  SetArcherBalance,
+  SetMageBalance,
+  SetBruiserBalance,
+  SetMercenaryBalance,
+  SetLands,
+  SetMercenaryUnlocksBalance,
+  SetBruiserUnlocksBalance,
+  SetMageUnlocksBalance,
+  SetArcherUnlocksBalance,
+  SetPaladinUnlocksBalance,
+  SetSkillClayUnlocksBalance,
+  SetSkillWoodUnlocksBalance,
+  SetWeaponsWoodUnlocksBalance,
+  SetWeaponsClayUnlocksBalance,
+  SetSkillStoneUnlocksBalance, SetWeaponsStoneUnlocksBalance
 } from './wallet.actions';
 import {Land} from "../../interfaces/land";
 
@@ -37,16 +51,27 @@ export interface WalletStateModel {
   weaponsBalance?: number;
   charactersBalance?: number;
   claySkillBalance?: number;
+  claySkillUnlocksBalance?: number;
   woodSkillBalance?: number;
+  woodSkillUnlocksBalance?: number;
   stoneSkillBalance?: number;
+  stoneSkillUnlocksBalance?: number;
   clayWeaponsBalance?: number;
+  clayWeaponsUnlocksBalance?: number;
   woodWeaponsBalance?: number;
+  woodWeaponsUnlocksBalance?: number;
   stoneWeaponsBalance?: number;
+  stoneWeaponsUnlocksBalance?: number;
   mercenaryBalance?: number;
+  mercenaryUnlocksBalance?: number;
   bruiserBalance?: number;
+  bruiserUnlocksBalance?: number;
   mageBalance?: number;
+  mageUnlocksBalance?: number;
   archerBalance?: number;
+  archerUnlocksBalance?: number;
   paladinBalance?: number;
+  paladinUnlocksBalance?: number;
   isConnected: boolean;
   isInstalled: boolean;
 }
@@ -104,9 +129,19 @@ export class WalletState {
     patchState({claySkillBalance: payload});
   }
 
+  @Action(SetSkillClayUnlocksBalance)
+  setClaySkillUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSkillClayUnlocksBalance) {
+    patchState({claySkillUnlocksBalance: payload});
+  }
+
   @Action(SetWeaponsClayBalance)
   setWeaponsClayBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsClayBalance) {
     patchState({clayWeaponsBalance: payload});
+  }
+
+  @Action(SetWeaponsClayUnlocksBalance)
+  setWeaponsClayUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsClayUnlocksBalance) {
+    patchState({clayWeaponsUnlocksBalance: payload});
   }
 
   @Action(SetSkillWoodBalance)
@@ -114,9 +149,19 @@ export class WalletState {
     patchState({woodSkillBalance: payload});
   }
 
+  @Action(SetSkillWoodUnlocksBalance)
+  setWoodSkillUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSkillWoodUnlocksBalance) {
+    patchState({woodSkillUnlocksBalance: payload});
+  }
+
   @Action(SetWeaponsWoodBalance)
   setWeaponsWoodBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsWoodBalance) {
     patchState({woodWeaponsBalance: payload});
+  }
+
+  @Action(SetWeaponsWoodUnlocksBalance)
+  setWeaponsWoodUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsWoodUnlocksBalance) {
+    patchState({woodWeaponsUnlocksBalance: payload});
   }
 
   @Action(SetSkillStoneBalance)
@@ -124,9 +169,19 @@ export class WalletState {
     patchState({stoneSkillBalance: payload});
   }
 
+  @Action(SetSkillStoneUnlocksBalance)
+  setStoneSkillUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSkillStoneUnlocksBalance) {
+    patchState({stoneSkillUnlocksBalance: payload});
+  }
+
   @Action(SetWeaponsStoneBalance)
   setWeaponsStoneBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsStoneBalance) {
     patchState({stoneWeaponsBalance: payload});
+  }
+
+  @Action(SetWeaponsStoneUnlocksBalance)
+  setWeaponsStoneUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetWeaponsStoneUnlocksBalance) {
+    patchState({stoneWeaponsUnlocksBalance: payload});
   }
 
   @Action(SetMercenaryBalance)
@@ -152,6 +207,31 @@ export class WalletState {
   @Action(SetPaladinBalance)
   setPaladinBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetPaladinBalance) {
     patchState({paladinBalance: payload});
+  }
+
+  @Action(SetMercenaryUnlocksBalance)
+  setMercenaryUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetMercenaryUnlocksBalance) {
+    patchState({mercenaryUnlocksBalance: payload});
+  }
+
+  @Action(SetBruiserUnlocksBalance)
+  setBruiserUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetBruiserUnlocksBalance) {
+    patchState({bruiserUnlocksBalance: payload});
+  }
+
+  @Action(SetMageUnlocksBalance)
+  setMageUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetMageUnlocksBalance) {
+    patchState({mageUnlocksBalance: payload});
+  }
+
+  @Action(SetArcherUnlocksBalance)
+  setArcherUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetArcherUnlocksBalance) {
+    patchState({archerUnlocksBalance: payload});
+  }
+
+  @Action(SetPaladinUnlocksBalance)
+  setPaladinUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetPaladinUnlocksBalance) {
+    patchState({paladinUnlocksBalance: payload});
   }
 
   @Action(SetMetamaskInstalled)
