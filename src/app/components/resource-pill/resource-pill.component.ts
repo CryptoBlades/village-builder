@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ResourcePillComponent implements OnInit {
 
   @Input() balance?: number;
+  @Input() unlocks?: number;
   @Input() image!: string;
   @Input() tooltip!: string;
 

@@ -72,14 +72,21 @@ export class AppComponent implements OnInit {
   weaponsBalance?: number;
   charactersBalance?: number;
   clayBalance?: number;
+  clayUnlocksBalance?: number;
   woodBalance?: number;
+  woodUnlocksBalance?: number;
   stoneBalance?: number;
+  stoneUnlocksBalance?: number;
   mercenaryBalance?: number;
+  mercenaryUnlocksBalance?: number;
   bruiserBalance?: number;
+  bruiserUnlocksBalance?: number;
   mageBalance?: number;
+  mageUnlocksBalance?: number;
   archerBalance?: number;
+  archerUnlocksBalance?: number;
   paladinBalance?: number;
-
+  paladinUnlocksBalance?: number;
   lands: Land[] = [];
   buildings: Building[] = [];
 
@@ -111,17 +118,31 @@ export class AppComponent implements OnInit {
       if (state.claySkillBalance !== undefined && state.clayWeaponsBalance !== undefined) {
         this.clayBalance = state.claySkillBalance + state.clayWeaponsBalance;
       }
+      if (state.claySkillUnlocksBalance !== undefined && state.clayWeaponsUnlocksBalance !== undefined) {
+        this.clayUnlocksBalance = state.claySkillUnlocksBalance + state.clayWeaponsUnlocksBalance;
+      }
       if (state.woodSkillBalance !== undefined && state.woodWeaponsBalance !== undefined) {
         this.woodBalance = state.woodSkillBalance + state.woodWeaponsBalance;
+      }
+      if (state.woodSkillUnlocksBalance !== undefined && state.woodWeaponsUnlocksBalance !== undefined) {
+        this.woodUnlocksBalance = state.woodSkillUnlocksBalance + state.woodWeaponsUnlocksBalance;
       }
       if (state.stoneSkillBalance !== undefined && state.stoneWeaponsBalance !== undefined) {
         this.stoneBalance = state.stoneSkillBalance + state.stoneWeaponsBalance;
       }
+      if (state.stoneSkillUnlocksBalance !== undefined && state.stoneWeaponsUnlocksBalance !== undefined) {
+        this.stoneUnlocksBalance = state.stoneSkillUnlocksBalance + state.stoneWeaponsUnlocksBalance;
+      }
       this.mercenaryBalance = state.mercenaryBalance;
+      this.mercenaryUnlocksBalance = state.mercenaryUnlocksBalance;
       this.bruiserBalance = state.bruiserBalance;
+      this.bruiserUnlocksBalance = state.bruiserUnlocksBalance;
       this.mageBalance = state.mageBalance;
+      this.mageUnlocksBalance = state.mageUnlocksBalance;
       this.archerBalance = state.archerBalance;
+      this.archerUnlocksBalance = state.archerUnlocksBalance;
       this.paladinBalance = state.paladinBalance;
+      this.paladinUnlocksBalance = state.paladinUnlocksBalance;
     });
     this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
       this.selectedLand = state.selectedLand;
