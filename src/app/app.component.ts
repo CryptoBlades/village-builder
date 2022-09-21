@@ -23,6 +23,7 @@ import {
 import {SkillService} from "./solidity/skill.service";
 import {TranslateService} from '@ngx-translate/core';
 import {UserOptionStateModel} from "./state/user-option/user-option.state";
+import {environment} from 'src/environments/environment';
 
 export interface Building {
   level: number;
@@ -195,6 +196,16 @@ export class AppComponent implements OnInit {
     const provider = await detectEthereumProvider() as any;
     if (provider) {
       this.store.dispatch(new SetMetamaskInstalled(true));
+      if (environment.environment === 'TEST' || environment.environment === 'PRODUCTION') {
+        try {
+          await provider.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{chainId: environment.chainId}],
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
     } else {
       this.store.dispatch(new SetMetamaskInstalled(false));
     }
@@ -221,9 +232,15 @@ export class AppComponent implements OnInit {
     const dialogRef = this.dialog.open(SimpleConfirmationDialogComponent, {
       data: {
         dialogs: [
-          {title: 'ConfirmationDialog.DoYouWantToUnstake', content: 'ConfirmationDialog.AreYouSureYouKnowWhatYouAreDoing'},
+          {
+            title: 'ConfirmationDialog.DoYouWantToUnstake',
+            content: 'ConfirmationDialog.AreYouSureYouKnowWhatYouAreDoing'
+          },
           {title: 'ConfirmationDialog.UnstakeIsPermanent', content: 'ConfirmationDialog.YouWontBeAbleToStakeAnymore'},
-          {title: 'ConfirmationDialog.NoComingBackFromThis', content: 'ConfirmationDialog.YouWontBeAbleToComeBackFromThis'},
+          {
+            title: 'ConfirmationDialog.NoComingBackFromThis',
+            content: 'ConfirmationDialog.YouWontBeAbleToComeBackFromThis'
+          },
         ]
       }
     });

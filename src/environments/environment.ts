@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   environment: 'DEVELOPMENT',
   networkId: '5777',
+  chainId: '0x241',
 };
 
 /*
