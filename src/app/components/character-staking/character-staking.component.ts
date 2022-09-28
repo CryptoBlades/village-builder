@@ -12,7 +12,7 @@ import {StakingTier} from "../../interfaces/staking-tier";
 import {Store} from "@ngxs/store";
 import {
   SetArcherBalance, SetArcherUnlocksBalance,
-  SetBruiserBalance, SetBruiserUnlocksBalance,
+  SetSpearmanBalance, SetSpearmanUnlocksBalance,
   SetCharactersBalance,
   SetMageBalance, SetMageUnlocksBalance,
   SetMercenaryBalance, SetMercenaryUnlocksBalance,
@@ -121,26 +121,26 @@ export class CharacterStakingComponent implements OnInit {
       if (unlockedCharactersTiers) {
         const {
           mercenary,
-          bruiser,
+          spearman,
           mage,
           archer,
           paladin
         } = extractRewardUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
         const {
           mercenary: mercenaryUnlocks,
-          bruiser: bruiserUnlocks,
+          spearman: spearmanUnlocks,
           mage: mageUnlocks,
           archer: archerUnlocks,
           paladin: paladinUnlocks
         } = extractUnlocksUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
         this.store.dispatch([
           new SetMercenaryBalance(mercenary),
-          new SetBruiserBalance(bruiser),
+          new SetSpearmanBalance(spearman),
           new SetMageBalance(mage),
           new SetArcherBalance(archer),
           new SetPaladinBalance(paladin),
           new SetMercenaryUnlocksBalance(mercenaryUnlocks),
-          new SetBruiserUnlocksBalance(bruiserUnlocks),
+          new SetSpearmanUnlocksBalance(spearmanUnlocks),
           new SetMageUnlocksBalance(mageUnlocks),
           new SetArcherUnlocksBalance(archerUnlocks),
           new SetPaladinUnlocksBalance(paladinUnlocks),

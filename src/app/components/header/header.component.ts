@@ -9,7 +9,7 @@ import detectEthereumProvider from "@metamask/detect-provider";
 import {
   ClearWalletState,
   SetArcherBalance, SetArcherUnlocksBalance,
-  SetBruiserBalance, SetBruiserUnlocksBalance,
+  SetSpearmanBalance, SetSpearmanUnlocksBalance,
   SetCharactersBalance,
   SetKingBalance,
   SetLands,
@@ -67,8 +67,8 @@ export class HeaderComponent implements OnInit {
   stoneUnlocksBalance?: number;
   mercenaryBalance?: number;
   mercenaryUnlocksBalance?: number;
-  bruiserBalance?: number;
-  bruiserUnlocksBalance?: number;
+  spearmanBalance?: number;
+  spearmanUnlocksBalance?: number;
   mageBalance?: number;
   mageUnlocksBalance?: number;
   archerBalance?: number;
@@ -122,8 +122,8 @@ export class HeaderComponent implements OnInit {
       }
       this.mercenaryBalance = state.mercenaryBalance;
       this.mercenaryUnlocksBalance = state.mercenaryUnlocksBalance;
-      this.bruiserBalance = state.bruiserBalance;
-      this.bruiserUnlocksBalance = state.bruiserUnlocksBalance;
+      this.spearmanBalance = state.spearmanBalance;
+      this.spearmanUnlocksBalance = state.spearmanUnlocksBalance;
       this.mageBalance = state.mageBalance;
       this.mageUnlocksBalance = state.mageUnlocksBalance;
       this.archerBalance = state.archerBalance;
@@ -216,26 +216,26 @@ export class HeaderComponent implements OnInit {
     if (unlockedCharactersTiers !== undefined) {
       const {
         mercenary,
-        bruiser,
+        spearman,
         mage,
         archer,
         paladin
       } = extractRewardUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
       const {
         mercenary: mercenaryUnlocks,
-        bruiser: bruiserUnlocks,
+        spearman: spearmanUnlocks,
         mage: mageUnlocks,
         archer: archerUnlocks,
         paladin: paladinUnlocks
       } = extractUnlocksUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
       this.store.dispatch([
         new SetMercenaryBalance(mercenary),
-        new SetBruiserBalance(bruiser),
+        new SetSpearmanBalance(spearman),
         new SetMageBalance(mage),
         new SetArcherBalance(archer),
         new SetPaladinBalance(paladin),
         new SetMercenaryUnlocksBalance(mercenaryUnlocks),
-        new SetBruiserUnlocksBalance(bruiserUnlocks),
+        new SetSpearmanUnlocksBalance(spearmanUnlocks),
         new SetMageUnlocksBalance(mageUnlocks),
         new SetArcherUnlocksBalance(archerUnlocks),
         new SetPaladinUnlocksBalance(paladinUnlocks),

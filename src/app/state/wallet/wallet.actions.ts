@@ -133,8 +133,8 @@ export class SetMercenaryBalance {
   }
 }
 
-export class SetBruiserBalance {
-  static readonly type = '[Wallet] Set Bruiser Balance';
+export class SetSpearmanBalance {
+  static readonly type = '[Wallet] Set Spearman Balance';
 
   constructor(public payload: number) {
   }
@@ -168,8 +168,8 @@ export class SetMercenaryUnlocksBalance {
   }
 }
 
-export class SetBruiserUnlocksBalance {
-  static readonly type = '[Wallet] Set Bruiser Unlocks Balance';
+export class SetSpearmanUnlocksBalance {
+  static readonly type = '[Wallet] Set Spearman Unlocks Balance';
 
   constructor(public payload: number) {
   }

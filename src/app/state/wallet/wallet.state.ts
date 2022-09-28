@@ -17,11 +17,11 @@ import {
   SetPaladinBalance,
   SetArcherBalance,
   SetMageBalance,
-  SetBruiserBalance,
+  SetSpearmanBalance,
   SetMercenaryBalance,
   SetLands,
   SetMercenaryUnlocksBalance,
-  SetBruiserUnlocksBalance,
+  SetSpearmanUnlocksBalance,
   SetMageUnlocksBalance,
   SetArcherUnlocksBalance,
   SetPaladinUnlocksBalance,
@@ -64,8 +64,8 @@ export interface WalletStateModel {
   stoneWeaponsUnlocksBalance?: number;
   mercenaryBalance?: number;
   mercenaryUnlocksBalance?: number;
-  bruiserBalance?: number;
-  bruiserUnlocksBalance?: number;
+  spearmanBalance?: number;
+  spearmanUnlocksBalance?: number;
   mageBalance?: number;
   mageUnlocksBalance?: number;
   archerBalance?: number;
@@ -189,9 +189,9 @@ export class WalletState {
     patchState({mercenaryBalance: payload});
   }
 
-  @Action(SetBruiserBalance)
-  setBruiserBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetBruiserBalance) {
-    patchState({bruiserBalance: payload});
+  @Action(SetSpearmanBalance)
+  setSpearmanBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSpearmanBalance) {
+    patchState({spearmanBalance: payload});
   }
 
   @Action(SetMageBalance)
@@ -214,9 +214,9 @@ export class WalletState {
     patchState({mercenaryUnlocksBalance: payload});
   }
 
-  @Action(SetBruiserUnlocksBalance)
-  setBruiserUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetBruiserUnlocksBalance) {
-    patchState({bruiserUnlocksBalance: payload});
+  @Action(SetSpearmanUnlocksBalance)
+  setSpearmanUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSpearmanUnlocksBalance) {
+    patchState({spearmanUnlocksBalance: payload});
   }
 
   @Action(SetMageUnlocksBalance)
@@ -256,7 +256,7 @@ export class WalletState {
       woodWeaponsBalance: undefined,
       stoneWeaponsBalance: undefined,
       mercenaryBalance: undefined,
-      bruiserBalance: undefined,
+      spearmanBalance: undefined,
       mageBalance: undefined,
       archerBalance: undefined,
       paladinBalance: undefined,

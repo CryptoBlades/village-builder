@@ -2,6 +2,9 @@
   <button class="dialog-close" mat-icon-button mat-dialog-close>
     <mat-icon>close</mat-icon>
   </button>
+  <img class="building-icon"
+       [src]="'./assets/Village/Buildings/Icons/'+ getBuildingTypeName(this.building.type) +'.png'"
+       [alt]="getBuildingTypeName(this.building.type)"/>
   <mat-tab-group color="accent" mat-align-tabs="center" class="h-full" selectedIndex="0">
     <mat-tab>
       <ng-template mat-tab-label>

@@ -41,11 +41,11 @@ export const extractRewardUnitsFromUnlockedTiers = (stakingTiers: StakingTier[],
       (m, {type, amount}) => m.set(type, (m.get(type) || 0) + amount), new Map
     ), ([type, amount]) => ({type, amount}));
   const mercenary = units.find(unit => unit.type === 'Mercenary')?.amount || 0;
-  const bruiser = units.find(unit => unit.type === 'Bruiser')?.amount || 0;
+  const spearman = units.find(unit => unit.type === 'Spearman')?.amount || 0;
   const mage = units.find(unit => unit.type === 'Mage')?.amount || 0;
   const archer = units.find(unit => unit.type === 'Archer')?.amount || 0;
   const paladin = units.find(unit => unit.type === 'Paladin')?.amount || 0;
-  return {mercenary, bruiser, mage, archer, paladin};
+  return {mercenary, spearman, mage, archer, paladin};
 }
 
 export const extractUnlocksUnitsFromUnlockedTiers = (stakingTiers: StakingTier[], unlockedTiers: number) => {
@@ -54,9 +54,9 @@ export const extractUnlocksUnitsFromUnlockedTiers = (stakingTiers: StakingTier[]
       (m, {type, amount}) => m.set(type, (m.get(type) || 0) + amount), new Map
     ), ([type, amount]) => ({type, amount}));
   const mercenary = units.find(unit => unit.type === 'Mercenary')?.amount || 0;
-  const bruiser = units.find(unit => unit.type === 'Bruiser')?.amount || 0;
+  const spearman = units.find(unit => unit.type === 'Spearman')?.amount || 0;
   const mage = units.find(unit => unit.type === 'Mage')?.amount || 0;
   const archer = units.find(unit => unit.type === 'Archer')?.amount || 0;
   const paladin = units.find(unit => unit.type === 'Paladin')?.amount || 0;
-  return {mercenary, bruiser, mage, archer, paladin};
+  return {mercenary, spearman, mage, archer, paladin};
 }

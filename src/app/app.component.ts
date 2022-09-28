@@ -79,8 +79,8 @@ export class AppComponent implements OnInit {
   stoneUnlocksBalance?: number;
   mercenaryBalance?: number;
   mercenaryUnlocksBalance?: number;
-  bruiserBalance?: number;
-  bruiserUnlocksBalance?: number;
+  spearmanBalance?: number;
+  spearmanUnlocksBalance?: number;
   mageBalance?: number;
   mageUnlocksBalance?: number;
   archerBalance?: number;
@@ -135,8 +135,8 @@ export class AppComponent implements OnInit {
       }
       this.mercenaryBalance = state.mercenaryBalance;
       this.mercenaryUnlocksBalance = state.mercenaryUnlocksBalance;
-      this.bruiserBalance = state.bruiserBalance;
-      this.bruiserUnlocksBalance = state.bruiserUnlocksBalance;
+      this.spearmanBalance = state.spearmanBalance;
+      this.spearmanUnlocksBalance = state.spearmanUnlocksBalance;
       this.mageBalance = state.mageBalance;
       this.mageUnlocksBalance = state.mageUnlocksBalance;
       this.archerBalance = state.archerBalance;
