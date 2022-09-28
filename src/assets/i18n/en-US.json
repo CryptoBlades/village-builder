@@ -38,7 +38,8 @@
     "Spearman": "Spearman",
     "Mage": "Mage",
     "Archer": "Archer",
-    "Paladin": "Paladin"
+    "Paladin": "Paladin",
+    "Spy": "Spy"
   },
   "Requirements": {
     "CharactersStaked": "Characters Staked",

@@ -45,7 +45,8 @@ export const extractRewardUnitsFromUnlockedTiers = (stakingTiers: StakingTier[],
   const mage = units.find(unit => unit.type === 'Mage')?.amount || 0;
   const archer = units.find(unit => unit.type === 'Archer')?.amount || 0;
   const paladin = units.find(unit => unit.type === 'Paladin')?.amount || 0;
-  return {mercenary, spearman, mage, archer, paladin};
+  const spy = units.find(unit => unit.type === 'Spy')?.amount || 0;
+  return {mercenary, spearman, mage, archer, paladin, spy};
 }
 
 export const extractUnlocksUnitsFromUnlockedTiers = (stakingTiers: StakingTier[], unlockedTiers: number) => {
@@ -58,5 +59,6 @@ export const extractUnlocksUnitsFromUnlockedTiers = (stakingTiers: StakingTier[]
   const mage = units.find(unit => unit.type === 'Mage')?.amount || 0;
   const archer = units.find(unit => unit.type === 'Archer')?.amount || 0;
   const paladin = units.find(unit => unit.type === 'Paladin')?.amount || 0;
-  return {mercenary, spearman, mage, archer, paladin};
+  const spy = units.find(unit => unit.type === 'Spy')?.amount || 0;
+  return {mercenary, spearman, mage, archer, paladin, spy};
 }

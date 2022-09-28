@@ -87,6 +87,8 @@ export class AppComponent implements OnInit {
   archerUnlocksBalance?: number;
   paladinBalance?: number;
   paladinUnlocksBalance?: number;
+  spyBalance?: number;
+  spyUnlocksBalance?: number;
   lands: Land[] = [];
   buildings: Building[] = [];
 
@@ -143,6 +145,8 @@ export class AppComponent implements OnInit {
       this.archerUnlocksBalance = state.archerUnlocksBalance;
       this.paladinBalance = state.paladinBalance;
       this.paladinUnlocksBalance = state.paladinUnlocksBalance;
+      this.spyBalance = state.spyBalance;
+      this.spyUnlocksBalance = state.spyUnlocksBalance;
     });
     this.land$.pipe(untilDestroyed(this)).subscribe(async (state: LandStateModel) => {
       this.selectedLand = state.selectedLand;

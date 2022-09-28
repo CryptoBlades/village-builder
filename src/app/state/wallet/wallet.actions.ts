@@ -161,6 +161,13 @@ export class SetPaladinBalance {
   }
 }
 
+export class SetSpyBalance {
+  static readonly type = '[Wallet] Set Spy Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
 export class SetMercenaryUnlocksBalance {
   static readonly type = '[Wallet] Set Mercenary Unlocks Balance';
 
@@ -191,6 +198,13 @@ export class SetArcherUnlocksBalance {
 
 export class SetPaladinUnlocksBalance {
   static readonly type = '[Wallet] Set Paladin Unlocks Balance';
+
+  constructor(public payload: number) {
+  }
+}
+
+export class SetSpyUnlocksBalance {
+  static readonly type = '[Wallet] Set Spy Unlocks Balance';
 
   constructor(public payload: number) {
   }

@@ -16,7 +16,7 @@ import {
   SetCharactersBalance,
   SetMageBalance, SetMageUnlocksBalance,
   SetMercenaryBalance, SetMercenaryUnlocksBalance,
-  SetPaladinBalance, SetPaladinUnlocksBalance
+  SetPaladinBalance, SetPaladinUnlocksBalance, SetSpyBalance, SetSpyUnlocksBalance
 } from "../../state/wallet/wallet.actions";
 import {BuildingType} from "../../enums/building-type";
 import {map, Observable, startWith} from "rxjs";
@@ -124,14 +124,16 @@ export class CharacterStakingComponent implements OnInit {
           spearman,
           mage,
           archer,
-          paladin
+          paladin,
+          spy,
         } = extractRewardUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
         const {
           mercenary: mercenaryUnlocks,
           spearman: spearmanUnlocks,
           mage: mageUnlocks,
           archer: archerUnlocks,
-          paladin: paladinUnlocks
+          paladin: paladinUnlocks,
+          spy: spyUnlocks,
         } = extractUnlocksUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
         this.store.dispatch([
           new SetMercenaryBalance(mercenary),
@@ -139,11 +141,13 @@ export class CharacterStakingComponent implements OnInit {
           new SetMageBalance(mage),
           new SetArcherBalance(archer),
           new SetPaladinBalance(paladin),
+          new SetSpyBalance(spy),
           new SetMercenaryUnlocksBalance(mercenaryUnlocks),
           new SetSpearmanUnlocksBalance(spearmanUnlocks),
           new SetMageUnlocksBalance(mageUnlocks),
           new SetArcherUnlocksBalance(archerUnlocks),
           new SetPaladinUnlocksBalance(paladinUnlocks),
+          new SetSpyUnlocksBalance(spyUnlocks),
         ]);
       }
     } finally {

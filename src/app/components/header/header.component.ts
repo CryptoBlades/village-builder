@@ -25,7 +25,7 @@ import {
   SetWeaponsBalance,
   SetWeaponsClayBalance, SetWeaponsClayUnlocksBalance,
   SetWeaponsStoneBalance, SetWeaponsStoneUnlocksBalance,
-  SetWeaponsWoodBalance, SetWeaponsWoodUnlocksBalance
+  SetWeaponsWoodBalance, SetWeaponsWoodUnlocksBalance, SetSpyUnlocksBalance, SetSpyBalance
 } from "../../state/wallet/wallet.actions";
 import {
   extractRewardResourcesFromUnlockedTiers,
@@ -75,6 +75,8 @@ export class HeaderComponent implements OnInit {
   archerUnlocksBalance?: number;
   paladinBalance?: number;
   paladinUnlocksBalance?: number;
+  spyBalance?: number;
+  spyUnlocksBalance?: number;
   land?: Land;
   isConnected = false;
   isLoading = false;
@@ -130,6 +132,8 @@ export class HeaderComponent implements OnInit {
       this.archerUnlocksBalance = state.archerUnlocksBalance;
       this.paladinBalance = state.paladinBalance;
       this.paladinUnlocksBalance = state.paladinUnlocksBalance;
+      this.spyBalance = state.spyBalance;
+      this.spyUnlocksBalance = state.spyUnlocksBalance;
       this.isConnected = state.isConnected;
     });
     this.land$.pipe(untilDestroyed(this)).subscribe((state: LandStateModel) => {
@@ -219,14 +223,16 @@ export class HeaderComponent implements OnInit {
         spearman,
         mage,
         archer,
-        paladin
+        paladin,
+        spy,
       } = extractRewardUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
       const {
         mercenary: mercenaryUnlocks,
         spearman: spearmanUnlocks,
         mage: mageUnlocks,
         archer: archerUnlocks,
-        paladin: paladinUnlocks
+        paladin: paladinUnlocks,
+        spy: spyUnlocks,
       } = extractUnlocksUnitsFromUnlockedTiers(this.charactersStakingTiers, unlockedCharactersTiers);
       this.store.dispatch([
         new SetMercenaryBalance(mercenary),
@@ -234,11 +240,13 @@ export class HeaderComponent implements OnInit {
         new SetMageBalance(mage),
         new SetArcherBalance(archer),
         new SetPaladinBalance(paladin),
+        new SetSpyBalance(spy),
         new SetMercenaryUnlocksBalance(mercenaryUnlocks),
         new SetSpearmanUnlocksBalance(spearmanUnlocks),
         new SetMageUnlocksBalance(mageUnlocks),
         new SetArcherUnlocksBalance(archerUnlocks),
         new SetPaladinUnlocksBalance(paladinUnlocks),
+        new SetSpyUnlocksBalance(spyUnlocks),
       ]);
     }
     this.store.dispatch(new SetLands(await this.landService.getOwnedLands()));

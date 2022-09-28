@@ -29,7 +29,7 @@ import {
   SetSkillWoodUnlocksBalance,
   SetWeaponsWoodUnlocksBalance,
   SetWeaponsClayUnlocksBalance,
-  SetSkillStoneUnlocksBalance, SetWeaponsStoneUnlocksBalance
+  SetSkillStoneUnlocksBalance, SetWeaponsStoneUnlocksBalance, SetSpyUnlocksBalance, SetSpyBalance
 } from './wallet.actions';
 import {Land} from "../../interfaces/land";
 
@@ -72,6 +72,8 @@ export interface WalletStateModel {
   archerUnlocksBalance?: number;
   paladinBalance?: number;
   paladinUnlocksBalance?: number;
+  spyBalance?: number;
+  spyUnlocksBalance?: number;
   isConnected: boolean;
   isInstalled: boolean;
 }
@@ -209,6 +211,11 @@ export class WalletState {
     patchState({paladinBalance: payload});
   }
 
+  @Action(SetSpyBalance)
+  setSpyBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSpyBalance) {
+    patchState({spyBalance: payload});
+  }
+
   @Action(SetMercenaryUnlocksBalance)
   setMercenaryUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetMercenaryUnlocksBalance) {
     patchState({mercenaryUnlocksBalance: payload});
@@ -232,6 +239,11 @@ export class WalletState {
   @Action(SetPaladinUnlocksBalance)
   setPaladinUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetPaladinUnlocksBalance) {
     patchState({paladinUnlocksBalance: payload});
+  }
+
+  @Action(SetSpyUnlocksBalance)
+  setSpyUnlocksBalance({patchState}: StateContext<WalletStateModel>, {payload}: SetSpyUnlocksBalance) {
+    patchState({spyUnlocksBalance: payload});
   }
 
   @Action(SetMetamaskInstalled)
@@ -260,6 +272,7 @@ export class WalletState {
       mageBalance: undefined,
       archerBalance: undefined,
       paladinBalance: undefined,
+      spyBalance: undefined,
     });
   }
 }
