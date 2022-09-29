@@ -32,15 +32,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 1
+        "amount": 4
       },
       {
         "type": "Wood",
-        "amount": 1
+        "amount": 4
       },
       {
         "type": "Stone",
-        "amount": 1
+        "amount": 4
       }
     ]
   },
@@ -85,15 +85,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 2
+        "amount": 8
       },
       {
         "type": "Wood",
-        "amount": 2
+        "amount": 8
       },
       {
         "type": "Stone",
-        "amount": 2
+        "amount": 8
       }
     ]
   },
@@ -146,15 +146,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 3
+        "amount": 12
       },
       {
         "type": "Wood",
-        "amount": 3
+        "amount": 12
       },
       {
         "type": "Stone",
-        "amount": 3
+        "amount": 12
       }
     ]
   },
@@ -199,15 +199,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 4
+        "amount": 16
       },
       {
         "type": "Wood",
-        "amount": 4
+        "amount": 16
       },
       {
         "type": "Stone",
-        "amount": 4
+        "amount": 16
       }
     ]
   },
@@ -260,15 +260,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 11
+        "amount": 44
       },
       {
         "type": "Wood",
-        "amount": 11
+        "amount": 44
       },
       {
         "type": "Stone",
-        "amount": 11
+        "amount": 44
       }
     ]
   },
@@ -313,15 +313,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 12
+        "amount": 48
       },
       {
         "type": "Wood",
-        "amount": 12
+        "amount": 48
       },
       {
         "type": "Stone",
-        "amount": 12
+        "amount": 48
       }
     ]
   },
@@ -374,15 +374,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 13
+        "amount": 52
       },
       {
         "type": "Wood",
-        "amount": 13
+        "amount": 52
       },
       {
         "type": "Stone",
-        "amount": 13
+        "amount": 52
       }
     ]
   },
@@ -427,15 +427,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 14
+        "amount": 56
       },
       {
         "type": "Wood",
-        "amount": 14
+        "amount": 56
       },
       {
         "type": "Stone",
-        "amount": 14
+        "amount": 56
       }
     ]
   },
@@ -488,15 +488,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 21
+        "amount": 84
       },
       {
         "type": "Wood",
-        "amount": 21
+        "amount": 84
       },
       {
         "type": "Stone",
-        "amount": 21
+        "amount": 84
       }
     ]
   },
@@ -541,15 +541,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 22
+        "amount": 88
       },
       {
         "type": "Wood",
-        "amount": 22
+        "amount": 88
       },
       {
         "type": "Stone",
-        "amount": 22
+        "amount": 88
       }
     ]
   },
@@ -602,15 +602,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 23
+        "amount": 92
       },
       {
         "type": "Wood",
-        "amount": 23
+        "amount": 92
       },
       {
         "type": "Stone",
-        "amount": 23
+        "amount": 92
       }
     ]
   },
@@ -655,15 +655,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 24
+        "amount": 96
       },
       {
         "type": "Wood",
-        "amount": 24
+        "amount": 96
       },
       {
         "type": "Stone",
-        "amount": 24
+        "amount": 96
       }
     ]
   },
@@ -716,15 +716,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 31
+        "amount": 124
       },
       {
         "type": "Wood",
-        "amount": 31
+        "amount": 124
       },
       {
         "type": "Stone",
-        "amount": 31
+        "amount": 124
       }
     ]
   },
@@ -769,15 +769,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 32
+        "amount": 128
       },
       {
         "type": "Wood",
-        "amount": 32
+        "amount": 128
       },
       {
         "type": "Stone",
-        "amount": 32
+        "amount": 128
       }
     ]
   },
@@ -814,15 +814,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 33
+        "amount": 132
       },
       {
         "type": "Wood",
-        "amount": 33
+        "amount": 132
       },
       {
         "type": "Stone",
-        "amount": 33
+        "amount": 132
       }
     ]
   },
@@ -859,15 +859,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 34
+        "amount": 136
       },
       {
         "type": "Wood",
-        "amount": 34
+        "amount": 136
       },
       {
         "type": "Stone",
-        "amount": 34
+        "amount": 136
       }
     ]
   },
@@ -912,15 +912,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 40
+        "amount": 160
       },
       {
         "type": "Wood",
-        "amount": 40
+        "amount": 160
       },
       {
         "type": "Stone",
-        "amount": 40
+        "amount": 160
       }
     ]
   },
@@ -957,15 +957,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 50
+        "amount": 200
       },
       {
         "type": "Wood",
-        "amount": 50
+        "amount": 200
       },
       {
         "type": "Stone",
-        "amount": 50
+        "amount": 200
       }
     ]
   },
@@ -986,15 +986,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 65
+        "amount": 260
       },
       {
         "type": "Wood",
-        "amount": 65
+        "amount": 260
       },
       {
         "type": "Stone",
-        "amount": 65
+        "amount": 260
       }
     ]
   },
@@ -1023,15 +1023,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 80
+        "amount": 320
       },
       {
         "type": "Wood",
-        "amount": 80
+        "amount": 320
       },
       {
         "type": "Stone",
-        "amount": 80
+        "amount": 320
       }
     ]
   },
@@ -1052,15 +1052,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 100
+        "amount": 400
       },
       {
         "type": "Wood",
-        "amount": 100
+        "amount": 400
       },
       {
         "type": "Stone",
-        "amount": 100
+        "amount": 400
       }
     ]
   }

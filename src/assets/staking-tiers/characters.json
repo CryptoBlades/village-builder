@@ -496,34 +496,6 @@
     },
     "rewards": [
       {
-        "type": "Mercenary",
-        "amount": 35
-      },
-      {
-        "type": "Spearman",
-        "amount": 35
-      },
-      {
-        "type": "Mage",
-        "amount": 35
-      },
-      {
-        "type": "Archer",
-        "amount": 35
-      },
-      {
-        "type": "Paladin",
-        "amount": 35
-      }
-    ],
-    "unlocks": []
-  },
-  {
-    "duration": 240000,
-    "amount": 26,
-    "type": "Characters",
-    "rewards": [
-      {
         "type": "Spearman",
         "amount": 100
       }
@@ -531,6 +503,23 @@
     "unlocks": [
       {
         "type": "Spearman",
+        "amount": 10
+      }
+    ]
+  },
+  {
+    "duration": 240000,
+    "amount": 26,
+    "type": "Characters",
+    "rewards": [
+      {
+        "type": "Mage",
+        "amount": 100
+      }
+    ],
+    "unlocks": [
+      {
+        "type": "Mage",
         "amount": 10
       }
     ]
@@ -541,13 +530,13 @@
     "type": "Characters",
     "rewards": [
       {
-        "type": "Mage",
+        "type": "Archer",
         "amount": 100
       }
     ],
     "unlocks": [
       {
-        "type": "Mage",
+        "type": "Archer",
         "amount": 10
       }
     ]
@@ -558,13 +547,13 @@
     "type": "Characters",
     "rewards": [
       {
-        "type": "Archer",
+        "type": "Paladin",
         "amount": 100
       }
     ],
     "unlocks": [
       {
-        "type": "Archer",
+        "type": "Paladin",
         "amount": 10
       }
     ]
@@ -575,13 +564,13 @@
     "type": "Characters",
     "rewards": [
       {
-        "type": "Paladin",
+        "type": "Mercenary",
         "amount": 100
       }
     ],
     "unlocks": [
       {
-        "type": "Paladin",
+        "type": "Mercenary",
         "amount": 10
       }
     ]
@@ -592,14 +581,14 @@
     "type": "Characters",
     "rewards": [
       {
-        "type": "Mercenary",
+        "type": "Spy",
         "amount": 100
       }
     ],
     "unlocks": [
       {
-        "type": "Mercenary",
-        "amount": 10
+        "type": "Spy",
+        "amount": 50
       }
     ]
   }

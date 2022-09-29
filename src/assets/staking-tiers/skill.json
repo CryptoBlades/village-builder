@@ -24,7 +24,7 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 5
+        "amount": 20
       }
     ]
   },
@@ -61,7 +61,7 @@
     "unlocks": [
       {
         "type": "Wood",
-        "amount": 5
+        "amount": 20
       }
     ]
   },
@@ -98,7 +98,7 @@
     "unlocks": [
       {
         "type": "Stone",
-        "amount": 5
+        "amount": 20
       }
     ]
   },
@@ -135,7 +135,7 @@
     "unlocks": [
       {
         "type": "Stone",
-        "amount": 10
+        "amount": 40
       }
     ]
   },
@@ -172,7 +172,7 @@
     "unlocks": [
       {
         "type": "Wood",
-        "amount": 10
+        "amount": 40
       }
     ]
   },
@@ -209,7 +209,7 @@
     "unlocks": [
       {
         "type": "Stone",
-        "amount": 10
+        "amount": 40
       }
     ]
   },
@@ -246,7 +246,7 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 25
+        "amount": 100
       }
     ]
   },
@@ -283,7 +283,7 @@
     "unlocks": [
       {
         "type": "Wood",
-        "amount": 25
+        "amount": 100
       }
     ]
   },
@@ -320,7 +320,7 @@
     "unlocks": [
       {
         "type": "Stone",
-        "amount": 25
+        "amount": 100
       }
     ]
   },
@@ -357,7 +357,7 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 50
+        "amount": 200
       }
     ]
   },
@@ -394,7 +394,7 @@
     "unlocks": [
       {
         "type": "Wood",
-        "amount": 50
+        "amount": 200
       }
     ]
   },
@@ -431,7 +431,7 @@
     "unlocks": [
       {
         "type": "Stone",
-        "amount": 50
+        "amount": 200
       }
     ]
   },
@@ -468,7 +468,7 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 75
+        "amount": 300
       }
     ]
   },
@@ -505,7 +505,7 @@
     "unlocks": [
       {
         "type": "Wood",
-        "amount": 75
+        "amount": 300
       }
     ]
   },
@@ -542,7 +542,7 @@
     "unlocks": [
       {
         "type": "Stone",
-        "amount": 75
+        "amount": 300
       }
     ]
   },
@@ -579,7 +579,7 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 100
+        "amount": 400
       }
     ]
   },
@@ -616,7 +616,7 @@
     "unlocks": [
       {
         "type": "Wood",
-        "amount": 100
+        "amount": 400
       }
     ]
   },
@@ -653,7 +653,7 @@
     "unlocks": [
       {
         "type": "Stone",
-        "amount": 100
+        "amount": 400
       }
     ]
   },
@@ -690,7 +690,7 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 150
+        "amount": 600
       }
     ]
   },
@@ -727,7 +727,7 @@
     "unlocks": [
       {
         "type": "Wood",
-        "amount": 150
+        "amount": 600
       }
     ]
   },
@@ -764,7 +764,7 @@
     "unlocks": [
       {
         "type": "Stone",
-        "amount": 150
+        "amount": 600
       }
     ]
   },
@@ -801,7 +801,7 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 200
+        "amount": 800
       }
     ]
   },
@@ -838,7 +838,7 @@
     "unlocks": [
       {
         "type": "Wood",
-        "amount": 200
+        "amount": 800
       }
     ]
   },
@@ -875,7 +875,7 @@
     "unlocks": [
       {
         "type": "Stone",
-        "amount": 200
+        "amount": 800
       }
     ]
   },
@@ -912,15 +912,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 100
+        "amount": 400
       },
       {
         "type": "Wood",
-        "amount": 100
+        "amount": 400
       },
       {
         "type": "Stone",
-        "amount": 100
+        "amount": 400
       }
     ]
   },
@@ -957,15 +957,15 @@
     "unlocks": [
       {
         "type": "Clay",
-        "amount": 150
+        "amount": 600
       },
       {
         "type": "Wood",
-        "amount": 150
+        "amount": 600
       },
       {
         "type": "Stone",
-        "amount": 150
+        "amount": 600
       }
     ]
   }
