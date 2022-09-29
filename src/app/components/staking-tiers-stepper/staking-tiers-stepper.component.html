@@ -2,7 +2,7 @@
   <mat-stepper orientation="vertical"
                [selectedIndex]="isPathFinished ? stakingTiers.length - 1 : unlockedTiers!">
     <mat-step *ngFor="let stakingTier of stakingTiers; index as i"
-              [label]="stakingTier.amount + ' ' + ('Resources.' + (stakingTier.type | titlecase) | translate) + ' (' + getDurationString(stakingTier.duration) + ')'"
+              [label]="stakingTier.amount.toLocaleString() + ' ' + ('Resources.' + (stakingTier.type | titlecase) | translate) + ' (' + getDurationString(stakingTier.duration) + ')'"
               [completed]="unlockedTiers! - 1 >= i">
       <div class="flex flex-col">
         <div *ngIf="stakingTier.requirement" class="flex flex-col">
