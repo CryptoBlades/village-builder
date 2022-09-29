@@ -33,7 +33,10 @@
       {{index + 1}}
     </ng-template>
   </mat-stepper>
-  <span *ngIf="isPathFinished">{{'Staking.StakePathFinished' | translate}}</span>
+  <p *ngIf="'Staking.FinalRewards.' + stakingTiers[0].type | translate"
+     class="building-requirements">{{'Staking.FinalReward' | translate}}:</p>
+  <p class="secondary-text">{{'Staking.FinalRewards.' + stakingTiers[0].type | translate}}</p>
+  <p *ngIf="isPathFinished">{{'Staking.StakePathFinished' | translate}}</p>
   <button [disabled]="!unlockedTiers || !currentStake" mat-raised-button
           (click)="isPathFinished ? unstakeWithoutConfirmation() : openUnstakeConfirmationDialog()"
           [color]="isPathFinished ? 'primary' : 'warn'">{{'Staking.Unstake' | translate}}

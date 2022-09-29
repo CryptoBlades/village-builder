@@ -95,7 +95,14 @@
     "NeedToStakeMoreCharacters": "You need to stake more characters",
     "StakePathFinished": "Stake path finished, you can now unstake your assets",
     "ChooseWeapon": "Choose weapon",
-    "SelectWeapon": "Select weapon..."
+    "SelectWeapon": "Select weapon...",
+    "FinalReward": "Final reward",
+    "FinalRewards": {
+      "KING": "",
+      "SKILL": "",
+      "Weapons": "",
+      "Characters": ""
+    }
   },
   "Vault": {
     "KingVault": "KING vault",
