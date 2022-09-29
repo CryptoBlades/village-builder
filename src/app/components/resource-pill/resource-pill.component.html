@@ -1,7 +1,7 @@
 <div class="resource-container">
   <div class="flex items-center">
     <img [src]="image" class="px-1 w-8" [alt]="tooltip" [matTooltip]="tooltip"/>
-    <span *ngIf="balance !== undefined; else loading" [matTooltip]="unlocks ? 'CBK unlocks: ' + unlocks : ''">{{balance.toLocaleString()}}</span>
+    <span *ngIf="balance !== undefined; else loading" [matTooltip]="unlocks ? 'CBK unlocks: ' + unlocks.toLocaleString() : ''">{{balance.toLocaleString()}}</span>
     <ng-template #loading>
       <span class="flex items-center justify-center">
         <mat-progress-spinner [diameter]="15" mode="indeterminate"></mat-progress-spinner>
