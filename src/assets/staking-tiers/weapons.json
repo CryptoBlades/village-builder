@@ -108,7 +108,7 @@
     "rewards": [
       {
         "type": "KING",
-        "amount": 1
+        "amount": 520
       }
     ],
     "unlocks": []
@@ -222,7 +222,7 @@
     "rewards": [
       {
         "type": "KING",
-        "amount": 2
+        "amount": 1040
       }
     ],
     "unlocks": []
@@ -336,7 +336,7 @@
     "rewards": [
       {
         "type": "KING",
-        "amount": 3
+        "amount": 1560
       }
     ],
     "unlocks": []
@@ -450,7 +450,7 @@
     "rewards": [
       {
         "type": "KING",
-        "amount": 4
+        "amount": 2080
       }
     ],
     "unlocks": []
@@ -564,7 +564,7 @@
     "rewards": [
       {
         "type": "KING",
-        "amount": 5
+        "amount": 2600
       }
     ],
     "unlocks": []
@@ -678,7 +678,7 @@
     "rewards": [
       {
         "type": "KING",
-        "amount": 6
+        "amount": 3120
       }
     ],
     "unlocks": []
@@ -792,7 +792,7 @@
     "rewards": [
       {
         "type": "KING",
-        "amount": 7
+        "amount": 3640
       }
     ],
     "unlocks": []
@@ -906,7 +906,7 @@
     "rewards": [
       {
         "type": "KING",
-        "amount": 8
+        "amount": 4160
       }
     ],
     "unlocks": [
@@ -1046,7 +1046,7 @@
     "rewards": [
       {
         "type": "KING",
-        "amount": 9
+        "amount": 5000
       }
     ],
     "unlocks": [
