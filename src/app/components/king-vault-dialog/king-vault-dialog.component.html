@@ -8,9 +8,9 @@
     <mat-card-content>
       <p>{{'Vault.Description' | translate}}</p>
       <div>
-        <p>{{'Vault.TotalAvailable' | translate}}: {{totalKingInVault}}</p>
-        <p>{{'Vault.Claimable' | translate}}: {{claimableKing}}</p>
-        <p>{{'Vault.AlreadyClaimed' | translate}}: {{claimedKing}}</p>
+        <p>{{'Vault.TotalAvailable' | translate}}: {{totalKingInVault?.toLocaleString()}}</p>
+        <p>{{'Vault.Claimable' | translate}}: {{claimableKing?.toLocaleString()}}</p>
+        <p>{{'Vault.AlreadyClaimed' | translate}}: {{claimedKing?.toLocaleString()}}</p>
       </div>
     </mat-card-content>
     <mat-card-actions>
