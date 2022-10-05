@@ -99,7 +99,10 @@
     </div>
   </ng-template>
   <ng-template #noLands>
-    <!--    TODO: Add a link to buy a land somewhere?-->
-    <div class="flex justify-center items-center text-2xl mt-5 text-white"> {{'App.NoLands' | translate}}</div>
+    <div class="flex flex-col items-center text-2xl mt-5 text-white">
+      <p>{{'App.NoLands' | translate}}</p>
+      <p>{{'App.IfYouHaveLandStakedYouNeedToUnstakeInOrderToPlayVillageBuilder' | translate}}</p>
+      <a class="building-name" href="https://app.cryptoblades.io/#/stake?chain=BNB" target="_blank">>CryptoBlades Staking<</a>
+    </div>
   </ng-template>
 </ng-template>
