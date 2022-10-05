@@ -64,6 +64,8 @@
     "ConnectWalletToAccessTheApp": "Connect your wallet to access the app",
     "NoLands": "You do not have lands available",
     "IfYouHaveLandStakedYouNeedToUnstakeInOrderToPlayVillageBuilder": "If you have Land staked in CryptoBlades, you need to unstake in order to play Village Builder",
+    "IfYouDoNotOwnLandYouCanPurchaseItInBazaarSkillShop": "If you do not own Land, you can purchase it in the Bazaar's Skill Shop",
+    "YouNeedLandInOrderToPlayVillageBuilder": "You need Land in order to play Village Builder",
     "LandTier": "Tier {{tier}} land",
     "KingRewardsVault": "King rewards vault",
     "ResourcesAndArmy": "Resources and army",

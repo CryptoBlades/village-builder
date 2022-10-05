@@ -99,10 +99,13 @@
     </div>
   </ng-template>
   <ng-template #noLands>
-    <div class="flex flex-col items-center text-2xl mt-5 text-white">
+    <div class="flex flex-col items-center text-2xl mt-8 text-white text-center">
       <p>{{'App.NoLands' | translate}}</p>
-      <p>{{'App.IfYouHaveLandStakedYouNeedToUnstakeInOrderToPlayVillageBuilder' | translate}}</p>
+      <p class="pt-8">{{'App.IfYouHaveLandStakedYouNeedToUnstakeInOrderToPlayVillageBuilder' | translate}}</p>
       <a class="building-name" href="https://app.cryptoblades.io/#/stake?chain=BNB" target="_blank">>CryptoBlades Staking<</a>
+      <p class="pt-8">{{'App.IfYouDoNotOwnLandYouCanPurchaseItInBazaarSkillShop' | translate}}</p>
+      <a class="building-name" href="https://bazaar.market/buy/skillshop" target="_blank">>Bazaar<</a>
+      <p class="pt-8">{{'App.YouNeedLandInOrderToPlayVillageBuilder' | translate}}</p>
     </div>
   </ng-template>
 </ng-template>
