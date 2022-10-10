@@ -48,9 +48,8 @@ contract NftStaking is Staking, IERC721ReceiverUpgradeable {
   }
 
   function unstake() virtual public returns (bool stakeCompleted) {
-    uint256 currentStakeId = currentStake[tx.origin];
-    require(currentStakeId != 0, 'You have no stakes to unstake');
-    if (block.timestamp > getStakeCompleteTimestamp()) {
+    require(currentStake[tx.origin] != 0, 'You have no stakes to unstake');
+    if (canCompleteStake()) {
       completeStake();
       stakeCompleted = true;
     }
