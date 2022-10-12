@@ -42,6 +42,7 @@
     "browser": "^0.2.6",
     "crypto-browserify": "^3.12.0",
     "dotenv": "^16.0.0",
+    "graph-data-structure": "^2.0.0",
     "https-browserify": "^1.0.0",
     "luxon": "^2.3.2",
     "ngx-drag-scroll": "^13.0.1",

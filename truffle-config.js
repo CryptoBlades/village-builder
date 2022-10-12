@@ -148,7 +148,7 @@ module.exports = {
   db: {
     enabled: false
   },
-  
+
   plugins: [
     "truffle-plugin-verify"
   ],
