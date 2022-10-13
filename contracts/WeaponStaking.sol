@@ -49,4 +49,9 @@ contract WeaponStaking is NftStaking {
     stakes[id] = Stake({duration : duration, requirement : requirement, amount : amount});
     kingRewards[id] = kingReward;
   }
+
+  // VIEWS
+  function version() public pure returns(uint256) {
+    return 2;
+  }
 }

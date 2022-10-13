@@ -16,4 +16,9 @@ contract CharacterStaking is NftStaking {
     require(barracksLevel >= getNextRequirement(), 'You need to upgrade barracks');
     finishTimestamp = super.stake(ids);
   }
+
+  // VIEWS
+  function version() public pure returns(uint256) {
+    return 2;
+  }
 }

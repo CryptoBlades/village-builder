@@ -3,7 +3,7 @@
     "events": {},
     "links": {},
     "address": "0xCdd727622832353EdB81AddfDc2b1aE09C3bF44f",
-    "transactionHash": "0x47a40514e848718fd026eb3da50fbf5eeee5332ab18fb7dd50979a411f979f36"
+    "transactionHash": "0xadb5abe6c725763252ac2737aed1167c496edee4b0ff8c531cf2b74474891e57"
   },
   "build/contracts/KingStaking.json": {
     "events": {},
@@ -253,6 +253,6 @@
     "events": {},
     "links": {},
     "address": "0x928516345463816B76194E0D8e4b6EB0f2C9c10E",
-    "transactionHash": "0x064bcac73bb45c7c0a5addc9379150c7f796fd4a346b0ac59fe37fe117e37fd2"
+    "transactionHash": "0x88729f3f5f23ef35b7633f8f6b1a9f50319e0a1406cf271ef97a3a20454fc25f"
   }
 }
