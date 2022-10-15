@@ -52,9 +52,7 @@ export class WeaponsService {
   async stake(ids: number[]): Promise<void> {
     const isApprovedForAll = await (await this.weaponsContract).methods.isApprovedForAll(this.currentAccount, this.weaponStakingContract.options.address).call({from: this.currentAccount});
 
-    if (ids.length === 1 && !isApprovedForAll) {
-      await (await this.weaponsContract).methods.approve(this.weaponStakingContract.options.address, ids[0]).send({from: this.currentAccount});
-    } else if (!isApprovedForAll) {
+    if (!isApprovedForAll) {
       await (await this.weaponsContract).methods.setApprovalForAll(this.weaponStakingContract.options.address, true).send({from: this.currentAccount});
     }
 
