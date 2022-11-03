@@ -37,6 +37,7 @@ export class WeaponStakingComponent implements OnInit {
   weaponsRequired?: number;
   charactersStakedRequired?: number;
   canClaim = false;
+  isApprovedForAll = false;
   unlockedTiers?: number;
   charactersUnlockedTiers?: number;
   filteredWeapons?: Observable<string[]>;
@@ -96,7 +97,8 @@ export class WeaponStakingComponent implements OnInit {
         canClaim,
         unlockedTiers,
         charactersUnlockedTiers,
-        stakeCompleteTimestamp
+        stakeCompleteTimestamp,
+        isApprovedForAll,
       ] = await Promise.all([
         this.weaponsService.getOwnedWeapons(),
         this.weaponsService.getCurrentStake(),
@@ -107,6 +109,7 @@ export class WeaponStakingComponent implements OnInit {
         this.weaponsService.getUnlockedTiers(),
         this.charactersService.getUnlockedTiers(),
         this.weaponsService.getStakeCompleteTimestamp(),
+        this.weaponsService.isApprovedForAll(),
       ]);
       this.ownedWeapons = ownedWeapons.map(weapon => weapon.toString());
       this.totalWeaponsStaked = totalWeaponsStaked;
@@ -114,6 +117,7 @@ export class WeaponStakingComponent implements OnInit {
       this.weaponsRequired = weaponsRequired;
       this.charactersStakedRequired = charactersStakedRequired;
       this.canClaim = canClaim;
+      this.isApprovedForAll = isApprovedForAll;
       this.unlockedTiers = unlockedTiers;
       this.charactersUnlockedTiers = charactersUnlockedTiers;
       this.nextStakingTier = this.weaponStakingTiers[this.unlockedTiers];
@@ -187,6 +191,16 @@ export class WeaponStakingComponent implements OnInit {
       this.isLoading = true;
       await this.weaponsService.claimStakeReward();
       console.log('Claimed');
+    } finally {
+      this.isLoading = false;
+    }
+    await this.loadData();
+  }
+
+  async onSetApprovedForAll() {
+    try {
+      this.isLoading = true;
+      await this.weaponsService.setApprovedForAll();
     } finally {
       this.isLoading = false;
     }

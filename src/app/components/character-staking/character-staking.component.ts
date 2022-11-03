@@ -40,6 +40,7 @@ export class CharacterStakingComponent implements OnInit {
   currentStake: number = 0;
   isPathFinished = false;
   canClaim = false;
+  isApprovedForAll = false;
   barracksRequired?: number;
   unlockedTiers?: number;
   filteredOptions?: Observable<string[]>;
@@ -90,7 +91,8 @@ export class CharacterStakingComponent implements OnInit {
         barracksRequired,
         unlockedTiers,
         canClaim,
-        stakeCompleteTimestamp
+        stakeCompleteTimestamp,
+        isApprovedForAll,
       ] = await Promise.all([
         this.charactersService.getOwnedCharacters(),
         this.charactersService.getCurrentStake(),
@@ -100,15 +102,16 @@ export class CharacterStakingComponent implements OnInit {
         this.charactersService.getUnlockedTiers(),
         this.charactersService.canCompleteStake(),
         this.charactersService.getStakeCompleteTimestamp(),
+        this.charactersService.isApprovedForAll(),
       ]);
       this.characters = ownedCharacters;
-      console.log(ownedCharacters);
       this.currentStake = currentStake;
       this.totalCharactersStaked = totalCharactersStaked;
       this.charactersRequired = charactersRequired;
       this.barracksRequired = barracksRequired;
       this.unlockedTiers = unlockedTiers;
       this.canClaim = canClaim;
+      this.isApprovedForAll = isApprovedForAll;
       this.nextStakingTier = this.charactersStakingTiers[this.unlockedTiers];
       if (stakeCompleteTimestamp > Date.now() / 1000) {
         this.stakeCompleteTimestamp = stakeCompleteTimestamp;
@@ -183,6 +186,16 @@ export class CharacterStakingComponent implements OnInit {
       this.isLoading = true;
       await this.charactersService.claimStakeReward();
       console.log('Claimed');
+    } finally {
+      this.isLoading = false;
+    }
+    await this.loadData();
+  }
+
+  async onSetApprovedForAll() {
+    try {
+      this.isLoading = true;
+      await this.charactersService.setApprovedForAll();
     } finally {
       this.isLoading = false;
     }
