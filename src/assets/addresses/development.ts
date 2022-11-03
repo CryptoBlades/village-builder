@@ -1,7 +1,15 @@
+const CBKLand = require('../../../../cryptoblades/build/contracts/CBKLand.json');
+const Characters = require('../../../../cryptoblades/build/contracts/Characters.json');
+const Weapons = require('../../../../cryptoblades/build/contracts/Weapons.json');
+const SkillToken = require('../../../../cryptoblades/build/contracts/SkillToken.json');
+const Garrison = require('../../../../cryptoblades/build/contracts/Garrison.json');
+
+const networkId = '5777';
+
 module.exports = {
-  cbkLandAddress: '0x530FDd0fB9c22fe5bc44DfdCD0a7A3d99B065DE3',
-  charactersAddress: '0x0242d3645fFaDfa5676Ba77798829302894961eC',
-  weaponsAddress: '0x4D41049618c6283337DBFd28896E63213CdA4D97',
-  skillAddress: '0x7338376AfceD28D99c284b00ab3a27583EE02033',
-  garrisonAddress: '0x8D552C9bF998DC5aCb807c5CcDaa18C2693fcEa3',
+  cbkLandAddress: CBKLand.networks[networkId]?.address,
+  charactersAddress: Characters.networks[networkId]?.address,
+  weaponsAddress: Weapons.networks[networkId]?.address,
+  skillAddress: SkillToken.networks[networkId]?.address,
+  garrisonAddress: Garrison.networks[networkId]?.address,
 }
