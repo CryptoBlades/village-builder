@@ -1,8 +1,16 @@
-const CBKLand = require('../../../../cryptoblades/build/contracts/CBKLand.json');
-const Characters = require('../../../../cryptoblades/build/contracts/Characters.json');
-const Weapons = require('../../../../cryptoblades/build/contracts/Weapons.json');
-const SkillToken = require('../../../../cryptoblades/build/contracts/SkillToken.json');
-const Garrison = require('../../../../cryptoblades/build/contracts/Garrison.json');
+let CBKLand;
+let Characters;
+let Weapons;
+let SkillToken;
+let Garrison;
+
+if (process.env["NODE_ENV"] === "development") {
+  CBKLand = require('../../../../cryptoblades/build/contracts/CBKLand.json');
+  Characters = require('../../../../cryptoblades/build/contracts/Characters.json');
+  Weapons = require('../../../../cryptoblades/build/contracts/Weapons.json');
+  SkillToken = require('../../../../cryptoblades/build/contracts/SkillToken.json');
+  Garrison = require('../../../../cryptoblades/build/contracts/Garrison.json');
+}
 
 const networkId = '5777';
 
