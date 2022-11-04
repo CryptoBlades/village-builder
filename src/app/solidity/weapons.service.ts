@@ -49,13 +49,24 @@ export class WeaponsService {
     return +await (await this.weaponsContract).methods.balanceOf(this.currentAccount).call({from: this.currentAccount});
   }
 
-  async stake(ids: number[]): Promise<void> {
-    const isApprovedForAll = await (await this.weaponsContract).methods.isApprovedForAll(this.currentAccount, this.weaponStakingContract.options.address).call({from: this.currentAccount});
+  async setApprovedForAll(): Promise<void> {
+    await (await this.weaponsContract).methods.setApprovalForAll(this.weaponStakingContract.options.address, true).send({from: this.currentAccount});
+  }
 
-    if (ids.length === 1 && !isApprovedForAll) {
-      await (await this.weaponsContract).methods.approve(this.weaponStakingContract.options.address, ids[0]).send({from: this.currentAccount});
-    } else if (!isApprovedForAll) {
-      await (await this.weaponsContract).methods.setApprovalForAll(this.weaponStakingContract.options.address, true).send({from: this.currentAccount});
+    async isApprovedForAll(): Promise<boolean> {
+    return await (await this.weaponsContract).methods.isApprovedForAll(this.currentAccount, this.weaponStakingContract.options.address).call({from: this.currentAccount});
+  }
+
+  async stake(ids: number[]): Promise<void> {
+    const isApprovedForAll = await this.isApprovedForAll();
+
+    if (!isApprovedForAll) {
+      for (const id of ids) {
+        const approved = await (await this.weaponsContract).methods.getApproved(id).call({from: this.currentAccount});
+        if (approved !== this.weaponStakingContract.options.address) {
+          await (await this.weaponsContract).methods.approve(this.weaponStakingContract.options.address, id).send({from: this.currentAccount});
+        }
+      }
     }
 
     await this.weaponStakingContract.methods.stake(ids).send({from: this.currentAccount});

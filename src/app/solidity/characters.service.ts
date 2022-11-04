@@ -59,18 +59,27 @@ export class CharactersService {
     return accountCharactersAmount + garrisonCharactersAmount;
   }
 
+  async setApprovedForAll(): Promise<void> {
+    await (await this.charactersContract).methods.setApprovalForAll(this.characterStakingContract.options.address, true).send({from: this.currentAccount});
+  }
+
+  async isApprovedForAll(): Promise<boolean> {
+    return await (await this.charactersContract).methods.isApprovedForAll(this.currentAccount, this.characterStakingContract.options.address).call({from: this.currentAccount});
+  }
+
   async stake(ids: number[]): Promise<void> {
-    const isApprovedForAll = await (await this.charactersContract).methods.isApprovedForAll(this.currentAccount, this.characterStakingContract.options.address).call({from: this.currentAccount});
-
-    if (ids.length === 1 && !isApprovedForAll) {
-      const idOwner = await (await this.charactersContract).methods.ownerOf(ids[0]).call({from: this.currentAccount});
-      if (idOwner === this.currentAccount) {
-        await (await this.charactersContract).methods.approve(this.characterStakingContract.options.address, ids[0]).send({from: this.currentAccount});
+    const isApprovedForAll = await this.isApprovedForAll();
+    if (!isApprovedForAll) {
+      for (const id of ids) {
+        const idOwner = await (await this.charactersContract).methods.ownerOf(id).call({from: this.currentAccount});
+        if (idOwner === this.currentAccount) {
+          const approved = await (await this.charactersContract).methods.getApproved(id).call({from: this.currentAccount});
+          if (approved !== this.characterStakingContract.options.address) {
+            await (await this.charactersContract).methods.approve(this.characterStakingContract.options.address, id).send({from: this.currentAccount});
+          }
+        }
       }
-    } else if (!isApprovedForAll) {
-      await (await this.charactersContract).methods.setApprovalForAll(this.characterStakingContract.options.address, true).send({from: this.currentAccount});
     }
-
     await this.characterStakingContract.methods.stake(ids).send({from: this.currentAccount});
   }
 

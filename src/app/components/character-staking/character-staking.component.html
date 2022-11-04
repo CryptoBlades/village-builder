@@ -53,7 +53,10 @@
           {{'Staking.NeedToUpgradeBarracks' | translate}}
         </ng-template>
       </button>
-      <button *ngIf="canClaim" mat-raised-button class="btn button-stake" (click)="onClaim()">
+      <button *ngIf="!isApprovedForAll" [disabled]="isLoading" mat-raised-button class="btn button-stake" (click)="onSetApprovedForAll()">
+        {{'Staking.ApproveAllTokens' | translate}}
+      </button>
+      <button *ngIf="canClaim" [disabled]="isLoading" mat-raised-button class="btn button-stake" (click)="onClaim()">
         {{'Staking.Claim' | translate}}
       </button>
       <app-next-tier-unlocks *ngIf="nextStakingTier" [nextStakingTier]="nextStakingTier"></app-next-tier-unlocks>

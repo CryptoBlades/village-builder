@@ -5,7 +5,7 @@ import {Contract} from "web3-eth-contract";
 import {Store} from "@ngxs/store";
 import {Web3Service} from "../services/web3.service";
 import SkillStaking from "../../../build/contracts/SkillStaking.json";
-import SkillToken from "../../../build/contracts/SkillInterface.json";
+import ERC20 from "../../../build/contracts/ERC20.json";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Networks} from "../interfaces/networks";
 import {environment} from "../../environments/environment";
@@ -28,7 +28,7 @@ export class SkillService {
   ) {
     this.skillStakingContract = new this.web3.eth.Contract(SkillStaking.abi as any, (SkillStaking.networks as Networks)[environment.networkId]?.address);
     this.skillContract = this.skillStakingContract.methods.currency().call().then((address: string) => {
-      return new this.web3.eth.Contract(SkillToken.abi as any, address);
+      return new this.web3.eth.Contract(ERC20.abi as any, address);
     });
     this.wallet$.pipe(untilDestroyed(this)).subscribe((state: WalletStateModel) => {
       this.currentAccount = state.publicAddress;
@@ -55,8 +55,13 @@ export class SkillService {
   }
 
   async stake(): Promise<void> {
-    const requiredAmount = await this.skillStakingContract.methods.getRequiredStakeAmount().call({from: this.currentAccount});
-    await (await this.skillContract).methods.approve(this.skillStakingContract.options.address, requiredAmount).send({from: this.currentAccount});
+    const requiredAmount = this.web3.utils.toBN(await this.skillStakingContract.methods.getRequiredStakeAmount().call({from: this.currentAccount}));
+    const approvedAmount = this.web3.utils.toBN(await (await this.skillContract).methods.allowance(this.currentAccount, this.skillStakingContract.options.address).call({from: this.currentAccount}));
+    if (approvedAmount.isZero()) {
+      await (await this.skillContract).methods.approve(this.skillStakingContract.options.address, requiredAmount).send({from: this.currentAccount});
+    } else if (approvedAmount.lt(requiredAmount)) {
+      await (await this.skillContract).methods.increaseAllowance(this.skillStakingContract.options.address, requiredAmount.sub(approvedAmount)).send({from: this.currentAccount});
+    }
     await this.skillStakingContract.methods.stake(requiredAmount).send({from: this.currentAccount});
   }
 
