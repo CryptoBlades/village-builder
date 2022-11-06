@@ -57,10 +57,8 @@ export class SkillService {
   async stake(): Promise<void> {
     const requiredAmount = this.web3.utils.toBN(await this.skillStakingContract.methods.getRequiredStakeAmount().call({from: this.currentAccount}));
     const approvedAmount = this.web3.utils.toBN(await (await this.skillContract).methods.allowance(this.currentAccount, this.skillStakingContract.options.address).call({from: this.currentAccount}));
-    if (approvedAmount.isZero()) {
+    if (approvedAmount.lt(requiredAmount)) {
       await (await this.skillContract).methods.approve(this.skillStakingContract.options.address, requiredAmount).send({from: this.currentAccount});
-    } else if (approvedAmount.lt(requiredAmount)) {
-      await (await this.skillContract).methods.increaseAllowance(this.skillStakingContract.options.address, requiredAmount.sub(approvedAmount)).send({from: this.currentAccount});
     }
     await this.skillStakingContract.methods.stake(requiredAmount).send({from: this.currentAccount});
   }

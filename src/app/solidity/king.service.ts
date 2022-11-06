@@ -43,10 +43,8 @@ export class KingService {
   async stake(buildingType: BuildingType): Promise<void> {
     const requiredAmount = this.web3.utils.toBN(await this.kingStakingContract.methods.getRequiredStakeAmount().call({from: this.currentAccount}));
     const approvedAmount = this.web3.utils.toBN(await (await this.kingContract).methods.allowance(this.currentAccount, this.kingStakingContract.options.address).call({from: this.currentAccount}));
-    if (approvedAmount.isZero()) {
-      await (await this.kingContract).methods.approve(this.kingStakingContract.options.address, requiredAmount.toString()).send({from: this.currentAccount});
-    } else if (approvedAmount.lt(requiredAmount)) {
-      await (await this.kingContract).methods.increaseAllowance(this.kingStakingContract.options.address, requiredAmount.sub(approvedAmount)).send({from: this.currentAccount});
+    if (approvedAmount.lt(requiredAmount)) {
+      await (await this.kingContract).methods.approve(this.kingStakingContract.options.address, requiredAmount).send({from: this.currentAccount});
     }
     await this.kingStakingContract.methods.stake(requiredAmount, buildingType).send({from: this.currentAccount});
   }
