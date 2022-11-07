@@ -4,12 +4,14 @@ let Weapons;
 let SkillToken;
 let Garrison;
 
-if (process.env["NODE_ENV"] === "development") {
+try {
   CBKLand = require('../../../../cryptoblades/build/contracts/CBKLand.json');
   Characters = require('../../../../cryptoblades/build/contracts/Characters.json');
   Weapons = require('../../../../cryptoblades/build/contracts/Weapons.json');
   SkillToken = require('../../../../cryptoblades/build/contracts/SkillToken.json');
   Garrison = require('../../../../cryptoblades/build/contracts/Garrison.json');
+} catch (e) {
+    console.warn('DEV: Local artifacts not found');
 }
 
 const networkId = '5777';
